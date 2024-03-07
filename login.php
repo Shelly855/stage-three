@@ -32,6 +32,9 @@
             </div>
 
         </form>
+        <?php
+            include("includes/footer.php");
+        ?>
     </div>
 </body>
 
