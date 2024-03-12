@@ -10,7 +10,8 @@
 </head>
    
 <body>
-    <div>
+    <div class="container">
+        <main>
         <h1>Login</h1>
         <form method="post">
             <div class="imgcontainer">
@@ -35,7 +36,28 @@
         <?php
             include("includes/footer.php");
         ?>
+        </main>
     </div>
 </body>
 
 </html>
+
+<?php
+
+$db = new SQLITE3("stage_3.db");
+$sql = "select first_name, last_name, password FROM staff";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $fname = $_POST["first_name"];
+    $lname = $_POST["last_name"];
+    $pword = $_POST["password"];
+}
+
+$sql = "SELECT first_name, last_name, password FROM staff WHERE first_name=:fname AND last_name=:lname AND password=:pword";
+$stmt = $db->prepare($sql);
+$stmt->bindValue(':fname', $fname, SQLITE3_TEXT);
+$stmt->bindValue(':lname', $lname, SQLITE3_TEXT);
+$stmt->bindValue(':pword', $pword, SQLITE3_TEXT);
+$result = $stmt->execute();
+
+?>

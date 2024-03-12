@@ -83,35 +83,35 @@ function checkUserIdExists($uid, $conn) {
             <form method="post">
                 <label>User ID</label>
                 <input type="number" name = "uid">
-                <span class="blank-notify"><?php echo $erroruid; ?></span>
+                <span class="blank-error"><?php echo $erroruid; ?></span>
 
                 <label>First Name</label>
                 <input type="text" name = "fname">
-                <span class="blank-notify"><?php echo $errorfname; ?></span>
+                <span class="blank-error"><?php echo $errorfname; ?></span>
 
                 <label>Surname</label>
                 <input type="text" name = "surname">
-                <span class="blank-notify"><?php echo $errorsurname; ?></span>
+                <span class="blank-error"><?php echo $errorsurname; ?></span>
 
                 <label>Date of Birth</label>
                 <input type="date" name = "dob">
-                <span class="blank-notify"><?php echo $errordob; ?></span>
+                <span class="blank-error"><?php echo $errordob; ?></span>
 
                 <label>Email Address</label>
                 <input type="text" name = "email">
-                <span class="blank-notify"><?php echo $erroremail; ?></span>
+                <span class="blank-error"><?php echo $erroremail; ?></span>
 
                 <label>Mobile Number</label>
                 <input type="text" name = "mobile">
-                <span class="blank-notify"><?php echo $errormobile; ?></span>
+                <span class="blank-error"><?php echo $errormobile; ?></span>
 
                 <label>Username</label>
                 <input type="text" name = "uname">
-                <span class="blank-notify"><?php echo $erroruname; ?></span>
+                <span class="blank-error"><?php echo $erroruname; ?></span>
 
                 <label>Password</label>
                 <input type="password" name = "pwd">
-                <span class="blank-notify"><?php echo $errorpwd; ?></span>
+                <span class="blank-error"><?php echo $errorpwd; ?></span>
 
                 <label>Job Role</label>
                 <select name="job">
@@ -120,7 +120,7 @@ function checkUserIdExists($uid, $conn) {
                     <option value="doctor">Doctor</option>
                     <option value="patient">Patient</option>
                 </select>
-                <span class="blank-notify"><?php echo $errorrole; ?></span>
+                <span class="blank-error"><?php echo $errorrole; ?></span>
 
                 <input type="submit" value="Create User" name ="submit"><a href="userProfiles.php">Back</a>
             </form>

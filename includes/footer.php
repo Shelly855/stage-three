@@ -1,7 +1,7 @@
 <footer>
     <nav>
-        <li>Something</li>
-        <li>Something 2</li>
-        <li>Something 3</li>
+        <li>Privacy Policy</li>
+        <li>Terms and Conditions</li>
+        <li>About Us</li>
     </nav>
 </footer>
