@@ -93,6 +93,15 @@ function checkUserIdExists($uid, $conn) {
                 <input type="text" name = "surname">
                 <span class="blank-error"><?php echo $errorsurname; ?></span>
 
+                <label>Role</label>
+                <select name="role">
+                    <option value="">Select Role</option>
+                    <option value="admin">Admin</option>
+                    <option value="doctor">Doctor</option>
+                    <option value="patient">Patient</option>
+                </select>
+                <span class="blank-error"><?php echo $errorrole; ?></span>
+
                 <label>Date of Birth</label>
                 <input type="date" name = "dob">
                 <span class="blank-error"><?php echo $errordob; ?></span>
@@ -112,15 +121,6 @@ function checkUserIdExists($uid, $conn) {
                 <label>Password</label>
                 <input type="password" name = "pwd">
                 <span class="blank-error"><?php echo $errorpwd; ?></span>
-
-                <label>Job Role</label>
-                <select name="job">
-                    <option value="">Select Role</option>
-                    <option value="admin">Admin</option>
-                    <option value="doctor">Doctor</option>
-                    <option value="patient">Patient</option>
-                </select>
-                <span class="blank-error"><?php echo $errorrole; ?></span>
 
                 <input type="submit" value="Create User" name ="submit"><a href="userProfiles.php">Back</a>
             </form>

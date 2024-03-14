@@ -125,15 +125,15 @@ form{
     font-size: 20px;
     border-radius:20px;
 }
-.blank-notify{
+.blank-error{
     color:red;
-    font-size: 10px;
+    font-size: 15px;
     font-weight: bold; 
     margin-top:5px;
     margin-bottom:10px;
     display:block;
 }
-.blank-notify span {
+.blank-error span {
     display: block;
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
