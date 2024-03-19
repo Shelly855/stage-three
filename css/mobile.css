@@ -1,6 +1,6 @@
 /* can change colours */
 body {
-  background-color: #DEF2A7;
+  background-color: #89AD7F;
   margin: 0;
   display: flex;
   justify-content: center;
@@ -38,7 +38,7 @@ footer li{
   list-style-type: none;
 }
 header{
-  background-color:lightgreen;
+  background-color:#589C44;
   border-radius:10px;
   display:flex; 
 }
@@ -59,12 +59,16 @@ nav ul li a{
   padding:8px 0;
   display:inline-block;
   width:100%;
+  color: #000000;
 }
 li a:visited{
   color:#551A8B;
 }
 li a:active{
   color:#0000ff;
+}
+li a:hover{
+  color: #fff;
 }
 nav li:last-child{
   border-bottom:none;
