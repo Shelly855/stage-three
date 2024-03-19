@@ -133,7 +133,7 @@ form{
     border-radius:20px;
 }
 .blank-error{
-    color:red;
+    color:darkred;
     font-size: 15px;
     font-weight: bold; 
     margin-top:5px;
@@ -144,4 +144,22 @@ form{
     display: block;
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
+}
+.back-button{
+    font-weight: bold; 
+    padding-left: 30px;
+}
+.confirm {
+    color: darkred;
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.delete-label {
+    color: blue;
+    font-weight: bold;
+}
+.delete-data {
+    margin-bottom: 20px;
+    font-size:px;
 }
