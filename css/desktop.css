@@ -1,6 +1,6 @@
 /* can change colours or anything u want */
 body {
-    background-color: #DEF2A7;
+    background-color: #89AD7F;
     margin: 0;
     display: flex;
     justify-content: center;
@@ -42,7 +42,7 @@ footer li{
     border-right:1px solid white;
 }
 header{
-    background-color:#6DF536;
+    background-color:#589C44;
     border-radius:15px;
     display:flex;
     padding:20px;
@@ -62,12 +62,19 @@ nav ul li{
     margin:0;
     border-right: 3px solid white;
     text-decoration:none;
+    font-weight: bold;
+}
+nav ul li a{
+    color: #000000;
 }
 li a:visited{
     color:#551A8B;
 }
 li a:active{
     color:#0000ff;
+}
+li a:hover{
+    color: #fff;
 }
 table{
     width: 100%;
