@@ -6,7 +6,7 @@ if (isset($_POST['delete'])) {
     $stmt->bindValue(':aid', $_POST['aid']);
     $result = $stmt->execute();
     if ($result) {
-        header("Location: appointments.php?deleted=true");
+        header("Location: ../appointments/appointments.php?deleted=true");
         exit();
     } else {
         echo "Error deleting appointment.";
@@ -30,14 +30,14 @@ $db->close();
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
-    <link href="css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
+    <link href="../css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
+    <link href="../css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
     <title>Delete Appointment</title>
 </head>
 <body>
     <div class="container">
         <?php
-            include("includes/header.php");
+            include("../includes/header.php");
         ?>  
         <main>
             <h2>Delete Appointment <?php echo $_GET['aid']; ?></h2><br>
@@ -64,11 +64,11 @@ $db->close();
             </div>
             <form method="post">
                 <input type="hidden" name="aid" value="<?php echo $_GET['aid'] ?>"><br>
-                <input type="submit" value="Delete" name="delete"><a href="appointments.php" class="back-button">Back</a>
+                <input type="submit" value="Delete" name="delete"><a href="../appointments/appointments.php" class="back-button">Back</a>
             </form>
         </main>
         <?php
-            include("includes/footer.php");
+            include("../includes/footer.php");
         ?>
     </div>
 </body>

@@ -3,22 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
-    <link href="css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
+    <link href="../css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
+    <link href="../css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
     <title>Appointments</title>
 </head>
 <body>
     <div class="container">
         <?php
-            include("viewAppointmentSql.php");
+            include("../appointments/viewAppointmentSql.php");
 
             $appointments = getAppointments();
-            include("includes/header.php");
+            include("../includes/header.php");
         ?>
         <main>
             <h1>Appointments</h1>
 
-            <form action="createAppointment.php">
+            <form action="../appointments/createAppointment.php">
                 <input type="submit" value="Create New Appointment" />
             </form>
 
@@ -45,8 +45,8 @@
                                 <td><?php echo $appointment['patient_id']; ?></td>
                                 <td><?php echo $appointment['staff_id']; ?></td>
                                 <td>
-                                    <a href="updateAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Update</a> 
-                                    <a href="deleteAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Delete</a>
+                                    <a href="../appointments/updateAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Update</a> 
+                                    <a href="../appointments/deleteAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
@@ -55,7 +55,7 @@
             </div> 
         </main>
         <?php
-            include("includes/footer.php");
+            include("../includes/footer.php");
         ?>
     </div>
 </body>

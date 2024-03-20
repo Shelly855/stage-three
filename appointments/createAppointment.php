@@ -52,7 +52,7 @@ if (isset($_POST['submit'])) {
             $result = $stmt->execute();
     
             if ($result) {
-                header("Location: createAppointmentSuccess.php?createAppointment=success");
+                header("Location: ../appointments/createAppointmentSuccess.php?createAppointment=success");
                 exit();
             } else {
                 echo "Error creating appointment";
@@ -67,15 +67,14 @@ if (isset($_POST['submit'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
-    <link href="css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
-    <script src="javascript/main.js" defer></script>
+    <link href="../css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
+    <link href="../css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
     <title>Create Appointment</title>
 </head>
 <body>
     <div class="container"> 
         <?php
-            include("includes/header.php");
+            include("../includes/header.php");
         ?>  
         <main>
             <h1>Create Appointment</h1>
@@ -105,11 +104,11 @@ if (isset($_POST['submit'])) {
                 <span class="blank-error"><?php echo $errorsid; ?></span>
 
                 <input type="submit" value="Create Appointment" name="submit">
-                <a href="appointments.php" class="back-button">Back</a>
+                <a href="../appointments/appointments.php" class="back-button">Back</a>
             </form>
         </main>
         <?php
-            include("includes/footer.php");
+            include("../includes/footer.php");
         ?>
     </div>
 </body>
