@@ -41,7 +41,7 @@ $db->close();
         ?>  
         <main>
             <h2>Delete Appointment <?php echo $_GET['aid']; ?></h2><br>
-            <div class="confirm">Are you sure want to delete this appointment?</div>
+            <div class="confirm">Are you sure you want to delete this appointment?</div>
             <div class="delete-data">
                 <label class="delete-label">Date:</label>
                 <label><?php echo $arrayResult[0][0] ?></label>
