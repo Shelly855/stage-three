@@ -1,3 +1,5 @@
+<!-- can't have patient or staff id, confirm details from notifications and press button for appointment -->
+
 <?php
 function checkAppointmentIdExists($aid, $db) {
     $stmt = $db->prepare("SELECT appointment_id FROM appointments WHERE appointment_id = :aid");
@@ -6,7 +8,7 @@ function checkAppointmentIdExists($aid, $db) {
     return $result->fetchArray() !== false;
 }
 
-$erroraid = $errordate = $errornotes = $errormedhistory = $errorpid = $errorsid = "";
+$erroraid = $errordate = $errortime = $errorpid = $errorsid = "";
 $allFields = true;
 
 if (isset($_POST['submit'])) {
@@ -20,12 +22,8 @@ if (isset($_POST['submit'])) {
         $errordate = "Date is mandatory";
         $allFields = false;
     }
-    if (empty($_POST['notes'])) {
-        $errornotes = "Notes is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['medhistory'])) {
-        $errormedhistory = "Medical History is mandatory";
+    if (empty($_POST['time'])) {
+        $errortime = "Time is mandatory";
         $allFields = false;
     }
     if (empty($_POST['pid'])) {
@@ -41,11 +39,10 @@ if (isset($_POST['submit'])) {
         if (checkAppointmentIdExists($_POST['aid'], $db)) {
             $erroraid = "Appointment ID already exists";
         } else {
-            $stmt = $db->prepare('INSERT INTO appointments (appointment_id, date, clinical_notes, medical_history, patient_id, staff_id) VALUES (:aid, :date, :notes, :medhistory, :pid, :sid)');
+            $stmt = $db->prepare('INSERT INTO appointments (appointment_id, date, time, patient_id, staff_id) VALUES (:aid, :date, :time, :pid, :sid)');
             $stmt->bindValue(':aid', $_POST['aid'], SQLITE3_INTEGER);
             $stmt->bindValue(':date', $_POST['date'], SQLITE3_TEXT);
-            $stmt->bindValue(':notes', $_POST['notes'], SQLITE3_TEXT);
-            $stmt->bindValue(':medhistory', $_POST['medhistory'], SQLITE3_TEXT);
+            $stmt->bindValue(':time', $_POST['time'], SQLITE3_TEXT);
             $stmt->bindValue(':pid', $_POST['pid'], SQLITE3_TEXT);
             $stmt->bindValue(':sid', $_POST['sid'], SQLITE3_TEXT);
             
@@ -87,13 +84,9 @@ if (isset($_POST['submit'])) {
                 <input type="date" name="date" value="<?php echo isset($_POST['date']) ? $_POST['date'] : ''; ?>">
                 <span class="blank-error"><?php echo $errordate; ?></span>
 
-                <label>Clinical Notes</label>
-                <input type="text" name="notes" value="<?php echo isset($_POST['notes']) ? $_POST['notes'] : ''; ?>">
-                <span class="blank-error"><?php echo $errornotes; ?></span>
-
-                <label>Medical History</label>
-                <input type="text" name="medhistory" value="<?php echo isset($_POST['medhistory']) ? $_POST['medhistory'] : ''; ?>">
-                <span class="blank-error"><?php echo $errormedhistory; ?></span>
+                <label>Time</label>
+                <input type="time" name="time" value="<?php echo isset($_POST['time']) ? $_POST['time'] : ''; ?>">
+                <span class="blank-error"><?php echo $errortime; ?></span>
 
                 <label>Patient ID</label>
                 <input type="number" name="pid" value="<?php echo isset($_POST['pid']) ? $_POST['pid'] : ''; ?>">

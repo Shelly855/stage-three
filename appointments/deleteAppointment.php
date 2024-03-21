@@ -13,7 +13,7 @@ if (isset($_POST['delete'])) {
     }
 }
 
-$sql = "SELECT date, clinical_notes, medical_history, patient_id, staff_id FROM appointments WHERE appointment_id=:aid";
+$sql = "SELECT date, time, patient_id, staff_id FROM appointments WHERE appointment_id=:aid";
 $stmt = $db->prepare($sql);
 $stmt->bindValue(':aid', $_GET['aid']);
 $result = $stmt->execute();
@@ -47,12 +47,8 @@ $db->close();
                 <label><?php echo $arrayResult[0][0] ?></label>
             </div>
             <div class="delete-data">
-                <label class="delete-label">Clinical Notes:</label>
-                <label><?php echo $arrayResult[0][1] ?></label>
-            </div>
-            <div class="delete-data">
-                <label class="delete-label">Medical History:</label>
-                <label><?php echo $arrayResult[0][2] ?></label>
+                <label class="delete-label">Time:</label>
+                <label><?php echo $arrayResult[0][0] ?></label>
             </div>
             <div class="delete-data">
                 <label class="delete-label">Patient ID:</label>

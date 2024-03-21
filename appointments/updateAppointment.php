@@ -24,7 +24,7 @@
         }
         
 
-        $erroraid = $errordate = $errornotes = $errormedhistory = $errorpid = $errorsid = "";
+        $erroraid = $errordate = $errortime = $errorpid = $errorsid = "";
         $allFields = true;
 
         if (isset($_POST['submit'])) {
@@ -33,12 +33,8 @@
                 $errordate = "Date is mandatory";
                 $allFields = false;
             }
-            if (empty($_POST['notes'])) {
-                $errornotes = "Notes is mandatory";
-                $allFields = false;
-            }
-            if (empty($_POST['medhistory'])) {
-                $errormedhistory = "Medical History is mandatory";
+            if (empty($_POST['time'])) {
+                $errortime = "Time is mandatory";
                 $allFields = false;
             }
             if (empty($_POST['pid'])) {
@@ -52,10 +48,9 @@
 
             if ($allFields) {
 
-                $stmt = $db->prepare("UPDATE appointments SET date = :date, clinical_notes = :notes, medical_history = :medhistory, patient_id = :pid, staff_id = :sid WHERE appointment_id = :aid");
+                $stmt = $db->prepare("UPDATE appointments SET date = :date, time = :time, patient_id = :pid, staff_id = :sid WHERE appointment_id = :aid");
                 $stmt->bindValue(':date', $_POST['date']);
-                $stmt->bindValue(':notes', $_POST['notes']);
-                $stmt->bindValue(':medhistory', $_POST['medhistory']);
+                $stmt->bindValue(':time', $_POST['time']);
                 $stmt->bindValue(':pid', $_POST['pid']);
                 $stmt->bindValue(':sid', $_POST['sid']);
                 $stmt->bindValue(':aid', $_GET['aid']);
@@ -80,20 +75,16 @@
                 <input type="date" name="date" value="<?php echo $arrayResult[0][1]; ?>">
                 <span class="blank-error"><?php echo $errordate; ?></span>
 
-                <label>Clinical Notes</label>
-                <input type="text" name="notes" value="<?php echo $arrayResult[0][2]; ?>">
-                <span class="blank-error"><?php echo $errornotes; ?></span>
-
-                <label>Medical History</label>
-                <input type="text" name="medhistory" value="<?php echo $arrayResult[0][3]; ?>">
-                <span class="blank-error"><?php echo $errormedhistory; ?></span>
+                <label>Time</label>
+                <input type="time" name="time" value="<?php echo $arrayResult[0][2]; ?>">
+                <span class="blank-error"><?php echo $errortime; ?></span>
 
                 <label>Patient ID</label>
-                <input type="number" name="pid" value="<?php echo $arrayResult[0][4]; ?>">
+                <input type="number" name="pid" value="<?php echo $arrayResult[0][5]; ?>">
                 <span class="blank-error"><?php echo $errorpid; ?></span>
 
                 <label>Staff ID</label>
-                <input type="number" name="sid" value="<?php echo $arrayResult[0][5]; ?>">
+                <input type="number" name="sid" value="<?php echo $arrayResult[0][6]; ?>">
                 <span class="blank-error"><?php echo $errorsid; ?></span>
 
                 <input type="submit" name="submit" value="Update"><a href="../appointments/appointments.php" class="back-button">Back</a>
