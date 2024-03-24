@@ -112,7 +112,7 @@ button, input[type=submit] {
     width:30%;
     margin-top:15px;
     margin-bottom:10px;
-  }
+}
 button:hover, input[type=submit]:hover {
     opacity: 0.9;
 }
