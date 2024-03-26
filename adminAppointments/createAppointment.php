@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
                 <span class="blank-error"><?php echo $errorsid; ?></span>
 
                 <input type="submit" value="Create Appointment" name="submit">
-                <a href="../adminAppointments/appointments.php" class="back-button">Back</a>
+                <a href="../adminAppointments/adminAppointments.php" class="back-button">Back</a>
             </form>
         </main>
         <?php

@@ -6,7 +6,7 @@ if (isset($_POST['delete'])) {
     $stmt->bindValue(':aid', $_POST['aid']);
     $result = $stmt->execute();
     if ($result) {
-        header("Location: ../adminAppointments/appointments.php?deleted=true");
+        header("Location: ../adminAppointments/adminAppointments.php?deleted=true");
         exit();
     } else {
         echo "Error deleting appointment.";
@@ -60,7 +60,7 @@ $db->close();
             </div>
             <form method="post">
                 <input type="hidden" name="aid" value="<?php echo $_GET['aid'] ?>"><br>
-                <input type="submit" value="Delete" name="delete"><a href="../adminAppointments/appointments.php" class="back-button">Back</a>
+                <input type="submit" value="Delete" name="delete"><a href="../adminAppointments/adminAppointments.php" class="back-button">Back</a>
             </form>
         </main>
         <?php

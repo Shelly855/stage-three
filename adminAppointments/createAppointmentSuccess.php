@@ -22,7 +22,7 @@
         ?>  
         <main>
             <h1><?php echo $message; ?></h1>
-            <form action="../adminAppointments/appointments.php">
+            <form action="../adminAppointments/adminAppointments.php">
                 <input type="submit" value="Back" />
             </form>
         </main>
