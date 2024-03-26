@@ -58,7 +58,7 @@
                 $result = $stmt->execute();
 
                 if ($result) {
-                    header('Location: ../appointments/appointments.php');
+                    header('Location: ../adminAppointments/appointments.php');
                     exit;
                 } else {
                     echo "Error updating appointment.";
@@ -87,7 +87,7 @@
                 <input type="number" name="sid" value="<?php echo $arrayResult[0][6]; ?>">
                 <span class="blank-error"><?php echo $errorsid; ?></span>
 
-                <input type="submit" name="submit" value="Update"><a href="../appointments/appointments.php" class="back-button">Back</a>
+                <input type="submit" name="submit" value="Update"><a href="../adminAppointments/appointments.php" class="back-button">Back</a>
             </form>
         </main>
         <?php
