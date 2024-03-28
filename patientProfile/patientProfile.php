@@ -13,9 +13,18 @@
             include("../includes/patientHeader.php");
         ?>  
         <main>
-
-            
-
+            <h1>My Profile<h1> 
+                <br>
+        <div class="row patientMenu">
+            <div class="col-3">
+                <a href="viewPatientDetails.php">My Details</a> 
+            </div>
+            <div class="col-3">
+                <a href="viewMedicalHistory.php">My Medical History</a>
+            </div> 
+            <div class="col-3">
+                <a href="helpGuide.php">Help & Support</a>
+            </div>
         </main>
         <?php
             include("../includes/footer.php");
