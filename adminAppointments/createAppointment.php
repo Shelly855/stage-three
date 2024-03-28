@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="container"> 
         <?php
-            include("../includes/header.php");
+            include("../includes/adminHeader.php");
         ?>  
         <main>
             <h1>Create Appointment</h1>

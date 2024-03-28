@@ -79,7 +79,7 @@ if (isset($_GET['pid'])) {
 <body>
 <div class="container">
     <?php
-        include("../includes/header.php");
+        include("../includes/adminHeader.php");
     ?>  
     <main>
         <h1>Update Patient</h1>

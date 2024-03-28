@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <?php
-            include("../includes/header.php");
+            include("../includes/adminHeader.php");
 
             $updated = isset($_GET['updated']) && $_GET['updated'] === 'true';
 

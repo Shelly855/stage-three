@@ -13,7 +13,7 @@
             include("../adminPatientProfiles/viewPatientSql.php");
 
             $patients = getPatients();
-            include("../includes/header.php");
+            include("../includes/adminHeader.php");
         ?>
         <main>
             <h1>Patient Profiles</h1>

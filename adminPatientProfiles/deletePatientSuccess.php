@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <?php
-            include("../includes/header.php");
+            include("../includes/adminHeader.php");
 
             $deleted = isset($_GET['deleted']) && $_GET['deleted'] === 'true';
 

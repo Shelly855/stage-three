@@ -37,7 +37,7 @@ $db->close();
 <body>
     <div class="container">
         <?php
-            include("../includes/header.php");
+            include("../includes/adminHeader.php");
         ?>  
         <main>
             <h2>Delete Appointment <?php echo $_GET['aid']; ?></h2><br>

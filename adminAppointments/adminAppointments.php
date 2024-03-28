@@ -13,7 +13,7 @@
             include("../adminAppointments/viewAppointmentSql.php");
 
             $appointments = getAppointments();
-            include("../includes/header.php");
+            include("../includes/adminHeader.php");
         ?>
         <main>
             <h1>Appointments</h1>

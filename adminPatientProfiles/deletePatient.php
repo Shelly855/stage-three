@@ -40,7 +40,7 @@ $db->close();
 </head>
 <body>
     <div class="container">
-        <?php include("../includes/header.php"); ?>
+        <?php include("../includes/adminHeader.php"); ?>
         <main>
             <h2>Delete Patient</h2>
             <div class="confirm">Are you sure you want to delete this patient?</div>

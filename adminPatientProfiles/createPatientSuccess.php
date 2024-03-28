@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <?php
-            include("../includes/header.php");
+            include("../includes/adminHeader.php");
 
             $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
