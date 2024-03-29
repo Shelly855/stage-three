@@ -5,100 +5,120 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-  }
-.container{
-    width:100%;
+}
+
+.container {
+    width: 100%;
     margin: 0 auto;
     max-width: 1200px;
     min-width: 600px;
     display: flex;
     flex-direction: column;
-    min-height:100vh;
-    min-height:100svh;
+    min-height: 100vh;
+    min-height: 100svh;
 }
-main{
-    margin:5px;
+
+main {
+    margin: 5px;
 }
-h1{
+
+h1 {
     font-size: 50px;
-    color:black;
+    color: black;
     text-align: center;
 }
-footer{
-    background-color:darkgreen;
-    color:white;
-    padding:15px;
+
+footer {
+    background-color: darkgreen;
+    color: white;
+    padding: 15px;
     border-radius: 10px;
     position: relative;
-    margin-top:auto;
-  }
-footer li{
+    margin-top: auto;
+}
+
+footer li {
     padding: 10px;
     display: flex;
     text-align: center;
     text-decoration: none;
     list-style-type: none;
     float: left;
-    border-right:1px solid white;
+    border-right: 1px solid white;
 }
-header{
-    background-color:#589C44;
-    border-radius:15px;
-    display:flex;
-    padding:20px;
-    margin:20px; 
+
+header {
+    background-color: #589C44;
+    border-radius: 15px;
+    display: flex;
+    padding: 20px;
+    margin: 20px;
 }
-nav ul{
-    list-style:none;
-    margin:0;
-    padding:0;
-    width:100%;
-    justify-content:center;
+
+nav ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    justify-content: center;
 }
-nav ul li{
+
+nav ul li {
     display: inline-block;
-    font-size:large;
-    padding:10px;
-    margin:0;
+    font-size: large;
+    padding: 10px;
+    margin: 0;
     border-right: 3px solid white;
-    text-decoration:none;
+    text-decoration: none;
     font-weight: bold;
 }
-nav ul li a{
+
+nav ul li a {
     color: #000000;
 }
-li a:visited{
-    color:#551A8B;
+
+li a:visited {
+    color: #551A8B;
 }
-li a:active{
-    color:#0000ff;
+
+li a:active {
+    color: #0000ff;
 }
-li a:hover{
+
+li a:hover {
     color: #fff;
 }
-table{
+
+table {
     width: 100%;
-    border:3px solid black;
-    margin-top:20px;
-    margin-bottom:20px;
+    border: 3px solid black;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
-th, td{
+
+th,
+td {
     padding: 10px 12px;
     text-align: left;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
-th{
-    font-size:15px;
+
+th {
+    font-size: 15px;
     border-bottom: 5px solid green;
     background-color: #A8F0B6;
-} 
-tr:nth-child(odd){
+}
+
+tr:nth-child(odd) {
     background-color: #fff;
 }
-tr:nth-child(even){
+
+tr:nth-child(even) {
     background-color: lightgreen;
 }
-button, input[type=submit] {
+
+button,
+input[type=submit] {
     background-color: lightgreen;
     color: black;
     border: 1px darkgreen solid;
@@ -109,57 +129,95 @@ button, input[type=submit] {
     display: inline-block;
     font-size: 14px;
     cursor: pointer;
-    width:30%;
-    margin-top:15px;
-    margin-bottom:10px;
+    width: 30%;
+    margin-top: 15px;
+    margin-bottom: 10px;
 }
-button:hover, input[type=submit]:hover {
+
+button:hover,
+input[type=submit]:hover {
     opacity: 0.9;
 }
-input, select{
+
+input,
+select {
     width: 100%;
-    display:inline-block;
+    display: inline-block;
     padding: 11px 20px;
     margin-top: 10px;
     box-sizing: border-box;
     border-radius: 6px;
-    font-size:15px;
+    font-size: 15px;
 }
-input:focus, select:focus{
+
+input:focus,
+select:focus {
     background-color: lightgrey;
 }
-form{
+
+form {
     font-size: 20px;
-    border-radius:20px;
+    border-radius: 20px;
 }
-.blank-error{
-    color:darkred;
+
+.blank-error {
+    color: darkred;
     font-size: 15px;
-    font-weight: bold; 
-    margin-top:5px;
-    margin-bottom:10px;
-    display:block;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    display: block;
 }
+
 .blank-error span {
     display: block;
     border-bottom: 1px solid #ccc;
     margin-bottom: 5px;
 }
-.back-button{
-    font-weight: bold; 
+
+.back-button {
+    font-weight: bold;
     padding-left: 30px;
 }
+
 .confirm {
     color: darkred;
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 20px;
 }
+
 .delete-label {
     color: blue;
     font-weight: bold;
 }
+
 .delete-data {
     margin-bottom: 20px;
-    font-size:18px;
+    font-size: 18px;
+}
+
+.login {
+    background-color: green;
+    overflow: hidden;
+}
+
+
+.login a {
+    float: left;
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+.login a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+.login a.active {
+    background-color: #0000ff;
+    color: white;
 }
