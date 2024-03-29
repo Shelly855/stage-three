@@ -67,7 +67,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($row = $result->fetchArray()) {
 
         $_SESSION['username'] = $username;
-        header("Location: dashboardPatient.php"); 
+        header("Location: patientProfile/dashboardPatient.php"); 
         exit;
     } else {
         echo "Invalid username or password. Please try again.";
