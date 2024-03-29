@@ -19,16 +19,16 @@
             <h2>Patient Login</h2><br>
             <div class="row">
                 <div class="col-md-4">
-                    <form method="post" action="checkPatientLogin.php">
+                    <form method="post" action="patientLogin.php">
 
                         <div class="form-group">
                             <label class="control-label">Username</label>
-                            <input class="form-control" name="username" placeholder="Enter Username" type="text" />
+                            <input class="form-control" name="username" id="usrname" placeholder="Enter Username" type="text" required />
                             <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
                             <label class="control-label">Password</label>
-                            <input type="password" name="password" placeholder="Enter Password" class="form-control" />
+                            <input type="password" name="password" id ="password"  placeholder="Enter Password" class="form-control" required />
                             <span class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -48,24 +48,33 @@
 </html>
 
 
+
 <?php
-    session_start();
 
-    require_once('includes/header.php');
 
-    if (isset($_SESSION['role']) && isset($navigationLinks[$_SESSION['role']])) {
-        $role = $_SESSION['role'];
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
 
-        echo '<ul class="nav-menu">';
-        foreach ($navigationLinks[$role] as $title => $link) {
-            echo '<li><a href="' . $link . '">' . $title . '</a></li>';
-        }
-        echo '</ul>';
+    $db = new SQLite3("stage_3.db");
+
+    $stmt = $db->prepare('SELECT username, password FROM patients WHERE username=:username AND password=:password');
+    $stmt->bindValue(':username', $username, SQLITE3_TEXT);
+    $stmt->bindValue(':password', $password, SQLITE3_TEXT);
+
+    $result = $stmt->execute();
+
+    if ($row = $result->fetchArray()) {
+
+        $_SESSION['username'] = $username;
+        header("Location: dashboardPatient.php"); 
+        exit;
     } else {
-        header("Location: patientLogin.php");
-        exit();                                                                               //u should prob take away the header-config line and the
-    }                                                                                            //navigation links thing
-?> 
+        echo "Invalid username or password. Please try again.";
+    }
 
+    $db->close();
+}
+?>
 
 
