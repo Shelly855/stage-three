@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 <?php
+=======
+ <?php
+>>>>>>> 794063e069479575af8b5edf464cc8bf7ecaf445
 function verifyPatients () {
     if (session_status() == PHP_SESSION_NONE) {
         session_start();

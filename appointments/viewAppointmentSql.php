@@ -2,11 +2,6 @@
 
 function getAppointments (){
     $db = new SQLITE3('C:\xampp\data\stage_3.db');
-
-    if (!$db) {
-        die("Failed to connect to the database.");
-    }
-
     $sql = "
     SELECT 
         appointments.appointment_id,
@@ -24,10 +19,6 @@ function getAppointments (){
         staff ON appointments.staff_id = staff.staff_id";
     $stmt = $db->prepare($sql);
     $result = $stmt->execute();
-
-    if (!$result) {
-        die("Error executing query: " . $db->lastErrorMsg());
-    }
 
     $arrayResult = [];
     while ($row = $result->fetchArray()){

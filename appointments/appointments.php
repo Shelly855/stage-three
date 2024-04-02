@@ -1,4 +1,3 @@
-<!-- needs notification page done first -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,15 +10,15 @@
 <body>
     <div class="container">
         <?php
-            include("../adminAppointments/viewAppointmentSql.php");
+            include("../appointments/viewAppointmentSql.php");
 
             $appointments = getAppointments();
-            include("../includes/adminHeader.php");
+            include("../includes/header.php");
         ?>
         <main>
             <h1>Appointments</h1>
 
-            <form action="../adminAppointments/createAppointment.php">
+            <form action="../appointments/createAppointment.php">
                 <input type="submit" value="Create New Appointment" />
             </form>
 
@@ -44,8 +43,8 @@
                                 <td><?php echo $appointment['patient_first_name'] . ' ' . $appointment['patient_surname']; ?></td>
                                 <td><?php echo $appointment['staff_first_name'] . ' ' . $appointment['staff_surname']; ?></td>
                                 <td>
-                                    <a href="../adminAppointments/updateAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Update</a> 
-                                    <a href="../adminAppointments/deleteAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Delete</a>
+                                    <a href="../appointments/updateAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Update</a> 
+                                    <a href="../appointments/deleteAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
