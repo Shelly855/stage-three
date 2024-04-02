@@ -12,7 +12,6 @@
 <body>
     <div class="container">
         <?php
-        include ("includes/doctorHeader.php");
         require_once ("checkDoctorLogin.php");
         ?>
         <main role="main" class="pb-3">

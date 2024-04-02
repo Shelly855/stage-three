@@ -12,7 +12,6 @@
 <body>
     <div class="container">
         <?php
-        include ("includes/header.php");
         require_once ("checkPatientLogin.php");
         ?>
         <main role="main" class="pb-3">
@@ -44,50 +43,15 @@
     </div>
 
 </body>
-
 </html>
 
-<<<<<<< HEAD
-
-=======
->>>>>>> 794063e069479575af8b5edf464cc8bf7ecaf445
-
-<?php
-
 <?php
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $username = $_POST["username"];
     $password = $_POST["password"];
 
-<<<<<<< HEAD
     $db = new SQLite3("stage_3.db");
-=======
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $username = $_POST["username"];
-    $password = $_POST["password"];
-
-    $db = new SQLite3("stage_3.db");
-
-    $stmt = $db->prepare('SELECT username, password FROM patients WHERE username=:username AND password=:password');
-    $stmt->bindValue(':username', $username, SQLITE3_TEXT);
-    $stmt->bindValue(':password', $password, SQLITE3_TEXT);
-
-    $result = $stmt->execute();
-
-    if ($row = $result->fetchArray()) {
-
-        $_SESSION['username'] = $username;
-        header("Location: patientProfile/dashboardPatient.php"); 
-        exit;
-    } else {
-        echo "Invalid username or password. Please try again.";
-    }
-
-    $db->close();
-}
-?>
->>>>>>> 794063e069479575af8b5edf464cc8bf7ecaf445
 
     $stmt = $db->prepare('SELECT username, password FROM patients WHERE username=:username AND password=:password');
     $stmt->bindValue(':username', $username, SQLITE3_TEXT);
