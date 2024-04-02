@@ -1,7 +1,3 @@
-
-
-<?php include ("header.php"); ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,47 +6,73 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
     <link href="css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
-    <title>Doctor Login</title>
+    <title>Patient Login</title>
 </head>
 
 <body>
-
-    <div class="container bgColor">
+    <div class="container">
+        <?php
+        include ("includes/doctorHeader.php");
+        require_once ("checkDoctorLogin.php");
+        ?>
         <main role="main" class="pb-3">
             <h2>Doctor Login</h2><br>
-
-
             <div class="row">
                 <div class="col-md-4">
-                    <form method="post" action="SelectPatient.php">
+                    <form method="post" action="doctorLogin.php">
 
                         <div class="form-group">
                             <label class="control-label">Username</label>
-
-                            <input class="form-control" placeholder="Enter Username" type="text" value="<?= $username; ?>" />
+                            <input class="form-control" name="username" id="usrname" placeholder="Enter Username" type="text" required />
                             <span class="text-danger"></span>
                         </div>
-
                         <div class="form-group">
                             <label class="control-label">Password</label>
-                            <input type="password" placeholder="Enter Password" class="form-control" value="<?php echo $password; ?>" />
+                            <input type="password" name="password" id ="password"  placeholder="Enter Password" class="form-control" required />
                             <span class="text-danger"></span>
                         </div>
-
                         <div class="form-group">
-                            <input type="submit" value="Login" class="btn btn-primary" />
-                           
-
+                            <input type="submit" value="Login" class="btn btn-primary" value="Submit">
                         </div>
-
                     </form>
                 </div>
             </div>
         </main>
+        <?php
+        include ("includes/footer.php");
+        ?>
     </div>
 
 </body>
 
 </html>
 
-<?php include ("footer.php"); ?>
+
+
+<?php
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = $_POST["username"];
+    $password = $_POST["password"];
+
+    $db = new SQLite3("stage_3.db");
+
+    $stmt = $db->prepare('SELECT username, password FROM staff WHERE username=:username AND password=:password');
+    $stmt->bindValue(':username', $username, SQLITE3_TEXT);
+    $stmt->bindValue(':password', $password, SQLITE3_TEXT);
+
+    $result = $stmt->execute();
+
+    if ($row = $result->fetchArray()) {
+
+        $_SESSION['username'] = $username;
+        header("Location: dashboardDoctor.php"); 
+        exit;
+    } else {
+        echo "Invalid username or password. Please try again.";
+    }
+
+    $db->close();
+}
+?>
