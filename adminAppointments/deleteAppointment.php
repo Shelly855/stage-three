@@ -6,7 +6,7 @@ if (isset($_POST['delete'])) {
     $stmt->bindValue(':aid', $_POST['aid']);
     $result = $stmt->execute();
     if ($result) {
-        header("Location: ../appointments/appointments.php?deleted=true");
+        header("Location: ../adminAppointments/adminAppointments.php?deleted=true");
         exit();
     } else {
         echo "Error deleting appointment.";
@@ -37,7 +37,7 @@ $db->close();
 <body>
     <div class="container">
         <?php
-            include("../includes/header.php");
+            include("../includes/adminHeader.php");
         ?>  
         <main>
             <h2>Delete Appointment <?php echo $_GET['aid']; ?></h2><br>
@@ -48,19 +48,19 @@ $db->close();
             </div>
             <div class="delete-data">
                 <label class="delete-label">Time:</label>
-                <label><?php echo $arrayResult[0][0] ?></label>
+                <label><?php echo $arrayResult[0][1] ?></label>
             </div>
             <div class="delete-data">
                 <label class="delete-label">Patient ID:</label>
-                <label><?php echo $arrayResult[0][3] ?></label>
+                <label><?php echo $arrayResult[0][2] ?></label>
             </div>
             <div class="delete-data">
                 <label class="delete-label">Staff ID:</label>
-                <label><?php echo $arrayResult[0][4] ?></label><br>
+                <label><?php echo $arrayResult[0][3] ?></label><br>
             </div>
             <form method="post">
                 <input type="hidden" name="aid" value="<?php echo $_GET['aid'] ?>"><br>
-                <input type="submit" value="Delete" name="delete"><a href="../appointments/appointments.php" class="back-button">Back</a>
+                <input type="submit" value="Delete" name="delete"><a href="../adminAppointments/adminAppointments.php" class="back-button">Back</a>
             </form>
         </main>
         <?php

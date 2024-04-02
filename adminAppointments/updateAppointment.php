@@ -10,7 +10,7 @@
 <body>
     <div class="container">
         <?php
-        include("../includes/header.php");
+        include("../includes/adminHeader.php");
         
         $db = new SQLITE3('C:\xampp\data\stage_3.db');
         $sql = "SELECT * FROM appointments WHERE appointment_id = :aid";
@@ -58,7 +58,7 @@
                 $result = $stmt->execute();
 
                 if ($result) {
-                    header('Location: ../appointments/appointments.php');
+                    header('Location: ../adminAppointments/adminAppointments.php');
                     exit;
                 } else {
                     echo "Error updating appointment.";
@@ -87,7 +87,7 @@
                 <input type="number" name="sid" value="<?php echo $arrayResult[0][6]; ?>">
                 <span class="blank-error"><?php echo $errorsid; ?></span>
 
-                <input type="submit" name="submit" value="Update"><a href="../appointments/appointments.php" class="back-button">Back</a>
+                <input type="submit" name="submit" value="Update"><a href="../adminAppointments/adminAppointments.php" class="back-button">Back</a>
             </form>
         </main>
         <?php

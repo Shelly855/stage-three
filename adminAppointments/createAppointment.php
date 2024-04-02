@@ -49,7 +49,7 @@ if (isset($_POST['submit'])) {
             $result = $stmt->execute();
     
             if ($result) {
-                header("Location: ../appointments/createAppointmentSuccess.php?createAppointment=success");
+                header("Location: ../adminAppointments/createAppointmentSuccess.php?createAppointment=success");
                 exit();
             } else {
                 echo "Error creating appointment";
@@ -71,7 +71,7 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="container"> 
         <?php
-            include("../includes/header.php");
+            include("../includes/adminHeader.php");
         ?>  
         <main>
             <h1>Create Appointment</h1>
@@ -97,7 +97,7 @@ if (isset($_POST['submit'])) {
                 <span class="blank-error"><?php echo $errorsid; ?></span>
 
                 <input type="submit" value="Create Appointment" name="submit">
-                <a href="../appointments/appointments.php" class="back-button">Back</a>
+                <a href="../adminAppointments/adminAppointments.php" class="back-button">Back</a>
             </form>
         </main>
         <?php
