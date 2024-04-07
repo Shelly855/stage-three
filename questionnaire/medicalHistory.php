@@ -1,13 +1,31 @@
+<!-- error messages, save answers -->
+
 <?php
 $erroroption = "Please pick an option";
 $allFields = true;
 
+$db = new SQLITE3('C:\xampp\data\stage_3.db');
+
+$query = 'SELECT percentage_completed FROM POA_questionnaire';
+
+$result = $db->querySingle($query);
+
+if ($result !== false) {
+    $percentageCompleted = $result;
+} else {
+    $percentageCompleted = 0;
+}
+
 if (isset($_POST['submit'])) {
     $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
-    $totalFields = 13;
+    $questionnaire_id = $_POST['questionnaire_id'];
+
+    $totalFields = 27;
     $filledFields = count(array_filter($_POST));
-    $percentageCompleted = ($filledFields / $totalFields) * 100;
+    $percentageCompleted = ((10 + $filledFields) / $totalFields) * 100;
+
+    $_SESSION['form_values'] = $_POST;
 
     if (empty($_POST['heart'])) {
         $erroroption;
@@ -77,37 +95,32 @@ if (isset($_POST['submit'])) {
         $arthritis_value = ($_POST['arthritis'] == 'yes') ? 1 : 0;
         $asthma_value = ($_POST['asthma'] == 'yes') ? 1 : 0;
 
-        function updateRecordWithSection2Data($db, $entryId, $section2Data){
-        $stmt = $db->prepare('INSERT INTO POA_questionnaire (heart_disease, MI, hypertension, angina, DVT/PE, stroke, diabetes, epilepsy, jaundice, sickle_cell_status, kidney_disease, arthritis, asthma) VALUES (:heart, :MI, :hypertension, :angina, :dvt, :stroke, :diabetes, :epilepsy, :jaundice, :sickle, :kidney, :arthritis, :asthsma)');
-        $stmt->bindValue(':heart', $heart_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':MI', $MI_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':hypertension', $hypertension_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':angina', $angina_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':dvt', $dvt_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':stroke', $stroke_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':diabetes', $diabetes_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':epilepsy', $epilepsy_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':jaundice', $jaundice_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':sickle', $sickle_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':kidney', $kidney_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':arthritis', $arthritis_value, SQLITE3_INTEGER);
-        $stmt->bindValue(':asthma', $asthma_value, SQLITE3_INTEGER);
+        $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET heart_disease = :heart, MI = :MI, hypertension = :hypertension, angina = :angina, DVT/PE = :dvt, stroke = :stroke, diabetes = :diabetes, epilepsy = :epilepsy, jaundice = :jaundice, sickle_cell_status = :sickle, kidney_disease = :kidney, arthritis = :arthritis, asthma = :asthma, percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
+        $stmtUpdate->bindValue(':heart', $heart_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':MI', $MI_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':hypertension', $hypertension_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':angina', $angina_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':dvt', $dvt_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':stroke', $stroke_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':diabetes', $diabetes_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':epilepsy', $epilepsy_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':jaundice', $jaundice_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':sickle', $sickle_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':kidney', $kidney_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':arthritis', $arthritis_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':asthma', $asthma_value, SQLITE3_INTEGER);
+        $stmtUpdate->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT);
+        $stmtUpdate->bindValue(':poa_form_id', $questionnaire_id, SQLITE3_INTEGER);
 
-        $result = $stmt->execute();
+        $result = $stmtUpdate->execute();
         }
     
         if ($result) {
-            $newEntryId = $db->lastInsertRowID();
-            $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
-            $stmtUpdate->bindValue(':percentage_completed', $percentage_completed, SQLITE3_FLOAT);
-            $stmtUpdate->bindValue(':poa_form_id', $newEntryId, SQLITE3_INTEGER);
-            $stmtUpdate->execute();
-        
+    
             header("Location: ../questionnaire/additionalDetails.php");
             exit();
         } else {
             echo "Error occurred while inserting data.";
-        }
         }
 }
 ?>
@@ -130,10 +143,12 @@ if (isset($_POST['submit'])) {
             <h1>Medical History</h1>
 
             <div>
-            Percentage Completed: <?php echo round($percentageCompleted, 2); ?>%
+            Total Percentage Completed: <?php echo round($percentageCompleted, 2); ?>%
             </div>
         
             <form method="post">
+            <input type="hidden" name="questionnaire_id" value="<?php echo $questionnaire_id; ?>">
+
                 <h3>Do you currently have or have you ever been diagnosed with:</h3>
 
                 <label>Heart Disease incl pacemaker</label>
@@ -242,7 +257,6 @@ if (isset($_POST['submit'])) {
 
                 <input type="submit" value="Save and Next" name="submit">
                 <a href="../questionnaire/basicDetails.php" class="back-button">Back</a> 
-                <!-- percentage completed -->
             </form>
         </main>
         <?php

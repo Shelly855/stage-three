@@ -2,8 +2,26 @@
 $erroroption = "";
 $allFields = true;
 
+$db = new SQLITE3('C:\xampp\data\stage_3.db');
+
+$query = 'SELECT percentage_completed FROM POA_questionnaire';
+
+$result = $db->querySingle($query);
+
+if ($result !== false) {
+    $percentageCompleted = $result;
+} else {
+    $percentageCompleted = 0;
+}
+
 if (isset($_POST['submit'])) {
     $db = new SQLITE3('C:\xampp\data\stage_3.db');
+
+    $questionnaire_id = $_POST['questionnaire_id'];
+
+    $totalFields = 27;
+    $filledFields = count(array_filter($_POST));
+    $percentageCompleted = ((23 + $filledFields) / $totalFields) * 100;
 
     if (empty($_POST['pregnant'])) {
         $erroroption = "Please pick an option.";
@@ -21,6 +39,9 @@ if (isset($_POST['submit'])) {
         $result = $stmt->execute();
     
         if ($result) {
+            $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
+            $stmtUpdate->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT); 
+            $stmtUpdate->execute();
             header("Location: ../questionnaire/completeQuestionnaireSuccess.php?completeQuestionnaire=success");
             // might need to be changed
             exit();
@@ -47,6 +68,11 @@ if (isset($_POST['submit'])) {
         ?>  
         <main>
             <h1>Additional Details</h1>
+
+            <div>
+            Total Percentage Completed: <?php echo round($percentageCompleted, 2); ?>%
+            </div>
+
             <form method="post">
 
                 <label>Are you currently or is there a possibility you are pregnant?</label>
@@ -65,7 +91,6 @@ if (isset($_POST['submit'])) {
 
                 <input type="submit" value="Save and Check Answers" name="submit">
                 <a href="../questionnaire/medicalHistory.php" class="back-button">Back</a> 
-                <!-- percentage completed -->
             </form>
         </main>
         <?php
