@@ -1,6 +1,7 @@
 <!-- error messages, save answers -->
 
 <?php
+session_start();
 $erroroption = "Please pick an option";
 $allFields = true;
 
@@ -95,7 +96,7 @@ if (isset($_POST['submit'])) {
         $arthritis_value = ($_POST['arthritis'] == 'yes') ? 1 : 0;
         $asthma_value = ($_POST['asthma'] == 'yes') ? 1 : 0;
 
-        $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET heart_disease = :heart, MI = :MI, hypertension = :hypertension, angina = :angina, DVT/PE = :dvt, stroke = :stroke, diabetes = :diabetes, epilepsy = :epilepsy, jaundice = :jaundice, sickle_cell_status = :sickle, kidney_disease = :kidney, arthritis = :arthritis, asthma = :asthma, percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
+        $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET heart_disease = :heart, MI = :MI, hypertension = :hypertension, angina = :angina, "DVT/PE" = :dvt, stroke = :stroke, diabetes = :diabetes, epilepsy = :epilepsy, jaundice = :jaundice, sickle_cell_status = :sickle, kidney_disease = :kidney, arthritis = :arthritis, asthma = :asthma, percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
         $stmtUpdate->bindValue(':heart', $heart_value, SQLITE3_INTEGER);
         $stmtUpdate->bindValue(':MI', $MI_value, SQLITE3_INTEGER);
         $stmtUpdate->bindValue(':hypertension', $hypertension_value, SQLITE3_INTEGER);
@@ -116,7 +117,8 @@ if (isset($_POST['submit'])) {
         }
     
         if ($result) {
-    
+            $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
+            $stmtUpdate->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT);
             header("Location: ../questionnaire/additionalDetails.php");
             exit();
         } else {
@@ -154,104 +156,104 @@ if (isset($_POST['submit'])) {
                 <label>Heart Disease incl pacemaker</label>
                 <select name="heart">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['heart']) && $_POST['heart'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['heart']) && $_SESSION['form_values']['heart'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['heart']) && $_POST['heart'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['heart']) && $_SESSION['form_values']['heart'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>MI(heart attack)</label>
                 <select name="MI">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['MI']) && $_POST['MI'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['heart']) && $_SESSION['form_values']['heart'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['MI']) && $_POST['MI'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['MI']) && $_SESSION['form_values']['MI'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Hypertension(high blood pressure)</label>
                 <select name="hypertension">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['hypertension']) && $_POST['hypertension'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['hypertension']) && $_SESSION['form_values']['hypertension'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['hypertension']) && $_POST['hypertension'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['hypertension']) && $_SESSION['form_values']['hypertension'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Angina(chest pain)</label>
                 <select name="angina">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['angina']) && $_POST['angina'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['angina']) && $_SESSION['form_values']['angina'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['angina']) && $_POST['angina'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['angina']) && $_SESSION['form_values']['angina'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>DVT/PE(blood clots)</label>
                 <select name="dvt">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['dvt']) && $_POST['dvt'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['dvt']) && $_SESSION['form_values']['dvt'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['dvt']) && $_POST['dvt'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['dvt']) && $_SESSION['form_values']['dvt'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Stroke(CVA/TIA)</label>
                 <select name="stroke">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['stroke']) && $_POST['stroke'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['stroke']) && $_SESSION['form_values']['stroke'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['stroke']) && $_POST['stroke'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['stroke']) && $_SESSION['form_values']['stroke'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Diabetes Type 1 / 2</label>
                 <select name="diabetes">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['diabetes']) && $_POST['diabetes'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['diabetes']) && $_SESSION['form_values']['diabetes'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['diabetes']) && $_POST['diabetes'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['diabetes']) && $_SESSION['form_values']['diabetes'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Epilepsy</label>
                 <select name="epilepsy">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['epilepsy']) && $_POST['epilepsy'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['epilepsy']) && $_SESSION['form_values']['epilepsy'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['epilepsy']) && $_POST['epilepsy'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['epilepsy']) && $_SESSION['form_values']['epilepsy'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Jaundice</label>
                 <select name="jaundice">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['jaundice']) && $_POST['jaundice'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['jaundice']) && $_SESSION['form_values']['jaundice'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['jaundice']) && $_POST['jaundice'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['jaundice']) && $_SESSION['form_values']['jaundice'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Sickle Cell Disease</label>
                 <select name="sickle">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['sickle']) && $_POST['sickle'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['sickle']) && $_SESSION['form_values']['sickle'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['sickle']) && $_POST['sickle'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['sickle']) && $_SESSION['form_values']['sickle'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Kidney Disease</label>
                 <select name="kidney">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['kidney']) && $_POST['kidney'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['kidney']) && $_SESSION['form_values']['kidney'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['kidney']) && $_POST['kidney'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['kidney']) && $_SESSION['form_values']['kidney'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Arthritis</label>
                 <select name="arthritis">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['arthritis']) && $_POST['arthritis'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['arthritis']) && $_SESSION['form_values']['arthritis'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['arthritis']) && $_POST['arthritis'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['arthritis']) && $_SESSION['form_values']['arthritis'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Asthma</label>
                 <select name="asthma">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['asthma']) && $_POST['asthma'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['asthma']) && $_SESSION['form_values']['asthma'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['asthma']) && $_POST['asthma'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['asthma']) && $_SESSION['form_values']['asthma'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
                 <span class="blank-error"><?php echo $erroroption; ?></span>
 
