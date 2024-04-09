@@ -1,12 +1,10 @@
 <?php
-$erroroption = "";
-$allFields = true;
-
 $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
-$query = 'SELECT percentage_completed FROM POA_questionnaire';
-
-$result = $db->querySingle($query);
+$query = 'SELECT percentage_completed FROM POA_questionnaire WHERE poa_form_id = :questionnaire_id';
+$stmt = $db->prepare($query);
+$stmt->bindValue(':questionnaire_id', $questionnaire_id, SQLITE3_INTEGER);
+$result = $stmt->execute();
 
 if ($result !== false) {
     $percentageCompleted = $result;
@@ -23,33 +21,33 @@ if (isset($_POST['submit'])) {
     $filledFields = count(array_filter($_POST));
     $percentageCompleted = ((23 + $filledFields) / $totalFields) * 100;
 
-    if (empty($_POST['pregnant'])) {
-        $erroroption = "Please pick an option.";
-        $allFields = false;
-    }
+    $pregnant_value = ($_POST['pregnant'] == 'yes') ? 1 : 0;
 
-    if ($allFields == true && isset($_POST['other']) && isset($_POST['medication'])) {
-        $pregnant_value = ($_POST['pregnant'] == 'yes') ? 1 : 0;
-
-        $stmt = $db->prepare('INSERT INTO POA_questionnaire (pregnant, other_health_conditions, previous_medication) VALUES (:pregnant, :other, :medication)');
-        $stmt->bindValue(':pregnant', $_POST['pregnant'], SQLITE3_INTEGER);
-        $stmt->bindValue(':other', $_POST['other'], SQLITE3_TEXT);
-        $stmt->bindValue(':medication', $_POST['medication'], SQLITE3_TEXT);
+    $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET pregnant = :pregnant, other_health_conditions = :other, previous_medication = :medication, percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
+    $stmtUpdate->bindValue(':pregnant', $pregnant_value, SQLITE3_INTEGER);
+    $stmtUpdate->bindValue(':other', $_POST['other'], SQLITE3_TEXT);
+    $stmtUpdate->bindValue(':medication', $_POST['medication'], SQLITE3_TEXT);
             
-        $result = $stmt->execute();
+    $resultUpdate = $stmtUpdate->execute();
     
-        if ($result) {
-            $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
-            $stmtUpdate->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT); 
-            $stmtUpdate->execute();
-            header("Location: ../questionnaire/completeQuestionnaireSuccess.php?completeQuestionnaire=success");
-            // might need to be changed
+    if ($resultUpdate) {
+        $stmtUpdatePercentage = $db->prepare('UPDATE POA_questionnaire SET percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
+        $stmtUpdatePercentage->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT);
+        $stmtUpdatePercentage->bindValue(':poa_form_id', $questionnaire_id, SQLITE3_INTEGER);
+
+        $resultPercentage = $stmtUpdatePercentage->execute();
+            
+        if ($resultPercentage) {
+            header("Location: ../questionnaire/testQuestionnaire.php");
+            // change in future
             exit();
         } else {
-            echo "Error completing questionnaire";
+            echo "Error occurred while updating the percentage completed.";
         }
-        }
-}
+    } else {
+        echo "Error occurred while updating other fields.";
+    }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -78,16 +76,15 @@ if (isset($_POST['submit'])) {
                 <label>Are you currently or is there a possibility you are pregnant?</label>
                 <select name="pregnant">
                     <option value="">Select Option</option>
-                    <option value="yes">Yes</option>
-                    <option value="no">No</option>
+                    <option value="yes"<?php echo (isset($_POST['pregnant']) && $_POST['pregnant'] == 'yes') ? ' selected' : (isset($_SESSION['form_values']['pregnant']) && $_SESSION['form_values']['pregnant'] == 'yes' ? ' selected' : ''); ?>>Yes</option>
+                    <option value="no"<?php echo (isset($_POST['pregnant']) && $_POST['pregnant'] == 'no') ? ' selected' : (isset($_SESSION['form_values']['pregnant']) && $_SESSION['form_values']['pregnant'] == 'no' ? ' selected' : ''); ?>>No</option>
                 </select>
-                <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>If you have any other health conditions, please mention them below.</label>
-                <input type="text" name="other" value="<?php echo isset($_POST['other']) ? $_POST['other'] : ''; ?>">
+                <input type="text" name="other" value="<?php echo isset($_POST['other']) ? $_POST['other'] : (isset($_SESSION['form_values']['other']) ? $_SESSION['form_values']['other'] : ''); ?>">
 
                 <label>If you have took any previous medications, please mention them below.</label>
-                <input type="text" name="medication" value="<?php echo isset($_POST['medication']) ? $_POST['medication'] : ''; ?>">
+                <input type="text" name="medication" value="<?php echo isset($_POST['medication']) ? $_POST['medication'] : (isset($_SESSION['form_values']['medicatioj']) ? $_SESSION['form_values']['medication'] : ''); ?>">
 
                 <input type="submit" value="Save and Check Answers" name="submit">
                 <a href="../questionnaire/medicalHistory.php" class="back-button">Back</a> 
