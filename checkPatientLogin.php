@@ -15,7 +15,7 @@ function verifyPatients () {
         return array();
     }
 
-    $stmt = $db->prepare('SELECT username, password FROM patients WHERE username=? AND password=?');
+    $stmt = $db->prepare('SELECT username, password FROM patients WHERE username=:username AND password=:password');
 
     $stmt->bindParam(':username', $_POST['username'], SQLITE3_TEXT);
     $stmt->bindParam(':password', $_POST['password'], SQLITE3_TEXT);
@@ -38,13 +38,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $verifiedPatients = verifyPatients();
 
     if (!empty($verifiedPatients)) {
-        $_SESSION['username'] = $verifiedUsers[0]['usernmae'];
-        $_SESSION['password'] = $verifiedUsers[0]['password'];
-        header("Location: index.php");
+        $_SESSION['username'] = $verifiedPatients[0]['username'];
+        $_SESSION['password'] = $verifiedPatients[0]['password'];
+        header("Location: patientProfile.php");
         exit;
     } else {
-        echo "<script>document.addEventListener('DOMContentLoaded', function() {                //this error message 
-        var errorMessageElement = document.getElementById('error-message');                    //prob be changed
+        echo "<script>document.addEventListener('DOMContentLoaded', function() {               
+        var errorMessageElement = document.getElementById('error-message');                   
         if (errorMessageElement) {
             errorMessageElement.innerHTML = 'Invalid username or password. Please try again.';
         }
