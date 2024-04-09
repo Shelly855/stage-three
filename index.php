@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,17 +8,23 @@
     <link href="css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
     <title>Homepage</title>
 </head>
+
 <body>
     <div class="container">
-    <?php
-        include("includes/header.php");
-    ?>
-    <main>
-        <h1>Homepage</h1>
-   
 
-    </main>
-    <?php
+        <main>
+            <h1>Welcome!</h1>
+            <nav>
+                <a href="patientLogin.php" class="login">Patient Login</a>
+                <a href="doctorLogin.php" class="login">Doctor Login</a>
+                <a href="adminLogin.php" class="login">Admin Login</a>
+            </nav>
+        </main>
+
+    </div>
+</body>
+
+</html>
         include("includes/footer.php");
     ?>
     </div>
