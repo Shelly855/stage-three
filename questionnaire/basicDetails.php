@@ -1,12 +1,10 @@
 <!-- unfinished -->
 <?php
 session_start();
-$errorpoadate = $errorsurname = $errorfname = $erroraddress = $errordob = $errorage = $errorphone = $erroroccupation = $errorreligion = $erroremergency = $erroroption = "";
-$allFields = true;
+$db = new SQLITE3('C:\xampp\data\stage_3.db');
 $percentageCompleted = 0; 
 
 if (isset($_POST['submit'])) {
-    $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
     $totalFields = 27;
     $filledFields = count(array_filter($_POST));
@@ -14,101 +12,53 @@ if (isset($_POST['submit'])) {
 
     $_SESSION['form_values'] = $_POST;
 
-    if (empty($_POST['poadate'])) {
-        $errorpoadate = "Date of Questionnaire Completion is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['surname'])) {
-        $errorsurname = "Surname is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['fname'])) {
-        $errorfname = "First Name is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['address'])) {
-        $erroraddress = "Address is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['dob'])) {
-        $errordob = "Date of Birth is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['sex'])) {
-        $erroroption = "Please pick an option";
-        $allFields = false;
-    }
-    if (empty($_POST['age'])) {
-        $errorage = "Age is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['phone'])) {
-        $errorphone = "Telephone Number is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['occupation'])) {
-        $erroroccupation = "Occupation is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['religion'])) {
-        $errorreligion = "Religion is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['emergency'])) {
-        $erroremergency = "Emergency Contact Number is mandatory";
-        $allFields = false;
-    }
-    if ($allFields) {
+    $stmt = $db->prepare('INSERT INTO POA_questionnaire (`date_of_poa`, `assigned`, `percentage_completed`, `completed`, `surname`, `first_name`, `address`, `date_of_birth`, `sex`, `age`, `telephone_number`, `occupation`, `religion`, `emergency_contact_number`, `heart_disease`, `MI`, `hypertension`, `angina`, `DVT/PE`, `stroke`, `diabetes`, `epilepsy`, `jaundice`, `sickle_cell_status`, `kidney_disease`, `arthritis`, `asthma`, `pregnant`, `other_health_conditions`, `previous_medication`) VALUES (:poadate, :assigned, :percentage, :completed, :surname, :fname, :address, :dob, :sex, :age, :phone, :occupation, :religion, :emergency, :heart, :MI, :hypertension, :angina, :dvt, :stroke, :diabetes, :epilepsy, :jaundice, :sickle, :kidney, :arthritis, :asthma, :pregnant, :other, :medication)');
+    $stmt->bindValue(':poadate', $_POST['poadate'], SQLITE3_TEXT);
+    $stmt->bindValue(':assigned', 1, SQLITE3_INTEGER);
+    $stmt->bindValue(':percentage', $percentageCompleted, SQLITE3_FLOAT);
+    $stmt->bindValue(':completed', 0, SQLITE3_INTEGER);
+    $stmt->bindValue(':surname', $_POST['surname'], SQLITE3_TEXT);
+    $stmt->bindValue(':fname', $_POST['fname'], SQLITE3_TEXT);
+    $stmt->bindValue(':address', $_POST['address'], SQLITE3_TEXT);
+    $stmt->bindValue(':dob', $_POST['dob'], SQLITE3_TEXT);
+    $stmt->bindValue(':sex', $_POST['sex'], SQLITE3_TEXT);
+    $stmt->bindValue(':age', $_POST['age'], SQLITE3_INTEGER);
+    $stmt->bindValue(':phone', $_POST['phone'], SQLITE3_INTEGER);
+    $stmt->bindValue(':occupation', $_POST['occupation'], SQLITE3_TEXT);
+    $stmt->bindValue(':religion', $_POST['religion'], SQLITE3_TEXT);
+    $stmt->bindValue(':emergency', $_POST['emergency'], SQLITE3_INTEGER);
+    $stmt->bindValue(':heart', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':MI', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':hypertension', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':angina', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':dvt', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':stroke', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':diabetes', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':epilepsy', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':jaundice', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':sickle', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':kidney', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':arthritis', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':asthma', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':pregnant', -1, SQLITE3_INTEGER);
+    $stmt->bindValue(':other', '', SQLITE3_TEXT);
+    $stmt->bindValue(':medication', '', SQLITE3_TEXT);
 
-        $stmt = $db->prepare('INSERT INTO POA_questionnaire (`date_of_poa`, `assigned`, `percentage_completed`, `completed`, `surname`, `first_name`, `address`, `date_of_birth`, `sex`, `age`, `telephone_number`, `occupation`, `religion`, `emergency_contact_number`, `heart_disease`, `MI`, `hypertension`, `angina`, `DVT/PE`, `stroke`, `diabetes`, `epilepsy`, `jaundice`, `sickle_cell_status`, `kidney_disease`, `arthritis`, `asthma`, `pregnant`, `other_health_conditions`, `previous_medication`) VALUES (:poadate, :assigned, :percentage, :completed, :surname, :fname, :address, :dob, :sex, :age, :phone, :occupation, :religion, :emergency, :heart, :MI, :hypertension, :angina, :dvt, :stroke, :diabetes, :epilepsy, :jaundice, :sickle, :kidney, :arthritis, :asthma, :pregnant, :other, :medication)');
-        $stmt->bindValue(':poadate', $_POST['poadate'], SQLITE3_TEXT);
-        $stmt->bindValue(':assigned', 1, SQLITE3_INTEGER);
-        $stmt->bindValue(':percentage', $percentageCompleted, SQLITE3_FLOAT);
-        $stmt->bindValue(':completed', 0, SQLITE3_INTEGER);
-        $stmt->bindValue(':surname', $_POST['surname'], SQLITE3_TEXT);
-        $stmt->bindValue(':fname', $_POST['fname'], SQLITE3_TEXT);
-        $stmt->bindValue(':address', $_POST['address'], SQLITE3_TEXT);
-        $stmt->bindValue(':dob', $_POST['dob'], SQLITE3_TEXT);
-        $stmt->bindValue(':sex', $_POST['sex'], SQLITE3_TEXT);
-        $stmt->bindValue(':age', $_POST['age'], SQLITE3_INTEGER);
-        $stmt->bindValue(':phone', $_POST['phone'], SQLITE3_INTEGER);
-        $stmt->bindValue(':occupation', $_POST['occupation'], SQLITE3_TEXT);
-        $stmt->bindValue(':religion', $_POST['religion'], SQLITE3_TEXT);
-        $stmt->bindValue(':emergency', $_POST['emergency'], SQLITE3_INTEGER);
-        $stmt->bindValue(':heart', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':MI', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':hypertension', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':angina', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':dvt', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':stroke', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':diabetes', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':epilepsy', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':jaundice', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':sickle', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':kidney', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':arthritis', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':asthma', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':pregnant', -1, SQLITE3_INTEGER);
-        $stmt->bindValue(':other', '', SQLITE3_TEXT);
-        $stmt->bindValue(':medication', '', SQLITE3_TEXT);
+    $result = $stmt->execute();
 
-        $result = $stmt->execute();
-
+    if ($result) {
+        $newEntryId = $db->lastInsertRowID();
         $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
         $stmtUpdate->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT);
+        $stmtUpdate->bindValue(':poa_form_id', $newEntryId, SQLITE3_INTEGER);
+        $stmtUpdate->execute();
 
-        if ($result) {
-            $newEntryId = $db->lastInsertRowID();
-            $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
-            $stmtUpdate->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT);
-            $stmtUpdate->bindValue(':poa_form_id', $newEntryId, SQLITE3_INTEGER);
-            $stmtUpdate->execute();
-
-            header("Location: ../questionnaire/medicalHistory.php");
-            exit();
-        }
+        header("Location: ../questionnaire/medicalHistory.php");
+        exit();
+    } else {
+        echo "Error occurred while inserting data.";
     }
-}
+    }
 ?>
     
 <!DOCTYPE html>
@@ -134,23 +84,18 @@ if (isset($_POST['submit'])) {
             <form method="post">
                 <label>Questionnaire Completion Date</label>
                 <input type="date" name="poadate" value="<?php echo isset($_POST['poadate']) ? $_POST['poadate'] : (isset($_SESSION['form_values']['poadate']) ? $_SESSION['form_values']['poadate'] : ''); ?>">
-                <span class="blank-error"><?php echo $errorpoadate; ?></span>
 
                 <label>Surname</label>
                 <input type="text" name="surname" value="<?php echo isset($_POST['surname']) ? $_POST['surname'] : (isset($_SESSION['form_values']['surname']) ? $_SESSION['form_values']['surname'] : ''); ?>">
-                <span class="blank-error"><?php echo $errorsurname; ?></span>
 
                 <label>First Name</label>
                 <input type="text" name="fname" value="<?php echo isset($_POST['fname']) ? $_POST['fname'] : (isset($_SESSION['form_values']['fname']) ? $_SESSION['form_values']['fname'] : ''); ?>">
-                <span class="blank-error"><?php echo $errorfname; ?></span>
 
                 <label>Address</label>
                 <input type="text" name="address" value="<?php echo isset($_POST['address']) ? $_POST['address'] : (isset($_SESSION['form_values']['address']) ? $_SESSION['form_values']['address'] : ''); ?>">
-                <span class="blank-error"><?php echo $erroraddress; ?></span>
 
                 <label>Date of Birth</label>
                 <input type="date" name="dob" value="<?php echo isset($_POST['dob']) ? $_POST['dob'] : (isset($_SESSION['form_values']['dob']) ? $_SESSION['form_values']['dob'] : ''); ?>">
-                <span class="blank-error"><?php echo $errordob; ?></span>
 
                 <label>Sex</label>
                 <select name="sex">
@@ -158,27 +103,21 @@ if (isset($_POST['submit'])) {
                     <option value="female"<?php echo (isset($_POST['sex']) && $_POST['sex'] == 'female') ? ' selected' : (isset($_SESSION['form_values']['sex']) && $_SESSION['form_values']['sex'] == 'female' ? ' selected' : ''); ?>>Female</option>
                     <option value="male"<?php echo (isset($_POST['sex']) && $_POST['sex'] == 'male') ? ' selected' : (isset($_SESSION['form_values']['sex']) && $_SESSION['form_values']['sex'] == 'male' ? ' selected' : ''); ?>>Male</option>
                 </select>
-                <span class="blank-error"><?php echo $erroroption; ?></span>
 
                 <label>Age</label>
                 <input type="number" name="age" value="<?php echo isset($_POST['age']) ? $_POST['age'] : (isset($_SESSION['form_values']['age']) ? $_SESSION['form_values']['age'] : ''); ?>">
-                <span class="blank-error"><?php echo $errorage; ?></span>
 
                 <label>Telephone Number</label>
                 <input type="number" name="phone" value="<?php echo isset($_POST['phone']) ? $_POST['phone'] : (isset($_SESSION['form_values']['phone']) ? $_SESSION['form_values']['phone'] : ''); ?>">
-                <span class="blank-error"><?php echo $errorphone; ?></span>
 
                 <label>Occupation</label>
                 <input type="text" name="occupation" value="<?php echo isset($_POST['occupation']) ? $_POST['occupation'] : (isset($_SESSION['form_values']['occupation']) ? $_SESSION['form_values']['occupation'] : ''); ?>">
-                <span class="blank-error"><?php echo $erroroccupation; ?></span>
 
                 <label>Religion</label>
                 <input type="text" name="religion" value="<?php echo isset($_POST['religion']) ? $_POST['religion'] : (isset($_SESSION['form_values']['religion']) ? $_SESSION['form_values']['religion'] : ''); ?>">
-                <span class="blank-error"><?php echo $errorreligion; ?></span>
 
                 <label>Emergency Contact Number</label>
                 <input type="number" name="emergency" value="<?php echo isset($_POST['emergency']) ? $_POST['emergency'] : (isset($_SESSION['form_values']['emergency']) ? $_SESSION['form_values']['emergency'] : ''); ?>">
-                <span class="blank-error"><?php echo $erroremergency; ?></span>
 
                 <input type="submit" value="Save and Next" name="submit">
                 <a href="../questionnaire/testQuestionnaire.php" class="back-button">Back</a> 
