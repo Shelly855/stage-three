@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($verifiedDoctors)) {
         $_SESSION['username'] = $verifiedDoctors[0]['usernmae'];
         $_SESSION['password'] = $verifiedDoctors[0]['password'];
-        header("Location: ../dashboardDoctor.php");
+        header("Location: ../doctorProfile/dashboardDoctor.php");
         exit;
     } else {
         echo "<script>document.addEventListener('DOMContentLoaded', function() {                

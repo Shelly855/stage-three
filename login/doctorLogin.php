@@ -4,21 +4,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
-    <link href="css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
-    <title>Patient Login</title>
+    <link href="../css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
+    <link href="../css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
+    <title>Doctor Login</title>
 </head>
 
 <body>
     <div class="container">
         <?php
-        require_once ("checkPatientLogin.php");
+        require_once ("../login/checkDoctorLogin.php");
         ?>
         <main role="main" class="pb-3">
-            <h2>Patient Login</h2><br>
+            <h2>Doctor Login</h2><br>
             <div class="row">
                 <div class="col-md-4">
-                    <form method="post" action="patientLogin.php">
+                    <form method="post" action="../login/doctorLogin.php">
 
                         <div class="form-group">
                             <label class="control-label">Username</label>
@@ -39,9 +39,11 @@
             </div>
         </main>
         <?php
-        include ("includes/footer.php");
+        include ("../includes/footer.php");
         ?>
     </div>
 
 </body>
+
 </html>
+
