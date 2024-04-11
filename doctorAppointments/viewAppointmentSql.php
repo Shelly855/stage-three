@@ -1,6 +1,6 @@
 <?php
 
-function getAppointments (){
+function getAppointments ($doctor_id){
     $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
     if (!$db) {
@@ -23,8 +23,12 @@ function getAppointments (){
     JOIN 
         patients ON appointments.patient_id = patients.patient_id
     JOIN 
-        staff ON appointments.staff_id = staff.staff_id";
+        staff ON appointments.staff_id = staff.staff_id
+        WHERE appointments.staff_id = :doctor_id";
     $stmt = $db->prepare($sql);
+
+    $stmt->bindValue(':doctor_id', $doctor_id, SQLITE3_INTEGER);
+    
     $result = $stmt->execute();
 
     if (!$result) {

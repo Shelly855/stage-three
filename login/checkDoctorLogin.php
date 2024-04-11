@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if (!empty($verifiedDoctors)) {
         $_SESSION['username'] = $verifiedDoctors[0]['usernmae'];
         $_SESSION['password'] = $verifiedDoctors[0]['password'];
+        $_SESSION['doctor_id'] = $verifiedDoctors[0]['staff_id'];
         header("Location: ../doctorProfile/dashboardDoctor.php");
         exit;
     } else {

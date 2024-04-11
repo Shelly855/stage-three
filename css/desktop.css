@@ -189,3 +189,9 @@ form {
     background-color: #0000ff;
     color: white;
 }
+#error-message {
+    text-align: center;
+    background-color: white;
+    color: #ff0000;
+    padding: 10px;
+  }

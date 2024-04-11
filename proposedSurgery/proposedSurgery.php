@@ -5,26 +5,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
     <link href="../css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
-    <title>Appointments</title>
+    <title>Proposed Surgery</title>
 </head>
 <body>
     <div class="container">
         <?php
-            session_start();
-            if(isset($_SESSION['doctor_id'])) {
-                include("../doctorAppointments/viewAppointmentSql.php");
+            include("../adminAppointments/viewAppointmentSql.php");
 
-                $doctor_id = $_SESSION['doctor_id'];
-
-                $appointments = getAppointments($doctor_id);
-                include("../includes/doctorHeader.php");
-            } else {
-                header("Location: index.php");
-                exit;
-            }
+            $appointments = getAppointments();
+            include("../includes/adminHeader.php");
         ?>
         <main>
             <h1>Appointments</h1>
+
+            <form action="../adminAppointments/createAppointment.php">
+                <input type="submit" value="Create New Appointment" />
+            </form>
 
             <div class="table-container">
                 <table>
@@ -35,8 +31,6 @@
                             <th>Time</th>
                             <th>Patient Name</th>
                             <th>Staff Name</th>
-                            <th>Clinical Notes</th>
-                            <th>Medical History</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -48,10 +42,9 @@
                                 <td><?php echo $appointment['time']; ?></td>
                                 <td><?php echo $appointment['patient_first_name'] . ' ' . $appointment['patient_surname']; ?></td>
                                 <td><?php echo $appointment['staff_first_name'] . ' ' . $appointment['staff_surname']; ?></td>
-                                <td><?php echo $appointment['clinical_notes']; ?></td>
-                                <td><?php echo $appointment['medical_history']; ?></td>
                                 <td>
-                                    <a href="../doctorAppointments/updateAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Update</a> 
+                                    <a href="../adminAppointments/updateAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Update</a> 
+                                    <a href="../adminAppointments/deleteAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
