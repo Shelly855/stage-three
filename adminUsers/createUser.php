@@ -35,16 +35,30 @@ if (isset($_POST['submit'])) {
         $stmt->bindValue(':uname', $_POST['uname'], SQLITE3_TEXT);
         $stmt->bindValue(':pwd', $_POST['pwd'], SQLITE3_TEXT);
             
-        $result = $stmt->execute();
+        $result_user = $stmt->execute();
+
+        $user_id = $db->lastInsertRowID();
     
-        if ($result) {
-            header("Location: ../adminUsers/createUserSuccess.php?createUser=success");
-            exit();
+        if ($result_user) {
+            if ($_POST['role'] === 'patient') {
+                $stmt_patient = $db->prepare('INSERT INTO patients (user_id) VALUES (:user_id)');
+                $stmt_patient->bindValue(':user_id', $user_id, SQLITE3_INTEGER);
+                $result_patient = $stmt_patient->execute();
+                if ($result_patient) {
+                    header("Location: ../adminUsers/createUserSuccess.php?createUser=success");
+                    exit();
+                } else {
+                    echo "Error creating patient record: " . $db->lastErrorMsg();
+                }
+            } else {
+                header("Location: ../adminUsers/createUserSuccess.php?createUser=success");
+                exit();
+            }
         } else {
-            echo "Error creating appointment";
-        }
+            echo "Error creating user: " . $db->lastErrorMsg();
         }
     }
+}
 ?>
 
 <!DOCTYPE html>
