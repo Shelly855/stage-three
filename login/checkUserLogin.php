@@ -42,13 +42,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['role'] = $verifiedUser[0]['role'];
         
         if ($_SESSION['role'] == 'admin') {
-            header("Location: dashboardAdmin.php");
+            header("Location: ../adminProfile/dashboardAdmin.php");
             exit;
         } elseif ($_SESSION['role'] == 'doctor') {
-            header("Location: dashboardDoctor.php");
+            header("Location: ../doctorProfile/dashboardDoctor.php");
             exit;
         } elseif ($_SESSION['role'] == 'patient') {
-            header("Location: dashboardPatient.php");
+            header("Location: ../patientProfile/dashboardPatient.php");
             exit;
         } else {
         }
