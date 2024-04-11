@@ -7,14 +7,12 @@ if (isset($_POST['delete'])) {
     if (isset($_POST['pid'])) {
         $patientId = $_POST['pid'];
 
-        // Get user_id associated with the patient
         $stmt_user_id = $db->prepare('SELECT user_id FROM patients WHERE patient_id = :pid');
         $stmt_user_id->bindValue(':pid', $patientId);
         $result_user_id = $stmt_user_id->execute();
         $row = $result_user_id->fetchArray(SQLITE3_ASSOC);
         $userId = $row['user_id'];
 
-        // Get first name and surname of the patient from the users table
         $stmt_user_info = $db->prepare('SELECT first_name, surname FROM users WHERE user_id = :uid');
         $stmt_user_info->bindValue(':uid', $userId);
         $result_user_info = $stmt_user_info->execute();
