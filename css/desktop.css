@@ -260,5 +260,10 @@ form {
     margin: 30px; font-family: sans-serif;
     font-size: 20px;
     font-weight: bold;
-
+  }
+#error-message {
+    text-align: center;
+    background-color: white;
+    color: #ff0000;
+    padding: 10px;
   }
