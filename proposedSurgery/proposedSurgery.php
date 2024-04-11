@@ -10,41 +10,39 @@
 <body>
     <div class="container">
         <?php
-            include("../adminAppointments/viewAppointmentSql.php");
+            include("../proposedSurgery/viewSurgerySql.php");
 
-            $appointments = getAppointments();
-            include("../includes/adminHeader.php");
+            $surgeries = getSurgeries();
+            include("../includes/doctorHeader.php");
         ?>
         <main>
-            <h1>Appointments</h1>
+            <h1>Proposed Surgeries</h1>
 
-            <form action="../adminAppointments/createAppointment.php">
-                <input type="submit" value="Create New Appointment" />
+            <form action="../proposedSurgery/createSurgery.php">
+                <input type="submit" value="Create New Surgery" />
             </form>
 
             <div class="table-container">
                 <table>
                     <thead>
                         <tr>
-                            <th>Appointment ID</th>
-                            <th>Date</th>
-                            <th>Time</th>
-                            <th>Patient Name</th>
-                            <th>Staff Name</th>
+                            <th>First Name</th>
+                            <th>Surname</th>
+                            <th>Surgery Name</th>
+                            <th>Eligible?</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($appointments as $appointment): ?>
+                        <?php foreach ($surgeries as $surgery): ?>
                             <tr>
-                                <td><?php echo $appointment['appointment_id']; ?></td>
-                                <td><?php echo $appointment['date']; ?></td>
-                                <td><?php echo $appointment['time']; ?></td>
-                                <td><?php echo $appointment['patient_first_name'] . ' ' . $appointment['patient_surname']; ?></td>
-                                <td><?php echo $appointment['staff_first_name'] . ' ' . $appointment['staff_surname']; ?></td>
+                                <td><?php echo $surgery['first_name']; ?></td>
+                                <td><?php echo $surgery['surname']; ?></td>
+                                <td><?php echo $surgery['surgery_name']; ?></td>
+                                <td><?php echo $surgery['eligible']; ?></td>
                                 <td>
-                                    <a href="../adminAppointments/updateAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Update</a> 
-                                    <a href="../adminAppointments/deleteAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Delete</a>
+                                    <a href="../proposedSurgery/updateSurgery.php?sid=<?php echo $surgery['surgery_id']; ?>">Update</a> 
+                                    <a href="../proposedSurgery/deleteSurgery.php?sid=<?php echo $surgery['surgery_id']; ?>">Delete</a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
