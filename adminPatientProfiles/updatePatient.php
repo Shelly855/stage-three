@@ -2,7 +2,7 @@
 session_start();
 
 $db = new SQLITE3('C:\xampp\data\stage_3.db');
-$errorpfname = $errorpsurname = $errorpemail = $errorpmobile = $errorpdob = $errorpuname = $errorppwd = "";
+$errorpfname = $errorpsurname = $errorpemail = $errorpmobile = $errorpdob = "";
 $allFields = true;
 
 if (isset($_POST['submit'])) {
@@ -27,40 +27,47 @@ if (isset($_POST['submit'])) {
         $errorpdob = "Date of Birth is mandatory";
         $allFields = false;
     }
-    if (empty($_POST['puname'])) {
-        $errorpuname = "Username is mandatory";
-        $allFields = false;
-    }
-    if (empty($_POST['ppwd'])) {
-        $errorppwd = "Password is mandatory";
-        $allFields = false;
-    }
 
     if ($allFields) {
-
-        $stmt = $db->prepare("UPDATE patients SET first_name = :pfname, surname = :psurname, email = :pemail, mobile_number = :pmobile, date_of_birth = :pdob, username = :puname, password = :ppwd WHERE patient_id = :pid");
-        $stmt->bindValue(':pid', $_POST['patient_id'], SQLITE3_INTEGER);
-        $stmt->bindValue(':pfname', $_POST['pfname'], SQLITE3_TEXT);
-        $stmt->bindValue(':psurname', $_POST['psurname'], SQLITE3_TEXT);
+        $stmt = $db->prepare("UPDATE patients
+                              SET email = :pemail, 
+                                  mobile_number = :pmobile, 
+                                  date_of_birth = :pdob
+                              WHERE patient_id = :pid");
+    
         $stmt->bindValue(':pemail', $_POST['pemail'], SQLITE3_TEXT);
         $stmt->bindValue(':pmobile', $_POST['pmobile'], SQLITE3_TEXT);
         $stmt->bindValue(':pdob', $_POST['pdob'], SQLITE3_TEXT);
-        $stmt->bindValue(':puname', $_POST['puname'], SQLITE3_TEXT);
-        $stmt->bindValue(':ppwd', $_POST['ppwd'], SQLITE3_TEXT);
-
-        $result = $stmt->execute();
-
-        if ($result) {
+        $stmt->bindValue(':pid', $_POST['patient_id'], SQLITE3_INTEGER);
+        $result_patient = $stmt->execute();
+    
+        $stmt_user = $db->prepare("UPDATE users
+                                   SET first_name = :pfname,
+                                       surname = :psurname
+                                   WHERE user_id = (
+                                       SELECT user_id
+                                       FROM patients
+                                       WHERE patient_id = :pid
+                                   )");
+    
+        $stmt_user->bindValue(':pfname', $_POST['pfname'], SQLITE3_TEXT);
+        $stmt_user->bindValue(':psurname', $_POST['psurname'], SQLITE3_TEXT);
+        $stmt_user->bindValue(':pid', $_POST['patient_id'], SQLITE3_INTEGER);
+        $result_user = $stmt_user->execute();
+    
+        if ($result_patient && $result_user) {
             header('Location: updatePatientSuccess.php?updated=true');
             exit;
         } else {
             echo "Error updating patient.";
         }
     }
+    
+    
 }
 
 if (isset($_GET['pid'])) {
-    $stmt = $db->prepare('SELECT * FROM patients WHERE patient_id = :pid');
+    $stmt = $db->prepare('SELECT p.*, u.first_name, u.surname FROM patients p INNER JOIN users u ON p.user_id = u.user_id WHERE p.patient_id = :pid');
     $stmt->bindParam(':pid', $_GET['pid'], SQLITE3_INTEGER);
     $result = $stmt->execute();
     $patient = $result->fetchArray(SQLITE3_ASSOC);
@@ -106,14 +113,6 @@ if (isset($_GET['pid'])) {
             <label>Date of Birth</label>
             <input type="date" name="pdob" value="<?php echo isset($patient['date_of_birth']) ? $patient['date_of_birth'] : ''; ?>">
             <span class="blank-error"><?php echo $errorpdob; ?></span>
-
-            <label>Username</label>
-            <input type="text" name="puname" value="<?php echo isset($patient['username']) ? $patient['username'] : ''; ?>">
-            <span class="blank-error"><?php echo $errorpuname; ?></span>
-
-            <label>Password</label>
-            <input type="text" name="ppwd" value="<?php echo isset($patient['password']) ? $patient['password'] : ''; ?>">
-            <span class="blank-error"><?php echo $errorppwd; ?></span>
 
             <input type="submit" value="Update Patient" name="submit">
             <a href="../adminPatientProfiles/adminPatientProfiles.php" class="back-button">Back</a>
