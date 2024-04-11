@@ -7,7 +7,9 @@ function getPatients() {
         die("Failed to connect to the database.");
     }
 
-    $sql = "SELECT * FROM patients";
+    $sql = "SELECT patients.*, users.first_name, users.surname 
+    FROM patients 
+    INNER JOIN users ON patients.user_id = users.user_id";
 
     $stmt = $db->prepare($sql);
     $result = $stmt->execute();
@@ -27,4 +29,5 @@ function getPatients() {
 }
 
 ?>
+
 
