@@ -1,7 +1,7 @@
 <header>
     <nav>
         <ul>
-            <li><a href="../index.php">Home</a></li>
+            <li><a href="../adminDashboard.php">Home</a></li>
             <li><a href="../adminPatientProfiles/adminPatientProfiles.php">Patients</a></li>
             <li><a href="../adminStaffProfiles/adminStaffProfiles.php">Staff</a></li>
             <li><a href="../adminAppointments/adminAppointments.php">Appointments</a></li>
