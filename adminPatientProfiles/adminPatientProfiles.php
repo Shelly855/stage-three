@@ -18,10 +18,6 @@
         <main>
             <h1>Patient Profiles</h1>
 
-            <form action="../adminPatientProfiles/createPatient.php">
-                <input type="submit" value="Create New Patient" />
-            </form>
-
             <div class="table-container">
                 <table>
                     <thead>
@@ -31,7 +27,6 @@
                             <th>Email</th>
                             <th>Mobile Number</th>
                             <th>Date of Birth</th>
-                            <th>Username</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -43,7 +38,6 @@
                                 <td><?php echo $patient['email']; ?></td>
                                 <td><?php echo $patient['mobile_number']; ?></td>
                                 <td><?php echo $patient['date_of_birth']; ?></td>
-                                <td><?php echo $patient['username']; ?></td>
                                 <td>
                                     <a href="../adminPatientProfiles/updatePatient.php?pid=<?php echo $patient['patient_id']; ?>">Update</a>
                                     <a href="../adminPatientProfiles/deletePatient.php?pid=<?php echo $patient['patient_id']; ?>">Delete</a>
