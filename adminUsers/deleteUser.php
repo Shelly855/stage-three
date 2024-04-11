@@ -7,11 +7,15 @@ if (isset($_POST['delete'])) {
     if (isset($_POST['uid'])) {
         $userId = $_POST['uid'];
 
-        $stmt = $db->prepare("DELETE FROM users WHERE user_id = :uid");
-        $stmt->bindValue(':uid', $userId);
-        $result = $stmt->execute();
+        $stmt_patient_delete = $db->prepare("DELETE FROM patients WHERE user_id = :uid");
+        $stmt_patient_delete->bindValue(':uid', $userId);
+        $result_patient_delete = $stmt_patient_delete->execute();
+        
+        $stmt_user_delete = $db->prepare("DELETE FROM users WHERE user_id = :uid");
+        $stmt_user_delete->bindValue(':uid', $userId);
+        $result_user_delete = $stmt_user_delete->execute();
 
-        if ($result) {
+        if ($result_patient_delete && $result_user_delete) {
             header("Location: ../adminUsers/deleteUserSuccess.php?deleted=true");
             exit();
         } else {
