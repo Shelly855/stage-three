@@ -1,7 +1,7 @@
 <?php
     $deleted = isset($_GET['deleted']) && $_GET['deleted'] === 'true';
 
-    $message = ($deleted) ? "User Deleted Successfully!" : "user Deletion Failed!";
+    $message = ($deleted) ? "User Deleted Successfully!" : "User Deletion Failed!";
 ?>
 
 <!DOCTYPE html>
