@@ -1,10 +1,10 @@
-<!-- unfinished -->
 <?php
 session_start();
 $db = new SQLITE3('C:\xampp\data\stage_3.db');
-$percentageCompleted = 0; 
 
 if (isset($_POST['submit'])) {
+
+    $patientId = $_SESSION['patient_id'];
 
     $totalFields = 27;
     $filledFields = count(array_filter($_POST));
@@ -12,11 +12,10 @@ if (isset($_POST['submit'])) {
 
     $_SESSION['form_values'] = $_POST;
 
-    $stmt = $db->prepare('INSERT INTO POA_questionnaire (`date_of_poa`, `assigned`, `percentage_completed`, `completed`, `surname`, `first_name`, `address`, `date_of_birth`, `sex`, `age`, `telephone_number`, `occupation`, `religion`, `emergency_contact_number`, `heart_disease`, `MI`, `hypertension`, `angina`, `DVT/PE`, `stroke`, `diabetes`, `epilepsy`, `jaundice`, `sickle_cell_status`, `kidney_disease`, `arthritis`, `asthma`, `pregnant`, `other_health_conditions`, `previous_medication`) VALUES (:poadate, :assigned, :percentage, :completed, :surname, :fname, :address, :dob, :sex, :age, :phone, :occupation, :religion, :emergency, :heart, :MI, :hypertension, :angina, :dvt, :stroke, :diabetes, :epilepsy, :jaundice, :sickle, :kidney, :arthritis, :asthma, :pregnant, :other, :medication)');
+    $stmt = $db->prepare('INSERT INTO POA_questionnaire (surgery_id, date_of_poa, percentage_completed, surname, first_name, address, date_of_birth, sex, age, telephone_number, occupation, religion, emergency_contact_number) VALUES (:surgery_id, :poadate, :percentage, :surname, :fname, :address, :dob, :sex, :age, :phone, :occupation, :religion, :emergency)');
+    $stmt->bindValue(':surgery_id', $patientId, SQLITE3_INTEGER);
     $stmt->bindValue(':poadate', $_POST['poadate'], SQLITE3_TEXT);
-    $stmt->bindValue(':assigned', 1, SQLITE3_INTEGER);
     $stmt->bindValue(':percentage', $percentageCompleted, SQLITE3_FLOAT);
-    $stmt->bindValue(':completed', 0, SQLITE3_INTEGER);
     $stmt->bindValue(':surname', $_POST['surname'], SQLITE3_TEXT);
     $stmt->bindValue(':fname', $_POST['fname'], SQLITE3_TEXT);
     $stmt->bindValue(':address', $_POST['address'], SQLITE3_TEXT);
@@ -27,22 +26,6 @@ if (isset($_POST['submit'])) {
     $stmt->bindValue(':occupation', $_POST['occupation'], SQLITE3_TEXT);
     $stmt->bindValue(':religion', $_POST['religion'], SQLITE3_TEXT);
     $stmt->bindValue(':emergency', $_POST['emergency'], SQLITE3_INTEGER);
-    $stmt->bindValue(':heart', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':MI', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':hypertension', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':angina', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':dvt', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':stroke', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':diabetes', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':epilepsy', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':jaundice', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':sickle', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':kidney', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':arthritis', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':asthma', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':pregnant', -1, SQLITE3_INTEGER);
-    $stmt->bindValue(':other', '', SQLITE3_TEXT);
-    $stmt->bindValue(':medication', '', SQLITE3_TEXT);
 
     $result = $stmt->execute();
 
@@ -58,8 +41,9 @@ if (isset($_POST['submit'])) {
     } else {
         echo "Error occurred while inserting data.";
     }
-    }
+}
 ?>
+
     
 <!DOCTYPE html>
 <html lang="en">
