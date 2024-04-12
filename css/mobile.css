@@ -226,7 +226,7 @@ input:focus, select:focus{
   font-weight: bold;
 }
 #error-message {
-    text-align: center;
-    color: #ff0000;
-    padding: 10px;
-  }
+  text-align: center;
+  color: darkred;
+  padding: 10px;
+}
