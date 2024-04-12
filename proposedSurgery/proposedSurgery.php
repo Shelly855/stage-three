@@ -1,3 +1,34 @@
+<?php
+$db = new SQLite3('C:\xampp\data\stage_3.db');
+
+function isQuestionnaireAssigned($db, $sid) {
+    $stmt = $db->prepare("SELECT COUNT(*) as count FROM POA_questionnaire WHERE surgery_id = :sid AND assigned = 1");
+    if (!$stmt) {
+        die("Error in preparing the statement: " . $db->lastErrorMsg());
+    }
+
+    $stmt->bindValue(':sid', $sid, SQLITE3_INTEGER);
+    if (!$stmt) {
+        die("Error in binding parameters: " . $db->lastErrorMsg());
+    }
+
+    $result = $stmt->execute();
+    if (!$result) {
+        die("Error in executing the query: " . $db->lastErrorMsg());
+    }
+
+    $row = $result->fetchArray();
+    if ($row === false) {
+        die("Error in fetching the result: " . $db->lastErrorMsg());
+    }
+
+    return ($row['count'] > 0);
+}
+
+include("../proposedSurgery/viewSurgerySql.php");
+$surgeries = getSurgeries();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,9 +41,6 @@
 <body>
     <div class="container">
         <?php
-            include("../proposedSurgery/viewSurgerySql.php");
-
-            $surgeries = getSurgeries();
             include("../includes/doctorHeader.php");
         ?>
         <main>
@@ -31,6 +59,7 @@
                             <th>Surgery Name</th>
                             <th>Eligible?</th>
                             <th>Actions</th>
+                            <th>Assign</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -53,6 +82,16 @@
                                 <td>
                                     <a href="../proposedSurgery/updateSurgery.php?sid=<?php echo $surgery['surgery_id']; ?>">Update</a> 
                                     <a href="../proposedSurgery/deleteSurgery.php?sid=<?php echo $surgery['surgery_id']; ?>">Delete</a>
+                                </td>
+                                <td>
+                                    <?php 
+                                        $assigned = isQuestionnaireAssigned($db, $surgery['surgery_id']);
+                                        if ($assigned) {
+                                            echo '<a href="../proposedSurgery/viewQuestionnaireAnswers.php?sid=' . $surgery['surgery_id'] . '">Questionnaire Answers</a>';
+                                        } else {
+                                            echo '<a href="../proposedSurgery/confirmAssignment.php?sid=' . $surgery['surgery_id'] . '">Assign Questionnaire</a>';
+                                        }
+                                    ?>
                                 </td>
                             </tr>
                         <?php endforeach; ?>
