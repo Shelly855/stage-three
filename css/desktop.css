@@ -128,7 +128,6 @@ select {
     box-sizing: border-box;
     border-radius: 6px;
     font-size: 15px;
-    margin-bottom:20px; 
 }
 input:focus,
 select:focus {
@@ -145,11 +144,6 @@ form {
     margin-top: 5px;
     margin-bottom: 10px;
     display: block;
-}
-.blank-error span {
-    display: block;
-    border-bottom: 1px solid #ccc;
-    margin-bottom: 5px;
 }
 .back-button {
     font-weight: bold;
