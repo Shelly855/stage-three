@@ -39,7 +39,17 @@
                                 <td><?php echo $surgery['first_name']; ?></td>
                                 <td><?php echo $surgery['surname']; ?></td>
                                 <td><?php echo $surgery['surgery_name']; ?></td>
-                                <td><?php echo $surgery['eligible']; ?></td>
+                                <td>
+                                    <?php 
+                                        if ($surgery['eligible'] === 1) {
+                                            echo 'Yes';
+                                        } elseif ($surgery['eligible'] === 0) {
+                                            echo 'No';
+                                        } elseif (is_null($surgery['eligible'])) {
+                                            echo 'Unknown';
+                                        }
+                                    ?>
+                                </td>
                                 <td>
                                     <a href="../proposedSurgery/updateSurgery.php?sid=<?php echo $surgery['surgery_id']; ?>">Update</a> 
                                     <a href="../proposedSurgery/deleteSurgery.php?sid=<?php echo $surgery['surgery_id']; ?>">Delete</a>
