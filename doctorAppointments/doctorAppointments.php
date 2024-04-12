@@ -11,17 +11,7 @@
     <div class="container">
         <?php
             session_start();
-            if(isset($_SESSION['doctor_id'])) {
                 include("../doctorAppointments/viewAppointmentSql.php");
-
-                $doctor_id = $_SESSION['doctor_id'];
-
-                $appointments = getAppointments($doctor_id);
-                include("../includes/doctorHeader.php");
-            } else {
-                header("Location: index.php");
-                exit;
-            }
         ?>
         <main>
             <h1>Appointments</h1>
