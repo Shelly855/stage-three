@@ -221,7 +221,9 @@ form {
   .pageLinks {
     border: 2px solid;
     width: 800px;
-    height:130px;
+    height: auto;
+    max-height: 300px;
+    overflow-y: auto; 
     margin: 30px;
     font-family: sans-serif;
     font-size: 20px;
@@ -230,6 +232,9 @@ form {
     text-decoration: none;
     color: black;
     padding-left: 20px;
+    display:block;
+    margin-bottom: 5px;
+    margin-top:5px;
   }
   .headings {
     border-bottom: 3px solid;
@@ -257,3 +262,4 @@ form {
     font-size: 20px;
     font-weight: bold;
   }
+
