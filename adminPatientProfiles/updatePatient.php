@@ -56,7 +56,7 @@ if (isset($_POST['submit'])) {
         $result_user = $stmt_user->execute();
     
         if ($result_patient && $result_user) {
-            header('Location: updatePatientSuccess.php?updated=true');
+            header('Location: ../adminPatientProfiles/updatePatientSuccess.php?updated=true');
             exit;
         } else {
             echo "Error updating patient.";
