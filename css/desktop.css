@@ -263,7 +263,6 @@ form {
   }
 #error-message {
     text-align: center;
-    background-color: white;
     color: #ff0000;
     padding-bottom: 10px;
   }
