@@ -133,6 +133,9 @@ input:focus,
 select:focus {
     background-color: lightgrey;
 }
+.form-group{
+    margin-bottom:20px;
+}
 form {
     font-size: 20px;
     border-radius: 20px;
