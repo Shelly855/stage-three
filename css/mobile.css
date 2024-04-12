@@ -112,16 +112,11 @@ button, input[type=submit] {
   border: 1px darkgreen solid;
 }
 .blank-error{
-  color:red;
+  color:darkred;
   font-size: 12px;
   font-weight: bold; 
   margin-bottom:20px;
   display:block;
-}
-.blank-error span {
-  display: block;
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 5px;
 }
 form{
   font-size: 15px;
