@@ -6,7 +6,7 @@ if (isset($_POST['delete'])) {
     $stmt->bindValue(':sid', $_POST['sid']);
     $result = $stmt->execute();
     if ($result) {
-        header("Location: ../proposedSurgery/proposedSurgery.php?deleted=true");
+        header("Location: ../proposedSurgery/deleteSurgerySuccess.php?deleted=true");
         exit();
     } else {
         echo "Error deleting surgery.";
