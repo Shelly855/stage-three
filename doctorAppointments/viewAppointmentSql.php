@@ -26,8 +26,6 @@ function getAppointments ($doctor_id){
         staff ON appointments.staff_id = staff.staff_id
         WHERE appointments.staff_id = :doctor_id";
     $stmt = $db->prepare($sql);
-
-    $stmt->bindValue(':doctor_id', $doctor_id, SQLITE3_INTEGER);
     
     $result = $stmt->execute();
 
