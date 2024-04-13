@@ -1,3 +1,15 @@
+<?php
+ session_start();
+$db = new SQLite3('C:\xampp\data\stage_3.db');
+
+if (!$db) {
+    die("Failed to connect to the database.");
+}
+$patientId = $_SESSION['patient_id'];
+$query = "SELECT * FROM patient WHERE user_id='$patient'";
+$res = $db->query($query);
+$row = $res->fetchArray(SQLITE3_ASSOC);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -18,6 +30,10 @@
             <tr> 
                 <td>User ID</td>
                 <td><?php echo $row['user_id']; ?></td>
+            </tr>
+            <tr> 
+                <td>Username</td>
+                <td><?php echo $row['user_name']; ?></td>
             </tr>            
             <tr> 
                 <td>First Name</td>
@@ -39,14 +55,6 @@
                 <td>Date of Birth</td>
                 <td><?php echo $row['date_of_birth']; ?></td>
             </tr>
-            <tr> 
-                <td>Medical Conditions</td>
-                <td><?php echo $row['medical_conditions']; ?></td>
-            </tr>
-            <tr> 
-                <td>Previous Medical Conditions</td>
-                <td><?php echo $row['previous_medical_conditions']; ?></td>
-            </tr>
 </table>  
  </main>
         <?php
@@ -55,3 +63,4 @@
     </div>
 </body>
 </html>
+
