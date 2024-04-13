@@ -65,7 +65,7 @@ while ($row = $result_patients->fetchArray(SQLITE3_ASSOC)) {
 <body>
     <div class="container"> 
         <?php
-            include("../includes/adminHeader.php");
+            include("../includes/doctorHeader.php");
         ?>  
         <main>
             <h1>Propose Surgery</h1>
