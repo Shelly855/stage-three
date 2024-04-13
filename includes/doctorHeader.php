@@ -2,6 +2,8 @@
     <nav>
         <ul>
             <li><a href="../doctorProfile/dashboardDoctor.php">Home</a></li>
+            <li><a href="../doctorProfile/viewPatients.php">Patients</a></li>
+            <li><a href="../doctorProfile/viewPOAanswers.php">Pre-Operative Answers</a></li>
             <li><a href="../proposedSurgery/proposedSurgery.php">Surgery</a></li>
             <li><a href="../doctorAppointments/doctorAppointments.php">Appointments</a></li>
             <li><a href="../notifications.php">Notifications</a></li>
