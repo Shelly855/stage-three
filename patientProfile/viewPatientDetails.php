@@ -10,6 +10,7 @@ $query = "SELECT * FROM patient WHERE user_id='$patient'";
 $res = $db->query($query);
 $row = $res->fetchArray(SQLITE3_ASSOC);
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +43,10 @@ $row = $res->fetchArray(SQLITE3_ASSOC);
             <tr> 
                 <td>Surname</td>
                 <td><?php echo $row['surname']; ?></td>
+            </tr>            
+            <tr> 
+                <td>Date of Birth</td>
+                <td><?php echo $row['date_of_birth']; ?></td>
             </tr>
             <tr> 
                 <td>Email</td>
@@ -51,10 +56,7 @@ $row = $res->fetchArray(SQLITE3_ASSOC);
                 <td>Mobile Number</td>
                 <td><?php echo $row['mobile_number']; ?></td>
             </tr>
-            <tr> 
-                <td>Date of Birth</td>
-                <td><?php echo $row['date_of_birth']; ?></td>
-            </tr>
+
 </table>  
  </main>
         <?php
