@@ -24,7 +24,7 @@
                 </div>
                 <div class="pageLinks">
                     <p class="headings"> Need To Complete </p>
-                    <a href="">Pre-operative assessment</a>
+                    <a href="../questionnaire/questionnaire.php">Pre-operative assessment</a>
                 </div> 
                 <div class="viewProfileButton">
                     <br>
