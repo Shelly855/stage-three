@@ -76,7 +76,7 @@ if (isset($_POST['submit'])) {
             }
             ?>
             </div>
-            <form method="post">
+            <form class="questionnaire-form" method="post">
                 <label>Questionnaire Completion Date</label>
                 <input type="date" name="poadate" value="<?php echo isset($_POST['poadate']) ? $_POST['poadate'] : (isset($_SESSION['form_values']['poadate']) ? $_SESSION['form_values']['poadate'] : ''); ?>">
 
