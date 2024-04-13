@@ -8,11 +8,30 @@ if (!isset($_SESSION['patient_id'])) {
     exit();
 }
 
-$stmt = $db->prepare('SELECT * FROM POA_questionnaire WHERE surgery_id = :patient_id');
+if (!isset($_SESSION['surgery_id'])) {
+    echo "Surgery ID not found in session.";
+    exit();
+}
+
+$surgeryId = $_SESSION['surgery_id'];
+
+$stmt = $db->prepare('SELECT pq.* 
+                      FROM POA_questionnaire pq
+                      INNER JOIN surgery s ON pq.surgery_id = s.surgery_id
+                      WHERE s.patient_id = :patient_id');
 $stmt->bindValue(':patient_id', $_SESSION['patient_id'], SQLITE3_INTEGER);
 $result = $stmt->execute();
-$row = $result->fetchArray(SQLITE3_ASSOC);
 
+if ($result) {
+    $row = $result->fetchArray(SQLITE3_ASSOC);
+    if (!$row) {
+        echo "No data found for the patient.";
+        exit();
+    }
+} else {
+    echo "Error executing the query.";
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -34,9 +53,9 @@ $row = $result->fetchArray(SQLITE3_ASSOC);
             <div class="dashboardBoxes">
                 <div class="pageLinks">
                     <p class="headings">Pre-operative Assessment</p>
-                    <a href="../questionnaire/basicDetails.php">Basic Details</a><br>
-                    <a href="../questionnaire/medicalHistory.php">Medical History</a><br>
-                    <a href="../questionnaire/additionalDetails.php">Additional Details</a> 
+                    <a href="../questionnaire/questionnaireInput.php?section=basic&surgery_id=<?php echo $surgeryId; ?>">Basic Details</a><br>
+                    <a href="../questionnaire/questionnaireInput.php?section=medical&surgery_id=<?php echo $surgeryId; ?>">Medical History</a><br>
+                    <a href="../questionnaire/questionnaireInput.php?section=additional&surgery_id=<?php echo $surgeryId; ?>">Additional Details</a>
                 </div>
             </div>
         </main>
