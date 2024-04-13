@@ -2,25 +2,14 @@
 session_start();
 $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
-$percentageCompleted = 0;
-
-$query = 'SELECT percentage_completed FROM POA_questionnaire WHERE poa_form_id = :questionnaire_id';
 $stmt = $db->prepare($query);
 $stmt->bindValue(':questionnaire_id', $questionnaire_id, SQLITE3_INTEGER);
 $result = $stmt->execute();
 
-if ($result !== false) {
-    $row = $result->fetchArray(SQLITE3_ASSOC);
-    $percentageCompleted = $row['percentage_completed'];
-}
 
 if (isset($_POST['submit'])) {
 
     $questionnaire_id = $_POST['questionnaire_id'];
-
-    $totalFields = 27;
-    $filledFields = count(array_filter($_POST));
-    $percentageCompleted = (($totalFields - 4 + $filledFields) / $totalFields) * 100;
 
     $pregnant_value = ($_POST['pregnant'] == 'yes') ? 1 : 0;
 
@@ -32,7 +21,7 @@ if (isset($_POST['submit'])) {
     $resultUpdate = $stmtUpdate->execute();
     
     if ($resultUpdate) {
-        header("Location: ../questionnaire/questionnaire.php");
+        header("Location: ../questionnaire/reviewAnswers.php");
         exit();
     } else {
         echo "Error occurred while updating the database.";
@@ -56,10 +45,6 @@ if (isset($_POST['submit'])) {
         ?>  
         <main>
             <h1>Additional Details</h1>
-
-            <div>
-            Total Percentage Completed: <?php echo round($percentageCompleted, 2); ?>%
-            </div>
 
             <form class="questionnaire-form" method="post">
 
