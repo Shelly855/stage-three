@@ -16,10 +16,12 @@ function verifyUser() {
     }
 
     $stmt = $db->prepare('
-    SELECT u.user_id, u.username, u.password, u.role
+    SELECT u.user_id, u.username, u.password, u.role, p.patient_id
     FROM users u
+    LEFT JOIN patients p ON u.user_id = p.user_id
     WHERE u.username=:username AND u.password=:password
 ');
+
 
 $stmt->bindParam(':username', $_POST['username'], SQLITE3_TEXT);
 $stmt->bindParam(':password', $_POST['password'], SQLITE3_TEXT);
@@ -45,7 +47,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user_id'] = $verifiedUser[0]['user_id'];
         $_SESSION['username'] = $verifiedUser[0]['username'];
         $_SESSION['role'] = $verifiedUser[0]['role'];
-        
+
+        if ($_SESSION['role'] == 'patient') {
+            $_SESSION['patient_id'] = $verifiedUser[0]['patient_id'];
+        }
+
         if ($_SESSION['role'] == 'admin') {
             header("Location: ../adminProfile/dashboardAdmin.php");
             exit;
@@ -53,17 +59,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../doctorProfile/dashboardDoctor.php");
             exit;
         } elseif ($_SESSION['role'] == 'patient') {
-            $_SESSION['patient_id'] = $verifiedUser[0]['patient_id']; 
             header("Location: ../patientProfile/dashboardPatient.php");
             exit;
         }
     } else {
-        echo "<script>document.addEventListener('DOMContentLoaded', function() {                 
-        var errorMessageElement = document.getElementById('error-message');                    
-        if (errorMessageElement) {
-            errorMessageElement.innerHTML = 'Invalid username or password. Please try again.';
-        }
-        });</script>";
+        echo "<div id='error-message'>Invalid username or password. Please try again.</div>";
     }
 }
+
 ?>
