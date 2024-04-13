@@ -2,15 +2,9 @@
 session_start();
 $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
-$totalFields = 27;
-$percentageCompleted = 0;
-
 if (isset($_POST['submit'])) {
 
     $patientId = $_SESSION['patient_id'];
-
-    $filledFields = count(array_filter($_POST));
-    $percentageCompleted = ($filledFields / $totalFields) * 100;
 
     $_SESSION['form_values'] = $_POST;
 
@@ -19,14 +13,13 @@ if (isset($_POST['submit'])) {
     $resultCheck = $stmtCheck->execute()->fetchArray();
 
     if ($resultCheck[0] > 0) {
-        $stmt = $db->prepare('UPDATE POA_questionnaire SET date_of_poa = :poadate, percentage_completed = :percentage, surname = :surname, first_name = :fname, address = :address, date_of_birth = :dob, sex = :sex, age = :age, telephone_number = :phone, occupation = :occupation, religion = :religion, emergency_contact_number = :emergency WHERE surgery_id = :surgery_id');
+        $stmt = $db->prepare('UPDATE POA_questionnaire SET date_of_poa = :poadate, surname = :surname, first_name = :fname, address = :address, date_of_birth = :dob, sex = :sex, age = :age, telephone_number = :phone, occupation = :occupation, religion = :religion, emergency_contact_number = :emergency WHERE surgery_id = :surgery_id');
     } else {
-        $stmt = $db->prepare('INSERT INTO POA_questionnaire (surgery_id, date_of_poa, percentage_completed, surname, first_name, address, date_of_birth, sex, age, telephone_number, occupation, religion, emergency_contact_number) VALUES (:surgery_id, :poadate, :percentage, :surname, :fname, :address, :dob, :sex, :age, :phone, :occupation, :religion, :emergency)');
+        $stmt = $db->prepare('INSERT INTO POA_questionnaire (surgery_id, date_of_poa, surname, first_name, address, date_of_birth, sex, age, telephone_number, occupation, religion, emergency_contact_number) VALUES (:surgery_id, :poadate, :surname, :fname, :address, :dob, :sex, :age, :phone, :occupation, :religion, :emergency)');
     }
 
     $stmt->bindValue(':surgery_id', $patientId, SQLITE3_INTEGER);
     $stmt->bindValue(':poadate', $_POST['poadate'], SQLITE3_TEXT);
-    $stmt->bindValue(':percentage', $percentageCompleted, SQLITE3_FLOAT);
     $stmt->bindValue(':surname', $_POST['surname'], SQLITE3_TEXT);
     $stmt->bindValue(':fname', $_POST['fname'], SQLITE3_TEXT);
     $stmt->bindValue(':address', $_POST['address'], SQLITE3_TEXT);
@@ -66,16 +59,6 @@ if (isset($_POST['submit'])) {
         ?>  
         <main>
             <h1>Basic Details</h1>
-
-            <div>
-            <?php
-            if (isset($percentageCompleted)) {
-                echo "Total Percentage Completed: " . round($percentageCompleted, 2) . "%";
-            } else {
-                echo "Total Percentage Completed: 0%";
-            }
-            ?>
-            </div>
             <form class="questionnaire-form" method="post">
                 <label>Questionnaire Completion Date</label>
                 <input type="date" name="poadate" value="<?php echo isset($_POST['poadate']) ? $_POST['poadate'] : (isset($_SESSION['form_values']['poadate']) ? $_SESSION['form_values']['poadate'] : ''); ?>">
