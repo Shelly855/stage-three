@@ -2,17 +2,28 @@
 session_start();
 $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
+$totalFields = 27;
+$percentageCompleted = 0;
+
 if (isset($_POST['submit'])) {
 
     $patientId = $_SESSION['patient_id'];
 
-    $totalFields = 27;
     $filledFields = count(array_filter($_POST));
     $percentageCompleted = ($filledFields / $totalFields) * 100;
 
     $_SESSION['form_values'] = $_POST;
 
-    $stmt = $db->prepare('INSERT INTO POA_questionnaire (surgery_id, date_of_poa, percentage_completed, surname, first_name, address, date_of_birth, sex, age, telephone_number, occupation, religion, emergency_contact_number) VALUES (:surgery_id, :poadate, :percentage, :surname, :fname, :address, :dob, :sex, :age, :phone, :occupation, :religion, :emergency)');
+    $stmtCheck = $db->prepare('SELECT COUNT(*) FROM POA_questionnaire WHERE surgery_id = :surgery_id');
+    $stmtCheck->bindValue(':surgery_id', $patientId, SQLITE3_INTEGER);
+    $resultCheck = $stmtCheck->execute()->fetchArray();
+
+    if ($resultCheck[0] > 0) {
+        $stmt = $db->prepare('UPDATE POA_questionnaire SET date_of_poa = :poadate, percentage_completed = :percentage, surname = :surname, first_name = :fname, address = :address, date_of_birth = :dob, sex = :sex, age = :age, telephone_number = :phone, occupation = :occupation, religion = :religion, emergency_contact_number = :emergency WHERE surgery_id = :surgery_id');
+    } else {
+        $stmt = $db->prepare('INSERT INTO POA_questionnaire (surgery_id, date_of_poa, percentage_completed, surname, first_name, address, date_of_birth, sex, age, telephone_number, occupation, religion, emergency_contact_number) VALUES (:surgery_id, :poadate, :percentage, :surname, :fname, :address, :dob, :sex, :age, :phone, :occupation, :religion, :emergency)');
+    }
+
     $stmt->bindValue(':surgery_id', $patientId, SQLITE3_INTEGER);
     $stmt->bindValue(':poadate', $_POST['poadate'], SQLITE3_TEXT);
     $stmt->bindValue(':percentage', $percentageCompleted, SQLITE3_FLOAT);
@@ -30,16 +41,10 @@ if (isset($_POST['submit'])) {
     $result = $stmt->execute();
 
     if ($result) {
-        $newEntryId = $db->lastInsertRowID();
-        $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
-        $stmtUpdate->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT);
-        $stmtUpdate->bindValue(':poa_form_id', $newEntryId, SQLITE3_INTEGER);
-        $stmtUpdate->execute();
-
         header("Location: ../questionnaire/medicalHistory.php");
         exit();
     } else {
-        echo "Error occurred while inserting data.";
+        echo "Error occurred while processing data.";
     }
 }
 ?>
@@ -57,13 +62,19 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="container"> 
         <?php
-            include("../includes/header.php");
+            include("../includes/patientHeader.php");
         ?>  
         <main>
             <h1>Basic Details</h1>
 
             <div>
-            Total Percentage Completed: <?php echo round($percentageCompleted, 2); ?>%
+            <?php
+            if (isset($percentageCompleted)) {
+                echo "Total Percentage Completed: " . round($percentageCompleted, 2) . "%";
+            } else {
+                echo "Total Percentage Completed: 0%";
+            }
+            ?>
             </div>
             <form method="post">
                 <label>Questionnaire Completion Date</label>
@@ -104,8 +115,7 @@ if (isset($_POST['submit'])) {
                 <input type="number" name="emergency" value="<?php echo isset($_POST['emergency']) ? $_POST['emergency'] : (isset($_SESSION['form_values']['emergency']) ? $_SESSION['form_values']['emergency'] : ''); ?>">
 
                 <input type="submit" value="Save and Next" name="submit">
-                <a href="../questionnaire/testQuestionnaire.php" class="back-button">Back</a> 
-                <!-- link will probably need to be changed -->
+                <a href="../questionnaire/questionnaire.php" class="back-button">Back</a> 
             </form>
         </main>
         <?php
