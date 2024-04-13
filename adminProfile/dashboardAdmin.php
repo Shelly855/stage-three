@@ -13,21 +13,19 @@
             include("../includes/adminHeader.php");
         ?>  
         <main> 
-            <h1>Welcome <?php echo $username; ?></h1>
+            <h1>Welcome</h1>
 
-        <h1>Welcome</h1>
-
-        <div class="dashboardBoxes">
-            <div class="pageLinks">
-                <p class="headings">Manage Profiles</p>
-                <a href="../adminUsers/adminUsers.php">Users</a></br>
-                <a href="../adminPatientProfiles/adminPatientProfiles.php">Patients</a> 
+            <div class="dashboardBoxes">
+                <div class="pageLinks">
+                    <p class="headings">Manage Profiles</p>
+                    <a href="../adminUsers/adminUsers.php">Users</a></br>
+                    <a href="../adminPatientProfiles/adminPatientProfiles.php">Patients</a> 
+                </div>
+                <div class="pageLinks">
+                    <p class="headings">Appointments</p>
+                    <a href="../adminAppointments/adminAppointments.php">Patient Appointments</a>
+                </div> 
             </div>
-            <div class="pageLinks">
-                <p class="headings">Appointments</p>
-                <a href="../adminAppointments/adminAppointments.php">Patient Appointments</a>
-            </div> 
-        </div>
         </main>
         <?php
             include("../includes/footer.php");
