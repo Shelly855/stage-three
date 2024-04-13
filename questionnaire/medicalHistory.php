@@ -1,26 +1,32 @@
 <?php
 session_start();
-$allFields = true;
-
 $db = new SQLITE3('C:\xampp\data\stage_3.db');
+
+$questionnaire_id = isset($_POST['questionnaire_id']) ? $_POST['questionnaire_id'] : (isset($_SESSION['questionnaire_id']) ? $_SESSION['questionnaire_id'] : null);
 
 $query = 'SELECT percentage_completed FROM POA_questionnaire WHERE poa_form_id = :questionnaire_id';
 $stmt = $db->prepare($query);
 $stmt->bindValue(':questionnaire_id', $questionnaire_id, SQLITE3_INTEGER);
 $result = $stmt->execute();
 
+$percentageCompleted = 0;
 if ($result !== false) {
-    $percentageCompleted = $result;
-} else {
-    $percentageCompleted = 0;
+    $row = $result->fetchArray(SQLITE3_ASSOC);
+    $percentageCompleted = $row ? $row['percentage_completed'] : 0;
 }
 
-if (isset($_POST['submit'])) {
-    $questionnaire_id = $_POST['questionnaire_id'];
+$totalFields = 27; 
 
-    $totalFields = 27;
-    $filledFields = count(array_filter($_POST));
-    $percentageCompleted = ((10 + $filledFields) / $totalFields) * 100;
+if (isset($_POST['submit'])) {
+
+    $filledFields = 0;
+    foreach ($_POST as $key => $value) {
+        if ($key !== 'questionnaire_id' && !empty($value)) {
+            $filledFields++;
+        }
+    }
+
+    $percentageCompleted = ($filledFields / $totalFields) * 100;
 
     $_SESSION['form_values'] = $_POST;
 
@@ -88,7 +94,7 @@ if (isset($_POST['submit'])) {
 <body>
     <div class="container"> 
         <?php
-            include("../includes/header.php");
+            include("../includes/patientHeader.php");
         ?>  
         <main>
             <h1>Medical History</h1>
@@ -97,7 +103,7 @@ if (isset($_POST['submit'])) {
             Total Percentage Completed: <?php echo round($percentageCompleted, 2); ?>%
             </div>
         
-            <form method="post">
+            <form class="questionnaire-form" method="post">
             <input type="hidden" name="questionnaire_id" value="<?php echo $questionnaire_id; ?>">
 
                 <h3>Do you currently have or have you ever been diagnosed with:</h3>
