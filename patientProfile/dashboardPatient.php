@@ -10,74 +10,54 @@
 <body>
     <div class="container"> 
         <?php
-            include("../includes/patientHeader.php");
-
             session_start();
+            include("../includes/patientHeader.php");
 
             $db = new SQLite3('C:\xampp\data\stage_3.db');
 
             $patientId = $_SESSION['patient_id'];
 
-            $query = "SELECT COUNT(*) AS count
-                      FROM POA_questionnaire pq
-                      JOIN surgery s ON pq.surgery_id = s.surgery_id
-                      WHERE s.patient_id = $patientId";
+            $questionnaireQuery = "SELECT pq.poa_form_id, s.surgery_id
+                                    FROM POA_questionnaire pq
+                                    JOIN surgery s ON pq.surgery_id = s.surgery_id
+                                    WHERE s.patient_id = $patientId";
 
-            $result = $db->querySingle($query);
+            $result = $db->query($questionnaireQuery);
 
             if ($result === false) {
                 echo "Error executing query";
             } else {
-                if ($result > 0) {
-                    echo '<main>
-                              <h1>Welcome To Your Dashboard</h1>
+                echo '<main>
+                        <h1>Welcome To Your Dashboard</h1>
+                        <div class="dashboardBoxes">
+                            <div class="pageLinks">
+                                <p class="headings">Your Appointments</p>
+                                <a href="">Past and Upcoming Appointments</a> 
+                            </div>';
 
-                              <div class="dashboardBoxes">
-                                  <div class="pageLinks">
-                                      <p class="headings">Your Appointments</p>
-                                      <a href="">Past and Upcoming Appointments</a> 
-                                  </div>
-                                  <div class="pageLinks">
-                                      <p class="headings"> Need To Complete </p>
-                                      <ul>';
-                    $questionnaireQuery = "SELECT pq.poa_form_id
-                                           FROM POA_questionnaire pq
-                                           JOIN surgery s ON pq.surgery_id = s.surgery_id
-                                           WHERE s.patient_id = $patientId";
+                $preOpAssessmentLinks = '';
 
-                    $questionnaireResults = $db->query($questionnaireQuery);
-
-                    while ($row = $questionnaireResults->fetchArray(SQLITE3_ASSOC)) {
-                        echo '<li><a href="../questionnaire/questionnaire.php?id=' . $row['poa_form_id'] . '">Pre-operative assessment</a></li>';
-                    }
-
-                    echo '</ul></div> 
-                                  <div class="viewProfileButton">
-                                      <br>
-                                      <a href="patientProfile.php" class="viewProfile">View Your Profile</a>
-                                  </div>
-                              </div>
-                          </main>';
-                } else {
-                    echo '<main>
-                              <h1>Welcome <?php echo $username; ?></h1>
-
-                              <div class="dashboardBoxes">
-                                  <div class="pageLinks">
-                                      <p class="headings">Your Appointments</p>
-                                      <a href="">Past and Upcoming Appointments</a> 
-                                  </div>
-                                  <div class="viewProfileButton">
-                                      <br>
-                                      <a href="patientProfile.php" class="viewProfile">View Your Profile</a>
-                                  </div>
-                              </div>
-                          </main>';
+                while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                    $preOpAssessmentLinks .= '<li><a href="../questionnaire/questionnaire.php?id=' . $row['poa_form_id'] . '&surgery_id=' . $row['surgery_id'] . '">Pre-operative assessment</a></li>';
                 }
+
+                if (!empty($preOpAssessmentLinks)) {
+                    echo '<div class="pageLinks">
+                            <p class="headings"> Need To Complete </p>
+                            <ul>';
+                    echo $preOpAssessmentLinks;
+                    echo '</ul></div>';
+                }
+
+                echo '<div class="viewProfileButton">
+                        <br>
+                        <a href="patientProfile.php" class="viewProfile">View Your Profile</a>
+                    </div>
+                    </div>
+                    </main>';
             }
+
             $db->close();
-        ?>
-        <?php
             include("../includes/footer.php");
         ?>
     </div>
