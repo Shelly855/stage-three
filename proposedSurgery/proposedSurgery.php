@@ -59,7 +59,8 @@ $surgeries = getSurgeries();
                             <th>Surgery Name</th>
                             <th>Eligible?</th>
                             <th>Actions</th>
-                            <th>Assign</th>
+                            <th>Questionnaire</th>
+                            <th>Answers</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -87,9 +88,20 @@ $surgeries = getSurgeries();
                                     <?php 
                                         $assigned = isQuestionnaireAssigned($db, $surgery['surgery_id']);
                                         if ($assigned) {
-                                            echo '<a href="../proposedSurgery/viewQuestionnaireAnswers.php?sid=' . $surgery['surgery_id'] . '">Questionnaire Answers</a>';
+                                            echo 'Assigned';
                                         } else {
                                             echo '<a href="../proposedSurgery/confirmAssignment.php?sid=' . $surgery['surgery_id'] . '">Assign Questionnaire</a>';
+                                        }
+                                    ?>
+                                </td>
+                                <td>
+                                    <?php 
+                                        $completed = $surgery['completed'] == 1;
+
+                                        if (!$completed) {
+                                            echo 'Not completed';
+                                        } else {
+                                            echo '<a href="../questionnaire/reviewAnswers.php?surgery_id=' . $surgery['surgery_id'] . '">Review Answers</a>';
                                         }
                                     ?>
                                 </td>
