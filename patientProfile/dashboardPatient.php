@@ -38,6 +38,7 @@
                 $preOpAssessmentLinks = '';
 
                 while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                    $_SESSION['surgery_id'] = $row['surgery_id'];
                     $preOpAssessmentLinks .= '<li><a href="../questionnaire/questionnaire.php?id=' . $row['poa_form_id'] . '&surgery_id=' . $row['surgery_id'] . '">Pre-operative assessment</a></li>';
                 }
 
