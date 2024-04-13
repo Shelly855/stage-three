@@ -262,4 +262,8 @@ form {
     font-size: 20px;
     font-weight: bold;
   }
+.questionnaire-form label{
+    display: block;
+    padding-top:20px;
+}
 
