@@ -4,29 +4,12 @@ $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
 $questionnaire_id = isset($_POST['questionnaire_id']) ? $_POST['questionnaire_id'] : (isset($_SESSION['questionnaire_id']) ? $_SESSION['questionnaire_id'] : null);
 
-$query = 'SELECT percentage_completed FROM POA_questionnaire WHERE poa_form_id = :questionnaire_id';
 $stmt = $db->prepare($query);
 $stmt->bindValue(':questionnaire_id', $questionnaire_id, SQLITE3_INTEGER);
 $result = $stmt->execute();
 
-$percentageCompleted = 0;
-if ($result !== false) {
-    $row = $result->fetchArray(SQLITE3_ASSOC);
-    $percentageCompleted = $row ? $row['percentage_completed'] : 0;
-}
-
-$totalFields = 27; 
 
 if (isset($_POST['submit'])) {
-
-    $filledFields = 0;
-    foreach ($_POST as $key => $value) {
-        if ($key !== 'questionnaire_id' && !empty($value)) {
-            $filledFields++;
-        }
-    }
-
-    $percentageCompleted = ($filledFields / $totalFields) * 100;
 
     $_SESSION['form_values'] = $_POST;
 
@@ -44,7 +27,7 @@ if (isset($_POST['submit'])) {
     $arthritis_value = ($_POST['arthritis'] == 'yes') ? 1 : 0;
     $asthma_value = ($_POST['asthma'] == 'yes') ? 1 : 0;
 
-    $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET heart_disease = :heart, MI = :MI, hypertension = :hypertension, angina = :angina, "DVT/PE" = :dvt, stroke = :stroke, diabetes = :diabetes, epilepsy = :epilepsy, jaundice = :jaundice, sickle_cell_status = :sickle, kidney_disease = :kidney, arthritis = :arthritis, asthma = :asthma, percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
+    $stmtUpdate = $db->prepare('UPDATE POA_questionnaire SET heart_disease = :heart, MI = :MI, hypertension = :hypertension, angina = :angina, "DVT/PE" = :dvt, stroke = :stroke, diabetes = :diabetes, epilepsy = :epilepsy, jaundice = :jaundice, sickle_cell_status = :sickle, kidney_disease = :kidney, arthritis = :arthritis, asthma = :asthma WHERE poa_form_id = :poa_form_id');
     $stmtUpdate->bindValue(':heart', $heart_value, SQLITE3_INTEGER);
     $stmtUpdate->bindValue(':MI', $MI_value, SQLITE3_INTEGER);
     $stmtUpdate->bindValue(':hypertension', $hypertension_value, SQLITE3_INTEGER);
@@ -58,28 +41,24 @@ if (isset($_POST['submit'])) {
     $stmtUpdate->bindValue(':kidney', $kidney_value, SQLITE3_INTEGER);
     $stmtUpdate->bindValue(':arthritis', $arthritis_value, SQLITE3_INTEGER);
     $stmtUpdate->bindValue(':asthma', $asthma_value, SQLITE3_INTEGER);
-    $stmtUpdate->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT);
     $stmtUpdate->bindValue(':poa_form_id', $questionnaire_id, SQLITE3_INTEGER);
 
     $resultUpdate = $stmtUpdate->execute();
 
     if ($resultUpdate) {
         $stmtUpdatePercentage = $db->prepare('UPDATE POA_questionnaire SET percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
-        $stmtUpdatePercentage->bindValue(':percentage_completed', $percentageCompleted, SQLITE3_FLOAT);
         $stmtUpdatePercentage->bindValue(':poa_form_id', $questionnaire_id, SQLITE3_INTEGER);
 
         $resultPercentage = $stmtUpdatePercentage->execute();
             
-        if ($resultPercentage) {
+        if ($resultUpdate) {
             header("Location: ../questionnaire/additionalDetails.php");
             exit();
         } else {
-            echo "Error occurred while updating the percentage completed.";
+            echo "Error occurred while updating other fields.";
         }
-    } else {
-        echo "Error occurred while updating other fields.";
     }
-    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -98,10 +77,6 @@ if (isset($_POST['submit'])) {
         ?>  
         <main>
             <h1>Medical History</h1>
-
-            <div>
-            Total Percentage Completed: <?php echo round($percentageCompleted, 2); ?>%
-            </div>
         
             <form class="questionnaire-form" method="post">
             <input type="hidden" name="questionnaire_id" value="<?php echo $questionnaire_id; ?>">
