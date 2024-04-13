@@ -13,7 +13,7 @@
             include("../includes/adminHeader.php");
         ?>  
         <main> 
-            <h1>Welcome</h1>
+        <h1>Welcome To Your Dashboard</h1>
 
             <div class="dashboardBoxes">
                 <div class="pageLinks">
