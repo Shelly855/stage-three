@@ -16,26 +16,25 @@ function verifyUser() {
     }
 
     $stmt = $db->prepare('
-        SELECT u.user_id, u.username, u.password, u.role, p.patient_id 
-        FROM users u
-        JOIN patients p ON u.user_id = p.user_id 
-        WHERE u.username=:username AND u.password=:password
-    ');
+    SELECT u.user_id, u.username, u.password, u.role
+    FROM users u
+    WHERE u.username=:username AND u.password=:password
+');
 
-    $stmt->bindParam(':username', $_POST['username'], SQLITE3_TEXT);
-    $stmt->bindParam(':password', $_POST['password'], SQLITE3_TEXT);
+$stmt->bindParam(':username', $_POST['username'], SQLITE3_TEXT);
+$stmt->bindParam(':password', $_POST['password'], SQLITE3_TEXT);
 
-    $result = $stmt->execute();
+$result = $stmt->execute();
 
-    $rows_array = array();
-    while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-        $rows_array[] = $row;
-    }
+$rows_array = array();
+while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+    $rows_array[] = $row;
+}
 
-    $stmt->close();
-    $db->close();
+$stmt->close();
+$db->close();
 
-    return $rows_array;
+return $rows_array;
 }
 
 
@@ -46,10 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $_SESSION['user_id'] = $verifiedUser[0]['user_id'];
         $_SESSION['username'] = $verifiedUser[0]['username'];
         $_SESSION['role'] = $verifiedUser[0]['role'];
-
-        if ($_SESSION['role'] == 'patient') {
-            $_SESSION['patient_id'] = $verifiedUser[0]['patient_id'];
-        }
         
         if ($_SESSION['role'] == 'admin') {
             header("Location: ../adminProfile/dashboardAdmin.php");
@@ -58,6 +53,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             header("Location: ../doctorProfile/dashboardDoctor.php");
             exit;
         } elseif ($_SESSION['role'] == 'patient') {
+            $_SESSION['patient_id'] = $verifiedUser[0]['patient_id']; 
             header("Location: ../patientProfile/dashboardPatient.php");
             exit;
         }
