@@ -33,7 +33,7 @@ $row = $res->fetchArray(SQLITE3_ASSOC);
             </tr>
             <tr> 
                 <td>Username</td>
-                <td><?php echo $row['user_name']; ?></td>
+                <td><?php echo $row['username']; ?></td>
             </tr>            
             <tr> 
                 <td>First Name</td>
