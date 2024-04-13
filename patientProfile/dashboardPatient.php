@@ -30,7 +30,7 @@
             } else {
                 if ($result > 0) {
                     echo '<main>
-                              <h1>Welcome <?php echo $username; ?></h1>
+                              <h1>Welcome To Your Dashboard</h1>
 
                               <div class="dashboardBoxes">
                                   <div class="pageLinks">
