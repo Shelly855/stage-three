@@ -192,11 +192,13 @@ input:focus, select:focus{
   margin: 30px auto; 
   font-family: sans-serif;
   font-size: 16px;
+  text-align: center; 
 }
 .pageLinks a {
   text-decoration: none;
   color: black;
   padding-left: 20px;
+  padding-right:20px;
   display:block;
   margin-bottom: 5px;
   margin-top:5px;
@@ -211,22 +213,25 @@ input:focus, select:focus{
   font-family: sans-serif;
   font-size: 18px;
   font-weight: bold;
+  text-align: center; 
 }
-.viewProfile {
+.viewProfileButton {
   display: flex;
 }
 .viewProfile {
   border: 2px solid;
-  padding: 20px 0px 20px 20px;
-  margin: 30px;
+  padding: 20px;
   background-color: #BDE7B4;
   color: black;
   text-decoration: none;
-  width: 780px;
+  max-width: 500px;
+  width: 90%;
   height: 30px;
-  margin: 30px; font-family: sans-serif;
-  font-size: 20px;
+  margin: 30px auto; 
+  font-family: sans-serif;
+  font-size: 18px;
   font-weight: bold;
+  text-align: center; 
 }
 #error-message {
   text-align: center;
