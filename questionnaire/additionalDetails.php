@@ -74,7 +74,7 @@ if (isset($_POST['submit'])) {
                 <input type="text" name="other" value="<?php echo isset($_POST['other']) ? $_POST['other'] : (isset($_SESSION['form_values']['other']) ? $_SESSION['form_values']['other'] : ''); ?>">
 
                 <label>If you have took any previous medications, please mention them below.</label>
-                <input type="text" name="medication" value="<?php echo isset($_POST['medication']) ? $_POST['medication'] : (isset($_SESSION['form_values']['medicatioj']) ? $_SESSION['form_values']['medication'] : ''); ?>">
+                <input type="text" name="medication" value="<?php echo isset($_POST['medication']) ? $_POST['medication'] : (isset($_SESSION['form_values']['medication']) ? $_SESSION['form_values']['medication'] : ''); ?>">
 
                 <input type="submit" value="Save and Check Answers" name="submit">
                 <a href="../questionnaire/medicalHistory.php" class="back-button">Back</a> 
