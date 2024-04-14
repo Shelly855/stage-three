@@ -1,6 +1,6 @@
 <?php
 
-function getAppointments ($doctor_id){
+function getAppointments() {
     $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
     if (!$db) {
@@ -13,18 +13,23 @@ function getAppointments ($doctor_id){
         appointments.date,
         appointments.time,
         appointments.clinical_notes,
-        appointments.medical_history,
-        patients.first_name AS patient_first_name,
-        patients.surname AS patient_surname,
-        staff.first_name AS staff_first_name,
-        staff.surname AS staff_surname
+        patients.medical_conditions,
+        patients.previous_medical_conditions,
+        users.first_name AS patient_first_name,
+        users.surname AS patient_surname,
+        users.first_name AS staff_first_name,
+        users.surname AS staff_surname
     FROM 
         appointments
+
     JOIN 
         patients ON appointments.patient_id = patients.patient_id
     JOIN 
-        staff ON appointments.staff_id = staff.staff_id
-        WHERE appointments.staff_id = :doctor_id";
+        users ON appointments.user_id = users.user_id;
+        
+    WHERE 
+        appointments.users_id = :doctor_id";
+
     $stmt = $db->prepare($sql);
     
     $result = $stmt->execute();
@@ -39,3 +44,4 @@ function getAppointments ($doctor_id){
     }
     return $arrayResult;
 }
+
