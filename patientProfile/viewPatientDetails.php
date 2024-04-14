@@ -6,7 +6,7 @@ if (!$db) {
     die("Failed to connect to the database.");
 }
 
-$patient = $_SESSION['patient'];
+$patient = $_SESSION['patient_id'];
 $query = "SELECT * FROM patients WHERE patient_id='$patient'";
 $res= new SQLite3_query($query);
 $row = new SQLite3_fetch_array($res);
