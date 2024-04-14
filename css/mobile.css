@@ -247,3 +247,6 @@ input:focus, select:focus{
     padding: 0;
     margin: 0;
 }
+#surgery-update{
+  padding-bottom:5px;
+}
