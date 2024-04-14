@@ -2,7 +2,7 @@
 session_start();
 
 $db = new SQLITE3('C:\xampp\data\stage_3.db');
-$errorpatient = $errorsurgery = "";
+$errorsurgery = "";
 $allFields = true;
 
 if (isset($_GET['sid'])) {
@@ -12,66 +12,56 @@ if (isset($_GET['sid'])) {
     $stmt->bindValue(':sid', $surgery_id, SQLITE3_INTEGER);
     $result = $stmt->execute();
     $surgery = $result->fetchArray(SQLITE3_ASSOC);
+    
+    $patient_name = getPatientName($db, $surgery['patient_id']);
 }
 
-$query = $db->query("SELECT * FROM patients");
-$patients = [];
-while ($row = $query->fetchArray(SQLITE3_ASSOC)) {
-    $patients[] = $row;
+function getPatientName($db, $patient_id) {
+    $stmt = $db->prepare("SELECT u.first_name, u.surname FROM patients p JOIN users u ON p.user_id = u.user_id WHERE p.patient_id = :pid");
+    $stmt->bindValue(':pid', $patient_id, SQLITE3_INTEGER);
+    $result = $stmt->execute();
+    $patient = $result->fetchArray(SQLITE3_ASSOC);
+    
+    if ($patient) {
+        return $patient['first_name'] . ' ' . $patient['surname'];
+    } else {
+        return 'Unknown';
+    }
 }
 
 if (isset($_POST['submit'])) {
 
-    if (empty($_POST['patient_id']) || $_POST['patient_id'] == 0) {
-        $errorpatient = "Please select a patient.";
-        $allFields = false;
-    }
     if (empty($_POST['surgery'])) {
         $errorsurgery = "Surgery Name is mandatory";
         $allFields = false;
     }
 
-    $eligibility_value = ($_POST['eligible'] == 'yes') ? 1 : 0;
+    if ($_POST['eligible'] == 'yes' || $_POST['eligible'] == 'no') {
+        $eligibility_value = ($_POST['eligible'] == 'yes') ? 1 : 0;
+    } else {
+        $eligibility_value = null;
+    }
 
     if ($allFields) {
 
-        $stmt = $db->prepare('SELECT patients.patient_id, users.first_name, users.surname FROM patients JOIN users ON patients.user_id = users.user_id WHERE patients.patient_id = :pid');
-        $stmt->bindValue(':pid', $_POST['patient_id'], SQLITE3_INTEGER);
-        $result = $stmt->execute();
-        $patientDetails = $result->fetchArray(SQLITE3_ASSOC);
-
-        if ($patientDetails) {
-            $stmt = $db->prepare("UPDATE surgery SET patient_id = :pid, surgery_name = :surgery, eligible = :eligible WHERE surgery_id = :sid");
-            $stmt->bindValue(':sid', $_POST['surgery_id'], SQLITE3_INTEGER);
-            $stmt->bindValue(':pid', $patientDetails['patient_id'], SQLITE3_INTEGER);
-            $stmt->bindValue(':surgery', $_POST['surgery'], SQLITE3_TEXT);
+        $stmt = $db->prepare("UPDATE surgery SET surgery_name = :surgery, eligible = :eligible WHERE surgery_id = :sid");
+        $stmt->bindValue(':sid', $_POST['surgery_id'], SQLITE3_INTEGER);
+        $stmt->bindValue(':surgery', $_POST['surgery'], SQLITE3_TEXT);
+        if ($eligibility_value !== null) {
             $stmt->bindValue(':eligible', $eligibility_value, SQLITE3_INTEGER);
-                
-            $result = $stmt->execute();
-        
-            if ($result) {
-                header("Location: ../proposedSurgery/updateSurgerySuccess.php?updated=true");
-                exit();
-            } else {
-                echo "Error updating surgery.";
-            }
         } else {
-            echo "Error fetching patient details.";
+            $stmt->bindValue(':eligible', null, SQLITE3_NULL);
+        }
+                
+        $result = $stmt->execute();
+        
+        if ($result) {
+            header("Location: ../proposedSurgery/updateSurgerySuccess.php?updated=true");
+            exit();
+        } else {
+            echo "Error updating surgery.";
         }
     }
-}
-
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
-$stmt_patients = $db->prepare('SELECT patients.patient_id, users.first_name, users.surname FROM patients JOIN users ON patients.user_id = users.user_id');
-$result_patients = $stmt_patients->execute();
-    
-$patients = array();
-    
-while ($row = $result_patients->fetchArray(SQLITE3_ASSOC)) {
-    $patients[] = array(
-        'patient_id' => $row['patient_id'],
-        'full_name' => $row['first_name'] . ' ' . $row['surname']
-    );
 }
 ?>
 
@@ -86,27 +76,18 @@ while ($row = $result_patients->fetchArray(SQLITE3_ASSOC)) {
 </head>
 <body>
 <div class="container">
-    <?php
-        include("../includes/doctorHeader.php");
-    ?>  
+    <?php include("../includes/doctorHeader.php"); ?>  
     <main>
         <h1>Update Surgery</h1>
         <form method="post">
-        <?php if (isset($surgery)): ?>
-            <input type="hidden" name="surgery_id" value="<?php echo $surgery['surgery_id']; ?>">
-        <?php endif; ?>
+            <?php if (isset($surgery)): ?>
+                <input type="hidden" name="surgery_id" value="<?php echo $surgery['surgery_id']; ?>">
+            <?php endif; ?>
 
-        <label for="patient_id">Select Patient:</label>
-        <select name="patient_id" id="patient_id">
-            <option value="0">Select Patient</option>
-            <?php foreach ($patients as $patient): ?>
-                <option value="<?php echo $patient['patient_id']; ?>" <?php echo (isset($surgery) && $surgery['patient_id'] == $patient['patient_id']) || (isset($_POST['patient_id']) && $_POST['patient_id'] == $patient['patient_id']) ? 'selected' : ''; ?>>
-                    <?php echo $patient['full_name']; ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-        <span class="blank-error"><?php echo $errorpatient; ?></span>
-
+            <div id="surgery-update">
+                <label>Patient Name:</label>
+                <span><?php echo isset($patient_name) ? $patient_name : ''; ?></span>
+            </div>
 
             <label for="surgery">Surgery Name</label>
             <input type="text" id="surgery" name="surgery" value="<?php echo isset($_POST['surgery']) ? $_POST['surgery'] : (isset($surgery) ? $surgery['surgery_name'] : ''); ?>">
@@ -123,9 +104,7 @@ while ($row = $result_patients->fetchArray(SQLITE3_ASSOC)) {
             <a href="../proposedSurgery/proposedSurgery.php" class="back-button">Back</a>
         </form>
     </main>
-    <?php
-        include("../includes/footer.php");
-    ?>
-    </div>
+    <?php include("../includes/footer.php"); ?>
+</div>
 </body>
 </html>
