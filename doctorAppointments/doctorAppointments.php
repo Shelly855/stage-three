@@ -11,7 +11,8 @@
     <div class="container">
         <?php
             session_start();
-                include("../doctorAppointments/viewAppointmentSql.php");
+            include("../doctorAppointments/viewAppointmentSql.php");
+            include("../includes/doctorHeader.php");
         ?>
         <main>
             <h1>Appointments</h1>
