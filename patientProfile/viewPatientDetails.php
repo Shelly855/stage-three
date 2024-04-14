@@ -30,8 +30,8 @@ $row = new SQLite3_fetch_array($res);
          <h1>Personal Details</h1>
          <table class="detailsTable">
             <tr> 
-                <td>User ID</td>
-                <td><?php echo $row['user_id']; ?></td>
+                <td>Patient ID</td>
+                <td><?php echo $row['patient_id']; ?></td>
             </tr>
             <tr> 
                 <td>Username</td>
