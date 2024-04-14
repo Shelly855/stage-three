@@ -5,10 +5,11 @@ $db = new SQLite3('C:\xampp\data\stage_3.db');
 if (!$db) {
     die("Failed to connect to the database.");
 }
-$patientId = $_SESSION['patient_id'];
-$query = "SELECT * FROM patients WHERE user_id='$patientId'";
-$res = $db->query($query);
-$row = $res->fetchArray(SQLITE3_ASSOC);
+
+$patient = $_SESSION['patient'];
+$query = "SELECT * FROM patients WHERE patient_id='$patient'";
+$res= new SQLite3_query($query);
+$row = new SQLite3_fetch_array($res);
 ?>
 
 <!DOCTYPE html>
