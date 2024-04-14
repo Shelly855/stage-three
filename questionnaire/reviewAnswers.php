@@ -11,38 +11,6 @@ $stmt->bindValue(':surgery_id', $surgeryId, SQLITE3_INTEGER);
 $result = $stmt->execute();
 
 $row = $result->fetchArray();
-
-$questionnaireFilled = !empty($row['date_of_poa']) &&
-                       !empty($row['surname']) &&
-                       !empty($row['first_name']) &&
-                       !empty($row['address']) &&
-                       !empty($row['date_of_birth']) &&
-                       !empty($row['sex']) &&
-                       !empty($row['age']) &&
-                       !empty($row['telephone_number']) &&
-                       !empty($row['occupation']) &&
-                       !empty($row['religion']) &&
-                       !empty($row['emergency_contact_number']) &&
-                       !empty($row['heart_disease']) &&
-                       !empty($row['MI']) &&
-                       !empty($row['hypertension']) &&
-                       !empty($row['angina']) &&
-                       !empty($row['DVT/PE']) &&
-                       !empty($row['stroke']) &&
-                       !empty($row['diabetes']) &&
-                       !empty($row['epilepsy']) &&
-                       !empty($row['jaundice']) &&
-                       !empty($row['sickle_cell_status']) &&
-                       !empty($row['kidney_disease']) &&
-                       !empty($row['arthritis']) &&
-                       !empty($row['asthma']) &&
-                       !empty($row['pregnant']) &&
-                       !empty($row['other_health_conditions']) &&
-                       !empty($row['previous_medication']);
-
-                       if (!$questionnaireFilled && isset($_POST['submit'])) {
-                        echo "<p class='blank-error'>Please fill out all required fields.</p>";
-                    }
 ?>
 
 <!DOCTYPE html>
@@ -61,6 +29,9 @@ $questionnaireFilled = !empty($row['date_of_poa']) &&
         ?>  
         <main>
             <h1>Review Your Answers</h1>
+            <?php if (isset($_GET['error']) && $_GET['error'] == 1): ?>
+                <p class="blank-error">Please fill out all required fields.</p>
+            <?php endif; ?>
             <div class="review-your-answers">
                 <h2>Basic Details</h2>
                 <p>Questionnaire Completion Date: <?php echo $row['date_of_poa']; ?></p>
@@ -98,9 +69,6 @@ $questionnaireFilled = !empty($row['date_of_poa']) &&
                 <p>Other Health Conditions: <?php echo $row['other_health_conditions']; ?></p>
                 <p>Previous Medication <?php echo $row['previous_medication']; ?></p>
             </div>
-            <?php if (!$questionnaireFilled && isset($_POST['submit'])): ?>
-                <p class="blank-error">Please fill out all required fields.</p>
-            <?php endif; ?>
             <form action="../questionnaire/submitAnswers.php" method="post">
                 <input type="submit" value="Submit Answers">
             </form>
