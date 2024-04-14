@@ -104,7 +104,8 @@ $questionnaireFilled = !empty($row['date_of_poa']) &&
             <form action="../questionnaire/submitAnswers.php" method="post">
                 <input type="submit" value="Submit Answers">
             </form>
-            <a href="../questionnaire/questionnaire.php" id="questionnaire-back-button">Back to Questionnaire</a> 
+            <form id="questionnaire-back-button">
+            <a href="../questionnaire/questionnaire.php">Back to Questionnaire</a> 
             </form>
         </main>
         <?php
@@ -113,4 +114,3 @@ $questionnaireFilled = !empty($row['date_of_poa']) &&
     </div>
 </body>
 </html>
-
