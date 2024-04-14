@@ -250,3 +250,13 @@ input:focus, select:focus{
 #surgery-update{
   padding-bottom:5px;
 }
+.review-your-answers{
+  font-size:18px;
+  text-align:center
+}
+#questionnaire-back-button{
+  font-size:18px;
+  font-weight: bold;
+  padding-bottom:20px;
+  text-align:center;
+}
