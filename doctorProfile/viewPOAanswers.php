@@ -10,11 +10,11 @@ function getPOAanswers()
 
     $sql = "
     SELECT 
-        POA_questionnaire.poa_form_id,
-        surgery.surgery_id AS surgery_id,
-        POA_questionnaire.assigned,
-        POA_questionnaire.percentage_completed,
-        POA_questionnaire.completed,
+    POA_questionnaire.poa_form_id,
+    surgery.surgery_id AS surgery_id,
+    POA_questionnaire.assigned,
+    POA_questionnaire.percentage_completed,
+    POA_questionnaire.completed,
         POA_questionnaire.date_of_poa,
         POA_questionnaire.surname,
         POA_questionnaire.first_name,
@@ -90,48 +90,38 @@ $POAanswers = getPOAanswers();
             <div class="table-container">
                 <table>
                     <thead>
-                        <th>poa_form_id</th>
-                        <th>surgery_id</th>
-                        <th>assigned</th>
-                        <th>percentage_completed</th>
-                        <th>completed</th>
-                        <th>date_of_poa</th>
-                        <th>surname</th>
-                        <th>first_name</th>
-                        <th>address</th>
-                        <th>date_of_birth</th>
-                        <th>sex</th>
-                        <th>age</th>
-                        <th>telephone_number</th>
-                        <th>occupation</th>
-                        <th>religion</th>
-                        <th>emergency_contact_number</th>
-                        <th>heart_disease</th>
+                        <th>Date of Assessment</th>
+                        <th>Surname</th>
+                        <th>First Name</th>
+                        <th>Address</th>
+                        <th>Date of Birth</th>
+                        <th>Sex</th>
+                        <th>Age</th>
+                        <th>Telephone Number</th>
+                        <th>Occupation</th>
+                        <th>Religion</th>
+                        <th>Emergency Contact Number</th>
+                        <th>Heart Disease</th>
                         <th>MI</th>
-                        <th>hypertension</th>
-                        <th>angina</th>
+                        <th>Hypertension</th>
+                        <th>Angina</th>
                         <th>DVT/PE</th>
-                        <th>stroke</th>
-                        <th>diabetes</th>
-                        <th>epilepsy</th>
-                        <th>jaundice</th>
-                        <th>sickle_cell_status</th>
-                        <th>kidney_disease</th>
-                        <th>arthritis</th>
-                        <th>asthma</th>
-                        <th>pregnant</th>
-                        <th>other_health_conditions</th>
-                        <th>previous_medication</th>
+                        <th>Stroke</th>
+                        <th>Diabetes</th>
+                        <th>Epilepsy</th>
+                        <th>Jaundice</th>
+                        <th>Sickle Cell Status</th>
+                        <th>Kidney Disease</th>
+                        <th>Arthritis</th>
+                        <th>Asthma</th>
+                        <th>Pregnant</th>
+                        <th>Other Health Conditions</th>
+                        <th>Previous Medication</th>
                         <th>Eligible for Surgery?</th>
                     </thead>
                     <tbody>
                         <?php foreach ($POAanswers as $POAanswer): ?>
                             <tr>
-                                <td><?php echo $POAanswer['poa_form_id']; ?></td>
-                                <td><?php echo $POAanswer['surgery_id']; ?></td>
-                                <td><?php echo $POAanswer['assigned']; ?></td>
-                                <td><?php echo $POAanswer['percentage_completed']; ?></td>
-                                <td><?php echo $POAanswer['completed']; ?></td>
                                 <td><?php echo $POAanswer['date_of_poa']; ?></td>
                                 <td><?php echo $POAanswer['surname']; ?></td>
                                 <td><?php echo $POAanswer['first_name']; ?></td>
@@ -143,25 +133,26 @@ $POAanswers = getPOAanswers();
                                 <td><?php echo $POAanswer['occupation']; ?></td>
                                 <td><?php echo $POAanswer['religion']; ?></td>
                                 <td><?php echo $POAanswer['emergency_contact_number']; ?></td>
-                                <td><?php echo $POAanswer['heart_disease']; ?></td>
-                                <td><?php echo $POAanswer['MI']; ?></td>
-                                <td><?php echo $POAanswer['hypertension']; ?></td>
-                                <td><?php echo $POAanswer['angina']; ?></td>
-                                <td><?php echo $POAanswer['DVT/PE']; ?></td>
-                                <td><?php echo $POAanswer['stroke']; ?></td>
-                                <td><?php echo $POAanswer['diabetes']; ?></td>
-                                <td><?php echo $POAanswer['epilepsy']; ?></td>
-                                <td><?php echo $POAanswer['jaundice']; ?></td>
-                                <td><?php echo $POAanswer['sickle_cell_status']; ?></td>
-                                <td><?php echo $POAanswer['kidney_disease']; ?></td>
-                                <td><?php echo $POAanswer['arthritis']; ?></td>
-                                <td><?php echo $POAanswer['asthma']; ?></td>
-                                <td><?php echo $POAanswer['pregnant']; ?> </td>
+                                <td><?php echo $POAanswer['heart_disease'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['MI'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['hypertension'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['angina'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['DVT/PE'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['stroke'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['diabetes'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['epilepsy'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['jaundice'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['sickle_cell_status'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['kidney_disease'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['arthritis'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['asthma'] ? 'Yes' : 'No'; ?></td>
+                                <td><?php echo $POAanswer['pregnant'] ? 'Yes' : 'No'; ?> </td>
                                 <td><?php echo $POAanswer['other_health_conditions']; ?></td>
                                 <td><?php echo $POAanswer['previous_medication']; ?></td>
                                 <td>
                                     <form action="insertEligibleSurgery.php" method="POST">
-                                        <input type="hidden" name="surgery_id" value="<?php echo $POAanswer['surgery_id']; ?>">
+                                        <input type="hidden" name="surgery_id"
+                                            value="<?php echo $POAanswer['surgery_id']; ?>">
                                         <input type="checkbox" id="eligible" name="eligible" value="1">
                                         <input type="submit" value="Submit">
                                     </form>
