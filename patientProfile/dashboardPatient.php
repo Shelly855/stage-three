@@ -20,7 +20,7 @@
             $questionnaireQuery = "SELECT pq.poa_form_id, s.surgery_id
                                     FROM POA_questionnaire pq
                                     JOIN surgery s ON pq.surgery_id = s.surgery_id
-                                    WHERE s.patient_id = $patientId";
+                                    WHERE s.patient_id = $patientId AND pq.completed = 0";
 
             $result = $db->query($questionnaireQuery);
 
