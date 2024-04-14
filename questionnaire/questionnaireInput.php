@@ -25,6 +25,15 @@ function getPOAData($poaId) {
     return $poaData;
 }
 
+function checkRecordExists($db, $surgeryId) {
+    $stmtCheck = $db->prepare('SELECT COUNT(*) FROM POA_questionnaire WHERE surgery_id = :surgery_id');
+    $stmtCheck->bindValue(':surgery_id', $surgeryId, SQLITE3_INTEGER);
+    $resultCheck = $stmtCheck->execute()->fetchArray();
+
+    return ($resultCheck[0] > 0);
+}
+
+
 $section = isset($_GET['section']) ? $_GET['section'] : 'basic';
 $surgeryId = isset($_SESSION['surgery_id']) ? $_SESSION['surgery_id'] : null;
 
@@ -44,12 +53,11 @@ if (isset($_POST['submit'])) {
     switch ($section) {
         case 'basic':
             if (isset($_POST['submit'])) {
+
+                $patientId = $_POST['patient_id'];
+                $surgeryId = $_POST['surgery_id'];
             
-                $stmtCheck = $db->prepare('SELECT COUNT(*) FROM POA_questionnaire WHERE surgery_id = :surgery_id');
-                $stmtCheck->bindValue(':surgery_id', $surgeryId, SQLITE3_INTEGER);
-                $resultCheck = $stmtCheck->execute()->fetchArray();
-            
-                if ($resultCheck[0] > 0) {
+                if (checkRecordExists($db, $surgeryId)) {
                     $stmt = $db->prepare('UPDATE POA_questionnaire SET date_of_poa = :poadate, surname = :surname, first_name = :fname, address = :address, date_of_birth = :dob, sex = :sex, age = :age, telephone_number = :phone, occupation = :occupation, religion = :religion, emergency_contact_number = :emergency WHERE surgery_id = :surgery_id');
                     $stmt->bindValue(':surgery_id', $surgeryId, SQLITE3_INTEGER);
                     $stmt->bindValue(':poadate', $_POST['poadate'], SQLITE3_TEXT);
@@ -90,12 +98,8 @@ if (isset($_POST['submit'])) {
 
                 $patientId = $_POST['patient_id'];
                 $surgeryId = $_POST['surgery_id'];
-                
-                $stmtCheck = $db->prepare('SELECT COUNT(*) FROM POA_questionnaire WHERE surgery_id = :surgery_id');
-                $stmtCheck->bindValue(':surgery_id', $surgeryId, SQLITE3_INTEGER);
-                $resultCheck = $stmtCheck->execute()->fetchArray();
 
-            if ($resultCheck[0] > 0) {
+                if (checkRecordExists($db, $surgeryId)) {
                 $heart_value = ($_POST['heart'] == 'yes') ? 1 : 0;
                 $MI_value = ($_POST['MI'] == 'yes') ? 1 : 0;
                 $hypertension_value = ($_POST['hypertension'] == 'yes') ? 1 : 0;
@@ -147,12 +151,8 @@ if (isset($_POST['submit'])) {
 
                 $patientId = $_POST['patient_id'];
                 $surgeryId = $_POST['surgery_id'];
-                
-                $stmtCheck = $db->prepare('SELECT COUNT(*) FROM POA_questionnaire WHERE surgery_id = :surgery_id');
-                $stmtCheck->bindValue(':surgery_id', $surgeryId, SQLITE3_INTEGER);
-                $resultCheck = $stmtCheck->execute()->fetchArray();
             
-                if ($resultCheck[0] > 0) {
+                if (checkRecordExists($db, $surgeryId)) {
                 $pregnant_value = ($_POST['pregnant'] == 'yes') ? 1 : 0;
             
                 $stmt = $db->prepare('UPDATE POA_questionnaire SET pregnant = :pregnant, other_health_conditions = :other, previous_medication = :medication, percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
