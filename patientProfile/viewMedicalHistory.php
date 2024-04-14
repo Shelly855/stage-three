@@ -1,16 +1,40 @@
 <?php
- session_start();
-$db = new SQLite3('C:\xampp\data\stage_3.db');
 
-if (!$db) {
-    die("Failed to connect to the database.");
+function getPatients()
+{
+    $db = new SQLite3('C:\xampp\data\stage_3.db');
+
+    if (!$db) {
+        die("Failed to connect to the database.");
+    }
+
+    $sql = "
+    SELECT 
+        users.user_id,
+        patients.medical_conditions,
+        patients.previous_medical_conditions
+    FROM 
+        patients
+    JOIN 
+        users ON patients.user_id = users.user_id";
+
+    $stmt = $db->prepare($sql);
+    $result = $stmt->execute();
+
+    if (!$result) {
+        die("Error executing query: " . $db->lastErrorMsg());
+    }
+
+    $arrayResult = [];
+    while ($row = $result->fetchArray()) {
+        $arrayResult[] = $row;
+    }
+    return $arrayResult;
+   
 }
-$patientId = $_SESSION['patient_id'];
-$query = "SELECT * FROM patient WHERE user_id='$patient'";
-$res = $db->query($query);
-$row = $res->fetchArray(SQLITE3_ASSOC);
-?>
+$patients = getPatients();
 
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,30 +45,36 @@ $row = $res->fetchArray(SQLITE3_ASSOC);
     <title>My Medical History</title>
 </head>
 <body>
-    <div class="container"> 
+<div class="container"> 
         <?php
             include("../includes/patientHeader.php");
         ?>  
-        <main> 
-         <h1>Medical History</h1>
-         <table class="detailsTable">
-            <tr> 
-                <td>User ID</td>
-                <td><?php echo $row['user_id']; ?></td>
-            </tr>            
-            <tr> 
-                <td>Medical Conditions</td>
-                <td><?php echo $row['medical_conditions']; ?></td>
-            </tr>
-            <tr> 
-                <td>Previous Medical Conditions</td>
-                <td><?php echo $row['previous_medical_conditions']; ?></td>
-            </tr>
-</table>  
- </main>
+        <main>
+            <h1>Medical History</h1>
+
+            <div class="detailsTable">
+                <table>
+                    <thead>
+                            <th>User ID</th>
+                            <th>Medical Conditions</th>
+                            <th>Previous Medical Conditions</th>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($patients as $patient): ?>
+                            <tr>
+                                <td><?php echo $patient['user_id']; ?></td>
+                                <td><?php echo $patient['medical_conditions']; ?></td>
+                                <td><?php echo $patient['previous_medical_conditions']; ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>   
+            </div> 
+        </main>
         <?php
             include("../includes/footer.php");
         ?>
     </div>
 </body>
 </html>
+
