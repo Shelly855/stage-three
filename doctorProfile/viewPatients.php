@@ -79,6 +79,9 @@ $patients = getPatients();
                                 <td><?php echo $patient['date_of_birth']; ?></td>
                                 <td><?php echo $patient['medical_conditions']; ?></td>
                                 <td><?php echo $patient['previous_medical_conditions']; ?></td>
+                                 <td>
+                                    <a href="../doctorProfile/updateMedicalConditions.php?pid=<?php echo $patient['patient_id']; ?>">Update</a>
+                                </td>
                             </tr>
                         <?php endforeach; ?>
                     </tbody>
