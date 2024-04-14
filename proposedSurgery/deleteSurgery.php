@@ -2,10 +2,17 @@
 $db = new SQLITE3('C:\xampp\data\stage_3.db');
 
 if (isset($_POST['delete'])) {
-    $stmt = $db->prepare("DELETE FROM surgery WHERE surgery_id = :sid");
-    $stmt->bindValue(':sid', $_POST['sid']);
-    $result = $stmt->execute();
-    if ($result) {
+    $surgeryId = $_POST['sid'];
+
+    $stmtDeleteQuestionnaire = $db->prepare("DELETE FROM POA_questionnaire WHERE surgery_id = :sid");
+    $stmtDeleteQuestionnaire->bindValue(':sid', $surgeryId);
+    $resultDeleteQuestionnaire = $stmtDeleteQuestionnaire->execute();
+
+    $stmtDeleteSurgery = $db->prepare("DELETE FROM surgery WHERE surgery_id = :sid");
+    $stmtDeleteSurgery->bindValue(':sid', $surgeryId);
+    $resultDeleteSurgery = $stmtDeleteSurgery->execute();
+
+    if ($resultDeleteSurgery && $resultDeleteQuestionnaire) {
         header("Location: ../proposedSurgery/deleteSurgerySuccess.php?deleted=true");
         exit();
     } else {
