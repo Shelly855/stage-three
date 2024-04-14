@@ -101,7 +101,7 @@ $surgeries = getSurgeries();
                                         if (!$completed) {
                                             echo 'Not completed';
                                         } else {
-                                            echo '<a href="../questionnaire/reviewAnswers.php?surgery_id=' . $surgery['surgery_id'] . '">Review Answers</a>';
+                                            echo '<a href="../doctorProfile/viewPOAanswers.php?surgery_id=' . $surgery['surgery_id'] . '">Review Answers</a>';
                                         }
                                     ?>
                                 </td>
