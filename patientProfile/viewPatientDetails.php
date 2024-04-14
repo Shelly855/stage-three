@@ -1,5 +1,5 @@
 <?php
- session_start();
+session_start();
 $db = new SQLite3('C:\xampp\data\stage_3.db');
 
 if (!$db) {
@@ -8,10 +8,13 @@ if (!$db) {
 
 $patient = $_SESSION['patient_id'];
 $query = "SELECT * FROM patients WHERE patient_id='$patient'";
-$res= new SQLite3_query($query);
-$row = new SQLite3_fetch_array($res);
-?>
+$res = $db->query($query);
 
+if ($res) {
+    $row = $res->fetchArray(SQLITE3_ASSOC);
+
+    if ($row !== false) {
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -23,47 +26,49 @@ $row = new SQLite3_fetch_array($res);
 </head>
 <body>
     <div class="container"> 
-        <?php
-            include("../includes/patientHeader.php");
-        ?>  
+        <?php include("../includes/patientHeader.php"); ?>  
         <main> 
-         <h1>Personal Details</h1>
-         <table class="detailsTable">
-            <tr> 
-                <td>Patient ID</td>
-                <td><?php echo $row['patient_id']; ?></td>
-            </tr>
-            <tr> 
-                <td>Username</td>
-                <td><?php echo $row['username']; ?></td>
-            </tr>            
-            <tr> 
-                <td>First Name</td>
-                <td><?php echo $row['first_name']; ?></td>
-            </tr>
-            <tr> 
-                <td>Surname</td>
-                <td><?php echo $row['surname']; ?></td>
-            </tr>            
-            <tr> 
-                <td>Date of Birth</td>
-                <td><?php echo $row['date_of_birth']; ?></td>
-            </tr>
-            <tr> 
-                <td>Email</td>
-                <td><?php echo $row['email']; ?></td>
-            </tr>
-            <tr> 
-                <td>Mobile Number</td>
-                <td><?php echo $row['mobile_number']; ?></td>
-            </tr>
-
-</table>  
- </main>
-        <?php
-            include("../includes/footer.php");
-        ?>
+            <h1>Personal Details</h1>
+            <table class="detailsTable">
+                <tr> 
+                    <td>Patient ID</td>
+                    <td><?php echo $row['patient_id']; ?></td>
+                </tr>
+                <tr> 
+                    <td>Username</td>
+                    <td><?php echo $row['username']; ?></td>
+                </tr>            
+                <tr> 
+                    <td>First Name</td>
+                    <td><?php echo $row['first_name']; ?></td>
+                </tr>
+                <tr> 
+                    <td>Surname</td>
+                    <td><?php echo $row['surname']; ?></td>
+                </tr>            
+                <tr> 
+                    <td>Date of Birth</td>
+                    <td><?php echo $row['date_of_birth']; ?></td>
+                </tr>
+                <tr> 
+                    <td>Email</td>
+                    <td><?php echo $row['email']; ?></td>
+                </tr>
+                <tr> 
+                    <td>Mobile Number</td>
+                    <td><?php echo $row['mobile_number']; ?></td>
+                </tr>
+            </table>  
+        </main>
+        <?php include("../includes/footer.php"); ?>
     </div>
 </body>
 </html>
-
+<?php
+    } else {
+        echo "No results found.";
+    }
+} else {
+    echo "Error executing query.";
+}
+?>
