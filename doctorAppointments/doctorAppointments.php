@@ -11,8 +11,9 @@
     <div class="container">
         <?php
             session_start();
-            include("../doctorAppointments/viewAppointmentSql.php");
-            include("../includes/doctorHeader.php");
+                include("../doctorAppointments/viewAppointmentSql.php");
+                include ("../includes/doctorHeader.php");
+                $appointments = getAppointments();
         ?>
         <main>
             <h1>Appointments</h1>
@@ -27,7 +28,8 @@
                             <th>Patient Name</th>
                             <th>Staff Name</th>
                             <th>Clinical Notes</th>
-                            <th>Medical History</th>
+                            <th>Medical Conditions</th>
+                            <th>Previous Medical Conditions</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -40,7 +42,8 @@
                                 <td><?php echo $appointment['patient_first_name'] . ' ' . $appointment['patient_surname']; ?></td>
                                 <td><?php echo $appointment['staff_first_name'] . ' ' . $appointment['staff_surname']; ?></td>
                                 <td><?php echo $appointment['clinical_notes']; ?></td>
-                                <td><?php echo $appointment['medical_history']; ?></td>
+                                <td><?php echo $appointment['medical_conditions']; ?></td>
+                                <td><?php echo $appointment['previous_medical_conditions']; ?></td>
                                 <td>
                                     <a href="../doctorAppointments/updateAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Update</a> 
                                 </td>
