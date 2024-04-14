@@ -274,4 +274,11 @@ form {
 #surgery-update{
     padding-bottom:20px;
 }
+.review-your-answers{
+    font-size:18px
+}
+#questionnaire-back-button{
+    font-size:18px;
+    font-weight: bold;
+}
 
