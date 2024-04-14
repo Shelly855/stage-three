@@ -7,7 +7,10 @@ if (!$db) {
 }
 
 $patient = $_SESSION['patient_id'];
-$query = "SELECT * FROM patients WHERE patient_id='$patient'";
+$query = "SELECT p.patient_id, u.username, u.first_name, u.surname, p.date_of_birth, p.email, p.mobile_number
+          FROM patients p
+          JOIN users u ON p.user_id = u.user_id
+          WHERE p.patient_id='$patient'";
 $res = $db->query($query);
 
 if ($res) {
