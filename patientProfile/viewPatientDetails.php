@@ -1,41 +1,14 @@
 <?php
-function getPatients()
-{
-    $db = new SQLite3('C:\xampp\data\stage_3.db');
+ session_start();
+$db = new SQLite3('C:\xampp\data\stage_3.db');
 
-    if (!$db) {
-        die("Failed to connect to the database.");
-    }
-
-    $sql = "
-    SELECT 
-        users.user_id,
-        users.username,
-        users.first_name,
-        users.surname,        
-        patients.date_of_birth,
-        patients.email,
-        patients.mobile_number,
-    FROM 
-        patients
-    JOIN 
-        users ON patients.user_id = users.user_id";
-
-    $stmt = $db->prepare($sql);
-    $result = $stmt->execute();
-
-    if (!$result) {
-        die("Error executing query: " . $db->lastErrorMsg());
-    }
-
-    $arrayResult = [];
-    while ($row = $result->fetchArray()) {
-        $arrayResult[] = $row;
-    }
-    return $arrayResult;
-   
+if (!$db) {
+    die("Failed to connect to the database.");
 }
-$patients = getPatients();
+$patientId = $_SESSION['patient_id'];
+$query = "SELECT * FROM patient WHERE user_id='$patient'";
+$res = $db->query($query);
+$row = $res->fetchArray(SQLITE3_ASSOC);
 ?>
 
 <!DOCTYPE html>
@@ -48,40 +21,44 @@ $patients = getPatients();
     <title>My Details</title>
 </head>
 <body>
-<div class="container"> 
+    <div class="container"> 
         <?php
             include("../includes/patientHeader.php");
         ?>  
-        <main>
-            <h1>Personal Details</h1>
+        <main> 
+         <h1>Personal Details</h1>
+         <table class="detailsTable">
+            <tr> 
+                <td>User ID</td>
+                <td><?php echo $row['user_id']; ?></td>
+            </tr>
+            <tr> 
+                <td>Username</td>
+                <td><?php echo $row['username']; ?></td>
+            </tr>            
+            <tr> 
+                <td>First Name</td>
+                <td><?php echo $row['first_name']; ?></td>
+            </tr>
+            <tr> 
+                <td>Surname</td>
+                <td><?php echo $row['surname']; ?></td>
+            </tr>            
+            <tr> 
+                <td>Date of Birth</td>
+                <td><?php echo $row['date_of_birth']; ?></td>
+            </tr>
+            <tr> 
+                <td>Email</td>
+                <td><?php echo $row['email']; ?></td>
+            </tr>
+            <tr> 
+                <td>Mobile Number</td>
+                <td><?php echo $row['mobile_number']; ?></td>
+            </tr>
 
-            <div class="detailsTable">
-                <table>
-                    <thead>
-                            <th>User ID</th>
-                            <th>Username</th>
-                            <th>First Name</th>
-                            <th>Surname</th>
-                            <th>Date of Birth</th>
-                            <th>Email</th>
-                            <th>Mobile Number</th>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($patients as $patient): ?>
-                            <tr>
-                                <td><?php echo $patient['user_id']; ?></td>
-                                <td><?php echo $patient['username']; ?></td>
-                                <td><?php echo $patient['first_name']; ?></td>
-                                <td><?php echo $patient['surname']; ?></td>                                
-                                <td><?php echo $patient['date_of_birth']; ?></td>
-                                <td><?php echo $patient['email']; ?></td>
-                                <td><?php echo $patient['mobile_number']; ?></td>
-                            </tr>
-                        <?php endforeach; ?>
-                    </tbody>
-                </table>   
-            </div> 
-        </main>
+</table>  
+ </main>
         <?php
             include("../includes/footer.php");
         ?>
