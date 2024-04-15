@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
         $result = $stmt->execute();
 
         if ($result) {
-            header('Location: updateMedicalConditionsSuccess.php?updated=true');
+            header('Location: ../doctorProfile/updateMedicalConditionsSuccess.php?updated=true');
             exit;
         } else {
             echo "Error updating patient.";
@@ -95,7 +95,7 @@ if (isset($_GET['pid'])) {
                 <span class="blank-error"><?php echo $errorpmc; ?></span>
 
                 <input type="submit" value="Update Patient" name="submit">
-                <a href="../adminPatientProfiles/adminPatientProfiles.php" class="back-button">Back</a>
+                <a href="../doctorPatientProfiles/doctorPatientProfiles.php" class="back-button">Back</a>
             </form>
         </main>
         <?php
