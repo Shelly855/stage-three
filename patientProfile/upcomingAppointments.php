@@ -46,7 +46,7 @@ if ($res) {
                     <td>Appointment Time</td>
                     <td><?php echo $row['time']; ?></td>
                 </tr>
-                <tr> 
+    </tr> 
             </table>  
         </main>
         <?php include("../includes/footer.php"); ?>
