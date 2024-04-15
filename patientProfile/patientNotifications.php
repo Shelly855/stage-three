@@ -9,11 +9,17 @@ if (!$db) {
 $patient = $_SESSION['patient_id'];
 $query = "SELECT * FROM appointments WHERE patient_id='$patient' AND date >= date('now') ORDER BY date LIMIT 1";
 $res = $db->query($query);
+if (!$res) {
+    die("Error executing appointment query: " . $db->lastErrorMsg());
+}
 $appointment = $res->fetchArray(SQLITE3_ASSOC);
 
 //check poa assigned
 $queryPOA = "SELECT * FROM poa_questionnaire WHERE patient_id='$patient' AND assigned=1";
 $resPOA = $db->query($queryPOA);
+if (!$res) {
+    die("Error executing appointment query: " . $db->lastErrorMsg());
+}
 $assignedPoa = $resPOA->fetchArray(SQLITE3_ASSOC);
 ?>
 
