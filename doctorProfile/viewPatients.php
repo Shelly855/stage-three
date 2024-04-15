@@ -10,6 +10,7 @@ function getPatients()
 
     $sql = "
     SELECT 
+        patients.patient_id,
         users.first_name,
         users.surname,
         patients.email,
