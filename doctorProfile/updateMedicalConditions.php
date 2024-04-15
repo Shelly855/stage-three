@@ -95,7 +95,7 @@ if (isset($_GET['pid'])) {
                 <span class="blank-error"><?php echo $errorpmc; ?></span>
 
                 <input type="submit" value="Update Patient" name="submit">
-                <a href="../doctorPatientProfiles/doctorPatientProfiles.php" class="back-button">Back</a>
+                <a href="../doctorProfile/viewPatients.php" class="back-button">Back</a>
             </form>
         </main>
         <?php
