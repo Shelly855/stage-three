@@ -32,7 +32,7 @@
                         <div class="dashboardBoxes">
                             <div class="pageLinks">
                                 <p class="headings">Your Appointments</p>
-                                <a href="upcomingAppointments.php">Past and Upcoming Appointments</a> 
+                                <a href="upcomingAppointments.php">Upcoming Appointments</a> 
                             </div>';
 
                 $preOpAssessmentLinks = '';
