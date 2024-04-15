@@ -7,11 +7,11 @@ $allFields = true;
 
 if (isset($_POST['submit'])) {
 
-    if (empty($_POST['mc'])) {
+    if (empty($_POST['medical_conditions'])) {
         $errormc = "Medical Conditions must be filled out";
         $allFields = false;
     }
-    if (empty($_POST['pmc'])) {
+    if (empty($_POST['previous_medical_conditions'])) {
         $errorpmc = "Previous Medical Conditions must be filled out";
         $allFields = false;
     }
@@ -19,12 +19,10 @@ if (isset($_POST['submit'])) {
 
     if ($allFields) {
 
-        $stmt = $db->prepare("UPDATE patients SET first_name = :pfname, surname = :psurname, medical_conditions = :medical_conditions, previous_medica_conditions = :previous_medical_conditions WHERE patient_id = :pid");
-        $stmt->bindValue(':pid', $_POST['patient_id'], SQLITE3_INTEGER);
-        $stmt->bindValue(':pfname', $_POST['pfname'], SQLITE3_TEXT);
-        $stmt->bindValue(':psurname', $_POST['psurname'], SQLITE3_TEXT);
+        $stmt = $db->prepare("UPDATE patients SET medical_conditions = :medical_conditions, previous_medical_conditions = :previous_medical_conditions WHERE patient_id = :pid");
         $stmt->bindValue(':medical_conditions', $_POST['medical_conditions'], SQLITE3_TEXT);
         $stmt->bindValue(':previous_medical_conditions', $_POST['previous_medical_conditions'], SQLITE3_TEXT);
+        $stmt->bindValue(':pid', $_POST['patient_id'], SQLITE3_INTEGER);
 
         $result = $stmt->execute();
 
@@ -35,19 +33,7 @@ if (isset($_POST['submit'])) {
             echo "Error updating patient.";
         }
     }
-    function getpatient($db, $patient_id) {
-        $stmt = $db->prepare("SELECT u.first_name, u.surname FROM patients p JOIN users u ON p.user_id = u.user_id WHERE p.patient_id = :pid");
-        $stmt->bindValue(':pid', $patient_id, SQLITE3_INTEGER);
-        $result = $stmt->execute();
-        $patient = $result->fetchArray(SQLITE3_ASSOC);
-        
-        if ($patient) {
-            return $patient['first_name'] . ' ' . $patient['surname'];
-        } else {
-            return 'Unknown';
-        }
     }
-}
 
 if (isset($_GET['pid'])) {
     $stmt = $db->prepare('SELECT * FROM patients WHERE patient_id = :pid');
@@ -79,18 +65,14 @@ if (isset($_GET['pid'])) {
                 <?php if (isset($patient)): ?>
                     <input type="hidden" name="patient_id" value="<?php echo $patient['patient_id']; ?>">
                 <?php endif; ?>
-                <div id="patient-update">
-                    <label>Patient Name:</label>
-                    <span><?php echo isset($patient_name) ? $patient_name : ''; ?></span>
-                </div>
 
                 <label>Medical Conditions</label>
-                <input type="text" name="medicalconditions"
+                <input type="text" name="medical_conditions"
                     value="<?php echo isset($patient['medical_conditions']) ? $patient['medical_conditions'] : ''; ?>">
                 <span class="blank-error"><?php echo $errormc; ?></span>
 
                 <label>Previous Medical Conditions</label>
-                <input type="number" name="previousmedicalconditions"
+                <input type="text" name="previous_medical_conditions"
                     value="<?php echo isset($patient['previous_medical_conditions']) ? $patient['previous_medical_conditions'] : ''; ?>">
                 <span class="blank-error"><?php echo $errorpmc; ?></span>
 
