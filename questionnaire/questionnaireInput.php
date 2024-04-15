@@ -155,7 +155,8 @@ if (isset($_POST['submit'])) {
                 if (checkRecordExists($db, $surgeryId)) {
                 $pregnant_value = ($_POST['pregnant'] == 'yes') ? 1 : 0;
             
-                $stmt = $db->prepare('UPDATE POA_questionnaire SET pregnant = :pregnant, other_health_conditions = :other, previous_medication = :medication, percentage_completed = :percentage_completed WHERE poa_form_id = :poa_form_id');
+                $stmt = $db->prepare('UPDATE POA_questionnaire SET pregnant = :pregnant, other_health_conditions = :other, previous_medication = :medication, percentage_completed = :percentage_completed WHERE surgery_id = :surgery_id');
+                $stmt->bindValue(':surgery_id', $surgeryId, SQLITE3_INTEGER);
                 $stmt->bindValue(':pregnant', $pregnant_value, SQLITE3_INTEGER);
                 $stmt->bindValue(':other', $_POST['other'], SQLITE3_TEXT);
                 $stmt->bindValue(':medication', $_POST['medication'], SQLITE3_TEXT);
