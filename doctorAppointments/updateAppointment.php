@@ -26,22 +26,18 @@
 
         if (isset($_POST['submit'])) {
 
-            if ($allFields) {
+            $stmt = $db->prepare("UPDATE appointments SET clinical_notes = :notes WHERE appointment_id = :aid");
+            $stmt->bindValue(':notes', $_POST['notes']);
+            $stmt->bindValue(':aid', $_GET['aid']);
 
-                $stmt = $db->prepare("UPDATE appointments SET clinical_notes = :notes WHERE appointment_id = :aid");
-                $stmt->bindValue(':notes', $_POST['notes']);
-                $stmt->bindValue(':aid', $_GET['aid']);
+            $result = $stmt->execute();
 
-                $result = $stmt->execute();
-
-                if ($result) {
-                    header('Location: ../doctorAppointments/doctorAppointments.php');
-                    exit;
-                } else {
-                    echo "Error updating appointment.";
-                }
+            if ($result) {
+                header('Location: ../doctorAppointments/doctorAppointments.php');
+                exit;
+            } else {
+                echo "Error updating appointment.";
             }
-            
         }
 
         ?>
