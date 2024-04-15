@@ -10,7 +10,6 @@ $patient = $_SESSION['patient_id'];
 $query = "SELECT * FROM appointments WHERE patient_id='$patient'";
 $res = $db->query($query);
 
-include("../includes/patientHeader.php");
 ?>
 
 <!DOCTYPE html>
@@ -24,6 +23,7 @@ include("../includes/patientHeader.php");
 </head>
 <body>
     <div class="container"> 
+        <?php include("../includes/patientHeader.php"); ?>  
         <main> 
             <?php
             if ($res) {
@@ -59,7 +59,8 @@ include("../includes/patientHeader.php");
             }
             ?>
         </main>
+    <?php include("../includes/footer.php"); ?>    
     </div>
-    <?php include("../includes/footer.php"); ?>
+
 </body>
 </html>
