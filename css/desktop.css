@@ -281,4 +281,13 @@ form {
     font-size:18px;
     font-weight: bold;
 }
-
+.notification{
+    padding: 10px 12px;
+    text-align: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    border-bottom: 5px solid green;
+    border: 1px solid #000000;
+    border-radius: 8px;
+    background-color: #A8F0B6;
+}
