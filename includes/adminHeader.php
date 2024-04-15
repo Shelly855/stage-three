@@ -5,7 +5,6 @@
             <li><a href="../adminPatientProfiles/adminPatientProfiles.php">Patients</a></li>
             <li><a href="../adminUsers/adminUsers.php">Users</a></li>
             <li><a href="../adminAppointments/adminAppointments.php">Appointments</a></li>
-            <li><a href="../notifications.php">Notifications</a></li>
             <li><a href="../login/logout.php">Log Out</a></li>
         </ul>
     </nav>
