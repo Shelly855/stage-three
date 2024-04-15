@@ -6,8 +6,13 @@ if (!$db) {
     die("Failed to connect to the database.");
 }
 
+$surgery_id = isset($_GET['surgery_id']) ? $_GET['surgery_id'] : null;
+
+if (!$surgery_id) {
+    die("Surgery ID not provided.");
+}
+
 // Check appointments
-$surgery_id = $_SESSION['surgery_id']; 
 $query = "SELECT * FROM appointments WHERE surgery_id='$surgery_id' AND date >= date('now') ORDER BY date LIMIT 1";
 $res = $db->query($query);
 if (!$res) {
@@ -44,7 +49,7 @@ $assignedPoa = $resPOA->fetchArray(SQLITE3_ASSOC);
             if ($appointment) {
                 echo '<div class="notification">';
                 echo '<h2>Upcoming Appointment</h2>';
-                echo '<p> You have an appointment on ' . $appointment['date'] . ' at ' . $appointment['time'] . '</p>'; // Added space between date and time
+                echo '<p> You have an appointment on ' . $appointment['date'] . ' at ' . $appointment['time'] . '</p>'; 
                 echo '</div>';
             } 
             else {
