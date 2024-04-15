@@ -69,6 +69,7 @@ $patients = getPatients();
                             <th>Date of Birth</th>
                             <th>Medical Conditions</th>
                             <th>Previous Medical Conditions</th>
+                            <th>Actions</th>
                     </thead>
                     <tbody>
                         <?php foreach ($patients as $patient): ?>
