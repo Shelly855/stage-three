@@ -10,11 +10,9 @@ $patient = $_SESSION['patient_id'];
 $query = "SELECT * FROM appointments WHERE patient_id='$patient'";
 $res = $db->query($query);
 
-if ($res) {
-    $row = $res->fetchArray(SQLITE3_ASSOC);
-
-    if ($row !== false) {
+include("../includes/patientHeader.php");
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -26,8 +24,13 @@ if ($res) {
 </head>
 <body>
     <div class="container"> 
-        <?php include("../includes/patientHeader.php"); ?>  
         <main> 
+            <?php
+            if ($res) {
+                $row = $res->fetchArray(SQLITE3_ASSOC);
+
+                if ($row !== false) {
+            ?>
             <h1>Appointments</h1>
             <table class="detailsTable">
                 <tr> 
@@ -35,7 +38,7 @@ if ($res) {
                     <td><?php echo $row['patient_id']; ?></td>
                 </tr>
                 <tr> 
-                    <td>Apoointment ID</td>
+                    <td>Appointment ID</td>
                     <td><?php echo $row['appointment_id']; ?></td>
                 </tr>
                 <tr> 
@@ -46,18 +49,17 @@ if ($res) {
                     <td>Appointment Time</td>
                     <td><?php echo $row['time']; ?></td>
                 </tr>
-    </tr> 
             </table>  
+            <?php
+                } else {
+                    echo "<h1>No Upcoming Appointments</h1>";
+                }
+            } else {
+                echo "<h1>Error executing query.</h1>";
+            }
+            ?>
         </main>
-        <?php include("../includes/footer.php"); ?>
     </div>
+    <?php include("../includes/footer.php"); ?>
 </body>
 </html>
-<?php
-    } else {
-        echo "You have no upcoming appointments";
-    }
-} else {
-    echo "Error executing query.";
-}
-?>
