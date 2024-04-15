@@ -7,8 +7,8 @@ if (!$db) {
 }
 
 // Check appointments
-$patient = $_SESSION['patient_id'];
-$query = "SELECT * FROM appointments WHERE patient_id='$patient' AND date >= date('now') ORDER BY date LIMIT 1";
+$surgery_id = $_SESSION['surgery_id']; 
+$query = "SELECT * FROM appointments WHERE surgery_id='$surgery_id' AND date >= date('now') ORDER BY date LIMIT 1";
 $res = $db->query($query);
 if (!$res) {
     die("Error executing appointment query: " . $db->lastErrorMsg());
@@ -16,9 +16,10 @@ if (!$res) {
 $appointment = $res->fetchArray(SQLITE3_ASSOC);
 
 // Check POA assigned
-$queryPOA = "SELECT * FROM poa_questionnaire WHERE patient_id='$patient' AND assigned=1";
+$patient_id = $_SESSION['patient_id']; 
+$queryPOA = "SELECT * FROM poa_questionnaire WHERE patient_id='$patient_id' AND assigned=1";
 $resPOA = $db->query($queryPOA);
-if (!$resPOA) { // Corrected from !$res to !$resPOA
+if (!$resPOA) {
     die("Error executing POA query: " . $db->lastErrorMsg());
 }
 $assignedPoa = $resPOA->fetchArray(SQLITE3_ASSOC);
