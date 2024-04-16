@@ -1,6 +1,6 @@
 <?php
 session_start();
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 
 function getPOAData($poaId) {
     $db = new SQLite3('C:\xampp\data\stage_3.db');
@@ -32,7 +32,6 @@ function checkRecordExists($db, $surgeryId) {
 
     return ($resultCheck[0] > 0);
 }
-
 
 $section = isset($_GET['section']) ? $_GET['section'] : 'basic';
 $surgeryId = isset($_SESSION['surgery_id']) ? $_SESSION['surgery_id'] : null;
