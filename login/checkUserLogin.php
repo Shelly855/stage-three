@@ -8,7 +8,7 @@ function verifyUser() {
         return array();
     }
 
-    $db = new SQLITE3('C:\xampp\data\stage_3.db');
+    include '../includes/dbConnection.php';
 
     if (!$db) {
         die("Failed to connect to the database.");
@@ -21,7 +21,6 @@ function verifyUser() {
     LEFT JOIN patients p ON u.user_id = p.user_id
     WHERE u.username=:username AND u.password=:password
 ');
-
 
 $stmt->bindParam(':username', $_POST['username'], SQLITE3_TEXT);
 $stmt->bindParam(':password', $_POST['password'], SQLITE3_TEXT);
@@ -38,7 +37,6 @@ $db->close();
 
 return $rows_array;
 }
-
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $verifiedUser = verifyUser();
@@ -70,5 +68,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<div id='error-message'>Invalid username or password. Please try again.</div>";
     }
 }
-
 ?>
