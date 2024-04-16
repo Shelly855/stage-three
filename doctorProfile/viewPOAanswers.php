@@ -1,9 +1,7 @@
 <?php
-
 function getPOAanswers()
 {
-    $db = new SQLITE3('C:\xampp\data\stage_3.db');
-
+    include '../includes/dbConnection.php';
     if (!$db) {
         die("Failed to connect to the database.");
     }
@@ -62,14 +60,12 @@ function getPOAanswers()
         $arrayResult[] = $row;
     }
     return $arrayResult;
-
 }
 $POAanswers = getPOAanswers();
-
 ?>
 
+<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -77,9 +73,6 @@ $POAanswers = getPOAanswers();
     <link href="../css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
     <title>View Preoperative Assessment Answers</title>
 </head>
-
-<html>
-
 <body>
     <div class="container">
         <?php
@@ -162,15 +155,8 @@ $POAanswers = getPOAanswers();
                     </tbody>
                 </table>
             </div>
-
         </main>
-
-
-
         <?php include ("../includes/footer.php"); ?>
-
     </div>
-
 </body>
-
 </html>
