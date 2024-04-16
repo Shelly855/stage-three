@@ -1,5 +1,5 @@
 <?php
-$db = new SQLite3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 
 function isQuestionnaireAssigned($db, $sid) {
     $stmt = $db->prepare("SELECT COUNT(*) as count FROM POA_questionnaire WHERE surgery_id = :sid AND assigned = 1");
