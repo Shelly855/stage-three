@@ -1,6 +1,6 @@
 <?php
 session_start();
-$db = new SQLite3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 
 $patientId = $_SESSION['patient_id'];
 $surgeryId = $_SESSION['surgery_id'];
@@ -45,5 +45,4 @@ if (isset($_POST['submit']) &&
     header("Location: ../questionnaire/reviewAnswers.php?error=1");
     exit();
 }
-
 ?>
