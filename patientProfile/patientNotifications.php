@@ -6,18 +6,15 @@ if (!$db) {
     die("Failed to connect to the database.");
 }
 
-// Retrieve patient ID from session
 $patientId = $_SESSION['patient_id'];
 
-// check surgery assigned
 $sqlSurgery = "SELECT * FROM surgery WHERE patient_id = $patientId AND eligible = 1";
-$resultSurgery = mysqli_query($db, $sqlSurgery);
-$surgery = mysqli_num_rows($resultSurgery) > 0;
+$resultSurgery = $db->query($sqlSurgery);
+$surgery = $resultSurgery->fetchArray() ? true : false;
 
-// check poa assigned
 $sqlPOA = "SELECT * FROM POA_questionnaire WHERE patient_id = $patientId AND assigned = 1";
-$resultPOA = mysqli_query($db, $sqlPOA);
-$poa = mysqli_num_rows($resultPOA) > 0;
+$resultPOA = $db->query($sqlPOA);
+$poa = $resultPOA->fetchArray() ? true : false;
 
 ?>
 <!DOCTYPE html>
