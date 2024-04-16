@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 
 if (isset($_POST['delete'])) {
     if (isset($_POST['pid'])) {
@@ -43,7 +43,6 @@ if (isset($_GET['pid'])) {
     $result = $stmt->execute();
     $patient = $result->fetchArray(SQLITE3_ASSOC);
 }
-
 
 $db->close();
 ?>
