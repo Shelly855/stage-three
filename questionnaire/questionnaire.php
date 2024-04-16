@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 
 if (!isset($_SESSION['patient_id'])) {
     header("Location: ../login/logout.php");
