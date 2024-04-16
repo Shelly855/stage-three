@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 $errorfname = $errorsurname = $errorrole = $erroruname = $errorpwd = "";
 $allFields = true;
 
