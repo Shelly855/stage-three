@@ -1,6 +1,6 @@
 <?php
 session_start();
-$db = new SQLite3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 
 $patientId = $_SESSION['patient_id'];
 $surgeryId = $_SESSION['surgery_id'];
@@ -51,7 +51,6 @@ function checkFieldsBlank($db, $surgeryId) {
     }
 }
 
-
 if (isset($_POST['submit'])) {
     if (!checkFieldsBlank($db, $surgeryId)) {
         $query = "UPDATE POA_questionnaire SET completed = 1, percentage_completed = 100 WHERE surgery_id = :surgery_id";
@@ -73,7 +72,6 @@ $stmt->bindValue(':surgery_id', $surgeryId, SQLITE3_INTEGER);
 $result = $stmt->execute();
 
 $row = $result->fetchArray();
-
 ?>
 
 <!DOCTYPE html>
