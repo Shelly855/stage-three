@@ -1,9 +1,7 @@
 <?php
-
 function getPatients()
 {
-    $db = new SQLite3('C:\xampp\data\stage_3.db');
-
+    include '../includes/dbConnection.php';
     if (!$db) {
         die("Failed to connect to the database.");
     }
@@ -35,10 +33,8 @@ function getPatients()
         $arrayResult[] = $row;
     }
     return $arrayResult;
-   
 }
 $patients = getPatients();
-
 ?>
 
 <!DOCTYPE html>
@@ -53,12 +49,10 @@ $patients = getPatients();
 <body>
     <div class="container">
         <?php
-        
             include("../includes/doctorHeader.php");
         ?>
         <main>
             <h1>Patient Records</h1>
-
             <div class="table-container">
                 <table>
                     <thead>
