@@ -151,6 +151,7 @@ form {
 .back-button {
     font-weight: bold;
     padding-left: 30px;
+    font-size:20px;
 }
 .confirm {
     color: darkred;
