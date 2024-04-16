@@ -1,10 +1,9 @@
 <?php
-
 $errorfname = $errorsurname = $errorrole = $erroruname = $errorpwd = "";
 $allFields = true;
 
 if (isset($_POST['submit'])) {
-    $db = new SQLITE3('C:\xampp\data\stage_3.db');
+    include '../includes/dbConnection.php';
 
     if (empty($_POST['fname'])) {
         $errorfname = "First Name is mandatory";
