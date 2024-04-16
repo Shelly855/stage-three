@@ -24,19 +24,36 @@
         }
         
 
+        $erroraid = $errordate = $errortime = "";
+        $allFields = true;
+
         if (isset($_POST['submit'])) {
 
-            $stmt = $db->prepare("UPDATE appointments SET clinical_notes = :notes WHERE appointment_id = :aid");
-            $stmt->bindValue(':notes', $_POST['notes']);
-            $stmt->bindValue(':aid', $_GET['aid']);
+            if (empty($_POST['date'])) {
+                $errordate = "Date is mandatory";
+                $allFields = false;
+            }
+            if (empty($_POST['time'])) {
+                $errortime = "Time is mandatory";
+                $allFields = false;
+            }
 
-            $result = $stmt->execute();
+            if ($allFields) {
 
-            if ($result) {
-                header('Location: ../doctorAppointments/doctorAppointments.php');
-                exit;
-            } else {
-                echo "Error updating appointment.";
+                $stmt = $db->prepare("UPDATE appointments SET date = :date, time = :time, clinical_notes = :notes WHERE appointment_id = :aid");
+                $stmt->bindValue(':date', $_POST['date']);
+                $stmt->bindValue(':time', $_POST['time']);
+                $stmt->bindValue(':notes', $_POST['notes']);
+                $stmt->bindValue(':aid', $_GET['aid']);
+
+                $result = $stmt->execute();
+
+                if ($result) {
+                    header('Location: ../doctorAppointments/doctorAppointments.php');
+                    exit;
+                } else {
+                    echo "Error updating appointment.";
+                }
             }
         }
 
@@ -44,6 +61,20 @@
         <main>
             <h1>Update Appointment</h1>
             <form method="post">
+            <?php if (isset($patient)): ?>
+                    <input type="hidden" name="patient_id" value="<?php echo $patient['patient_id']; ?>">
+                <?php endif; ?>
+                <div id="patient-update">
+                    <label>Patient Name:</label>
+                    <span><?php echo isset($patient_name) ? $patient_name : ''; ?></span>
+                </div>
+                <label>Date</label>
+                <input type="date" name="date" value="<?php echo $arrayResult[0][1]; ?>">
+                <span class="blank-error"><?php echo $errordate; ?></span>
+
+                <label>Time</label>
+                <input type="time" name="time" value="<?php echo $arrayResult[0][2]; ?>">
+                <span class="blank-error"><?php echo $errortime; ?></span>
 
                 <label>Clinical Notes</label>
                 <input type="text" name="notes" value="<?php echo $arrayResult[0][3]; ?>">
