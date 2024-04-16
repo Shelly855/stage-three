@@ -1,5 +1,5 @@
 <?php
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 
 if (isset($_POST['delete'])) {
     $surgeryId = $_POST['sid'];
