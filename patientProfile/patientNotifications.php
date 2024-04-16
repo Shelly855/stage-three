@@ -6,9 +6,11 @@ if (!$db) {
     die("Failed to connect to the database.");
 }
 
+// Retrieve patient ID from session
+$patientId = $_SESSION['patient_id'];
+
 // check surgery assigned
-$patient = $_SESSION['patient_id'];
-$sqlSurgery = "SELECT * FROM surgery WHERE patient_id = $patient";
+$sqlSurgery = "SELECT * FROM surgery WHERE patient_id = $patientId AND eligible = 1";
 $resultSurgery = mysqli_query($db, $sqlSurgery);
 $surgery = mysqli_num_rows($resultSurgery) > 0;
 
