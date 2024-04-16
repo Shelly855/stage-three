@@ -292,3 +292,7 @@ form {
     border-radius: 8px;
     background-color: #A8F0B6;
 }
+#eligibility-message{
+    font-size:20px;
+    padding-left:30px;
+}
