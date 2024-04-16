@@ -12,8 +12,7 @@
         <?php
             session_start();
             include("../includes/patientHeader.php");
-
-            $db = new SQLite3('C:\xampp\data\stage_3.db');
+            include '../includes/dbConnection.php';
 
             $patientId = $_SESSION['patient_id'];
 
@@ -57,7 +56,6 @@
                     </div>
                     </main>';
             }
-
             $db->close();
             include("../includes/footer.php");
         ?>
