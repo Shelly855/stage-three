@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 $errormc = $errorpmc = "";
 $allFields = true;
 
 if (isset($_POST['submit'])) {
-
+    
     if (empty($_POST['medical_conditions'])) {
         $errormc = "Medical Conditions must be filled out";
         $allFields = false;
@@ -16,9 +16,7 @@ if (isset($_POST['submit'])) {
         $allFields = false;
     }
 
-
     if ($allFields) {
-
         $stmt = $db->prepare("UPDATE patients SET medical_conditions = :medical_conditions, previous_medical_conditions = :previous_medical_conditions WHERE patient_id = :pid");
         $stmt->bindValue(':medical_conditions', $_POST['medical_conditions'], SQLITE3_TEXT);
         $stmt->bindValue(':previous_medical_conditions', $_POST['previous_medical_conditions'], SQLITE3_TEXT);
@@ -45,7 +43,6 @@ if (isset($_GET['pid'])) {
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -53,7 +50,6 @@ if (isset($_GET['pid'])) {
     <link href="../css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
     <title>Update Patient</title>
 </head>
-
 <body>
     <div class="container">
         <?php
@@ -85,5 +81,4 @@ if (isset($_GET['pid'])) {
         ?>
     </div>
 </body>
-
 </html>
