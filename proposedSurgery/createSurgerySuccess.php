@@ -19,8 +19,6 @@
     <div class="container">
         <?php
             include("../includes/doctorHeader.php");
-
-            $db = new SQLITE3('C:\xampp\data\stage_3.db');
         ?>  
         <main>
             <h1><?php echo $message; ?></h1>
@@ -30,8 +28,6 @@
         </main>
         <?php
             include("../includes/footer.php");
-
-            $db->close();
         ?>
     </div>
 </body>
