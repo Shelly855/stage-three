@@ -1,5 +1,5 @@
 <?php
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 
 if (isset($_POST['assign'])) {
     $sql = "INSERT INTO POA_questionnaire (surgery_id, assigned, completed, percentage_completed) VALUES (:sid, 1, 0, 0)";
