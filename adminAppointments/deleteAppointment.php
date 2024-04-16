@@ -13,7 +13,11 @@ if (isset($_POST['delete'])) {
     }
 }
 
-$sql = "SELECT date, time, patient_id, staff_id FROM appointments WHERE appointment_id=:aid";
+$sql = "SELECT a.date, a.time, u_patient.first_name AS patient_first_name, u_user.surname AS patient_last_name, u_user.first_name AS user_first_name, u_user.surname AS user_last_name 
+        FROM appointments AS a 
+        JOIN users AS u_patient ON a.patient_id = u_patient.user_id 
+        JOIN users AS u_user ON a.user_id = u_user.user_id 
+        WHERE a.appointment_id = :aid";
 $stmt = $db->prepare($sql);
 $stmt->bindValue(':aid', $_GET['aid']);
 $result = $stmt->execute();
@@ -51,12 +55,20 @@ $db->close();
                 <label><?php echo $arrayResult[0][1] ?></label>
             </div>
             <div class="delete-data">
-                <label class="delete-label">Patient ID:</label>
+                <label class="delete-label">Patient First Name:</label>
                 <label><?php echo $arrayResult[0][2] ?></label>
             </div>
             <div class="delete-data">
-                <label class="delete-label">Staff ID:</label>
+                <label class="delete-label">Patient Last Name:</label>
                 <label><?php echo $arrayResult[0][3] ?></label><br>
+            </div>
+            <div class="delete-data">
+                <label class="delete-label">Staff First Name:</label>
+                <label><?php echo $arrayResult[0][4] ?></label><br>
+            </div>
+            <div class="delete-data">
+                <label class="delete-label">Staff Last Name:</label>
+                <label><?php echo $arrayResult[0][5] ?></label><br>
             </div>
             <form method="post">
                 <input type="hidden" name="aid" value="<?php echo $_GET['aid'] ?>"><br>
@@ -69,3 +81,4 @@ $db->close();
     </div>
 </body>
 </html>
+
