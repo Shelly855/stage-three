@@ -1,12 +1,12 @@
 <?php
 session_start();
 
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 $errorsurgery = "";
 $allFields = true;
 
 if (isset($_GET['sid'])) {
-    $db = new SQLITE3('C:\xampp\data\stage_3.db');
+    include '../includes/dbConnection.php';
     $surgery_id = $_GET['sid'];
     $stmt = $db->prepare("SELECT * FROM surgery WHERE surgery_id = :sid");
     $stmt->bindValue(':sid', $surgery_id, SQLITE3_INTEGER);
@@ -43,7 +43,6 @@ if (isset($_POST['submit'])) {
     }
 
     if ($allFields) {
-
         $stmt = $db->prepare("UPDATE surgery SET surgery_name = :surgery, eligible = :eligible WHERE surgery_id = :sid");
         $stmt->bindValue(':sid', $_POST['surgery_id'], SQLITE3_INTEGER);
         $stmt->bindValue(':surgery', $_POST['surgery'], SQLITE3_TEXT);
