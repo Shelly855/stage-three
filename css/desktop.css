@@ -296,3 +296,19 @@ form {
     font-size:20px;
     padding-left:30px;
 }
+section{
+    border: 5px solid #5b7e64;
+    width: 80%;
+    margin: 40px 40px 40px 130px;
+}
+section h2{
+    text-align: center;
+}
+section .assigned{
+    font-size: 20px;
+    border-top: 3px solid #658C6F;
+    padding: 10px;
+  }
+  section p {
+    padding: 0px 10px 10px 10px;
+}
