@@ -13,7 +13,7 @@
             session_start();
                 include("../doctorAppointments/viewAppointmentSql.php");
                 include ("../includes/doctorHeader.php");
-                $appointments = getAppointments($_SESSION['doctor_id']);
+                $appointments = getAppointments();
         ?>
         <main>
             <h1>Appointments</h1>
