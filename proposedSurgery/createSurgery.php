@@ -3,7 +3,7 @@ $errorpatient = $errorsurgery = "";
 $allFields = true;
 
 if (isset($_POST['submit'])) {
-    $db = new SQLITE3('C:\xampp\data\stage_3.db');
+    include '../includes/dbConnection.php';
 
     if (empty($_POST['patient_id']) || $_POST['patient_id'] == 0) {
         $errorpatient = "Please select a patient.";
@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
     }
 }
 
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 $stmt_patients = $db->prepare('SELECT patients.patient_id, users.first_name, users.surname FROM patients JOIN users ON patients.user_id = users.user_id');
 $result_patients = $stmt_patients->execute();
     
