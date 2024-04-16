@@ -1,3 +1,30 @@
+<?php
+ include '../includes/dbConnection.php';
+
+ if (!$db) {
+    die("Failed to connect to the database.");
+}
+
+$surgery_id = $_POST['surgery_id'];
+$eligible = isset($_POST['eligible']) ? 1 : 0; 
+
+$sql = "UPDATE surgery SET eligible = :eligible WHERE surgery_id = :surgery_id";
+$stmt = $db->prepare($sql);
+
+$stmt->bindParam(':surgery_id', $surgery_id, SQLITE3_INTEGER);
+$stmt->bindParam(':eligible', $eligible, SQLITE3_INTEGER);
+
+$message = "";
+
+if ($stmt->execute()) {
+    $message = "Eligibility successfully added";
+} else {
+    $message = "Error updating eligibility: " . $conn->lastErrorMsg();
+}
+
+$db->close();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,37 +37,15 @@
 <body>
     <div class="container">
         <?php
-        
             include("../includes/doctorHeader.php");
         ?>
-        <a href="viewPOAanswers.php" class="back-button">Back</a>
-
-<?php
-$db_file = 'C:\xampp\data\stage_3.db';
-
-$conn = new SQLite3($db_file);
-
-if (!$conn) {
-    die("Connection failed: " . $conn->lastErrorMsg());
-}
-
-$surgery_id = $_POST['surgery_id'];
-$eligible = isset($_POST['eligible']) ? 1 : 0; 
-
-$sql = "UPDATE surgery SET eligible = :eligible WHERE surgery_id = :surgery_id";
-$stmt = $conn->prepare($sql);
-
-$stmt->bindParam(':surgery_id', $surgery_id, SQLITE3_INTEGER);
-$stmt->bindParam(':eligible', $eligible, SQLITE3_INTEGER);
-
-if ($stmt->execute()) {
-    echo "Eligibility successfully added";
-} else {
-    echo "Error updating eligibility: " . $conn->lastErrorMsg();
-}
-
-$conn->close();
-
-include ("../includes/footer.php"); 
-
-?>
+        <main>
+            <div id="eligibility-message"><?php echo $message; ?></div>
+            <a href="viewPOAanswers.php" class="back-button">Back</a><br>
+        </main>
+        <?php
+        include ("../includes/footer.php"); 
+        ?>
+    </div>
+</body>
+</html>
