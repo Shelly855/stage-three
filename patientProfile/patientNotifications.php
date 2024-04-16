@@ -6,30 +6,18 @@ if (!$db) {
     die("Failed to connect to the database.");
 }
 
-$surgery_id = isset($_GET['surgery_id']) ? $_GET['surgery_id'] : null;
+// check surgery assigned
+$patient = $_SESSION['patient_id'];
+$sqlSurgery = "SELECT * FROM surgery WHERE patient_id = $patient";
+$resultSurgery = mysqli_query($db, $sqlSurgery);
+$surgery = mysqli_num_rows($resultSurgery) > 0;
 
-if (!$surgery_id) {
-    die("Surgery ID not provided.");
-}
+// check poa assigned
+$sqlPOA = "SELECT * FROM POA_questionnaire WHERE patient_id = $patientId AND assigned = 1";
+$resultPOA = mysqli_query($db, $sqlPOA);
+$poa = mysqli_num_rows($resultPOA) > 0;
 
-// Check appointments
-$query = "SELECT * FROM appointments WHERE surgery_id='$surgery_id' AND date >= date('now') ORDER BY date LIMIT 1";
-$res = $db->query($query);
-if (!$res) {
-    die("Error executing appointment query: " . $db->lastErrorMsg());
-}
-$appointment = $res->fetchArray(SQLITE3_ASSOC);
-
-// Check POA assigned
-$patient_id = $_SESSION['patient_id']; 
-$queryPOA = "SELECT * FROM poa_questionnaire WHERE patient_id='$patient_id' AND assigned=1";
-$resPOA = $db->query($queryPOA);
-if (!$resPOA) {
-    die("Error executing POA query: " . $db->lastErrorMsg());
-}
-$assignedPoa = $resPOA->fetchArray(SQLITE3_ASSOC);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -45,33 +33,40 @@ $assignedPoa = $resPOA->fetchArray(SQLITE3_ASSOC);
         <main> 
             <h1>Notifications</h1>
             <?php 
-            if ($appointment) {
-                echo '<div class="notification">';
-                echo '<h2>Upcoming Appointment</h2>';
-                echo '<p> You have an appointment on ' . $appointment['date'] . ' at ' . $appointment['time'] . '</p>'; 
-                echo '</div>';
-            } 
-            else {
-                echo '<h2>You have no upcoming appointments.</h2>';
-            }
-            ?>
-            <?php 
-            if ($assignedPoa){
-                echo '<div class="notification">';
-                echo '<h2>POA Assessment</h2>';
-                echo '<p>The Doctor has assigned a pre-operative assessment to you.</p>';
-                echo '</div>';
-            }
-            else {
-                echo '<h2> You have not been assigned the pre-operative assessment</h2>';
-            }
-           ?>
+            
+        if ($surgery){
+           echo '<section class="outcomeNotifications">';
+           echo '<h2>Your Questionnaire Outcome</h2>';
+           echo '<p class="assigned">Surgery Assigned: Yes</p>';
+           echo '<p>The doctor has assigned a surgery for you. Click <a href="">here</a> to view your surgery details.</p>';
+           echo '</section>';
+        }
+        else{
+            echo '<section class="outcomeNotifications">';
+            echo '<h2>Your Questionnaire Outcome</h2>';
+            echo '<p class="assigned">Surgery Assigned: No</p>';
+            echo '<p>The doctor has not assigned a surgery for you. </p>';   
+            echo '</section>';
+        }
+        ?>
+        <?php
+        if ($poa) {
+            echo '<section class="poaDecision">';
+            echo '<h2>Pre Operative Assessment Decision</h2>';   
+            echo '<p class="assigned">POA Assigned: Yes</p>';   
+            echo '<p>The doctor has assigned a Pre-Operative Assessment for you. Click <a href="">here</a>  to start the Questionnaire.</p>';   
+            echo '</section>';
+        }
+        else{
+            echo '<section class="poaDecision">';
+            echo '<h2>Pre Operative Assessment Decision</h2>';   
+            echo '<p class="assigned">POA Assigned: No</p>';    
+            echo '<p>The doctor has not assigned a Pre-Operative Assessment for you. </p>';    
+            echo '</section>';
+        }
+        ?>       
         </main>
         <?php include("../includes/footer.php"); ?>
     </div>
 </body>
 </html>
-
-<?php
-$db->close();
-?>
