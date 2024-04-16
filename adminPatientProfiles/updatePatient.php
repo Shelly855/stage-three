@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$db = new SQLITE3('C:\xampp\data\stage_3.db');
+include '../includes/dbConnection.php';
 $errorpfname = $errorpsurname = $errorpemail = $errorpmobile = $errorpdob = "";
 $allFields = true;
 
@@ -62,8 +62,6 @@ if (isset($_POST['submit'])) {
             echo "Error updating patient.";
         }
     }
-    
-    
 }
 
 if (isset($_GET['pid'])) {
