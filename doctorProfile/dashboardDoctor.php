@@ -1,13 +1,3 @@
-<?php
-session_start();
-
-if (!isset($_SESSION['username'])) {
-    header("Location: Doctorlogin.html"); 
-    exit;
-}
-$username = $_SESSION['username'];
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,12 +12,23 @@ $username = $_SESSION['username'];
         <?php
             include("../includes/doctorHeader.php");
         ?>  
-        <main>        
-        <h1>Welcome</h1><br>
-
-
-            
-       
+        <main> 
+        <h1>Welcome To Your Dashboard</h1>
+            <div class="dashboardBoxes">
+                <div class="pageLinks">
+                    <p class="headings">Profiles</p>
+                    <a href="../doctorProfile/viewPatients.php">Patients</a></br> 
+                </div>
+                <div class="pageLinks">
+                    <p class="headings">Surgery & Pre-Operative Assessment</p>
+                    <a href="../proposedSurgery/proposedSurgery.php">Surgery</a>
+                    <a href="../doctorProfile/viewPOAanswers.php">Pre-Operative Assessment Answers</a>
+                </div> 
+                <div class="pageLinks">
+                    <p class="headings">Appointments</p>
+                    <a href="../doctorAppointments/doctorAppointments.php">Patient Appointments</a>
+                </div>
+            </div>
         </main>
         <?php
             include("../includes/footer.php");
