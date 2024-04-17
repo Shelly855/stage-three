@@ -6,8 +6,10 @@ if (!$db) {
     die("Failed to connect to the database.");
 }
 
-$patient = $_SESSION['patient_id'];
-$query = "SELECT COUNT(*) AS count FROM POA_questionnaire WHERE surname='$patient'";
+$patientId = $_SESSION['patient_id'];
+$query = $query = "SELECT COUNT(*) AS count FROM POA_questionnaire pq
+JOIN surgery s ON pq.surgery_id = s.surgery_id
+WHERE s.patient_id = $patientId";
 $res = $db->query($query);
 $row = $res->fetchArray(SQLITE3_ASSOC);
 
