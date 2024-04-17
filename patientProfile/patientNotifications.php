@@ -7,29 +7,23 @@ if (!$db) {
 }
 
 $patient = $_SESSION['patient_id'];
-$query = "SELECT assigned FROM POA_questionnaire WHERE patient_id='$patient'";
+$query = "SELECT COUNT(*) AS count FROM POA_questionnaire WHERE surname='$patient'";
 $res = $db->query($query);
 $row = $res->fetchArray(SQLITE3_ASSOC);
 
-if ($row) {
-    $assigned = $row['assigned'];
-    if ($assigned == 1) {
-        $poaNotification = '<section class="poaDecision">
-                            <h2>Pre Operative Assessment Decision</h2>
-                            <p class="assigned">POA Assigned: Yes</p>  
-                            <p>The doctor has assigned a Pre-Operative Assessment for you. Click <a href="">here</a>  to start the Questionnaire.</p>
-                        </section>';
-    } elseif ($assigned == 0) {
-        $poaNotification = '<section class="poaDecision">
-                            <h2>Pre Operative Assessment Decision</h2>
-                            <p class="assigned">POA Assigned: No</p>
-                            <p>The doctor has not assigned a Pre-Operative Assessment for you. </p>
-                        </section>';
-    }
-} 
-    else {
-    $poaNotification = '<p>You have no results.</p>';
-    }
+if ($row['count'] > 0) {
+    $poaMessage = '<section class="poaDecision">
+                        <h2>Pre Operative Assessment Decision</h2>
+                        <p class="assigned">POA Assigned: Yes</p>  
+                        <p>The doctor has assigned a Pre-Operative Assessment for you. Click <a href="">here</a>  to start the Questionnaire.</p>
+                    </section>';
+} else {
+    $poaMessage = '<section class="poaDecision">
+                        <h2>Pre Operative Assessment Decision</h2>
+                        <p class="assigned">POA Assigned: No</p>
+                        <p>The doctor has not assigned a Pre-Operative Assessment for you. </p>
+                    </section>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -39,13 +33,13 @@ if ($row) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="../css/desktop.css" media="only screen and (min-width:720px)" rel="stylesheet" type="text/css">
     <link href="../css/mobile.css" media="only screen and (max-width:720px)" rel="stylesheet" type="text/css">
-    <title>Notifications</title>
+    <title>Pre Operative Assessment</title>
 </head>
 <body>
     <div class="container"> 
         <?php include("../includes/patientHeader.php"); ?>  
         <main> 
-            <?php echo $poaNotification; ?>
+            <?php echo $poaMessage; ?>
         </main>
         <?php include("../includes/footer.php"); ?>    
     </div>
