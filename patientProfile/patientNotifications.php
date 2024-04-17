@@ -14,10 +14,11 @@ $row = $res->fetchArray(SQLITE3_ASSOC);
 if ($row['count'] > 0) {
     $surgeryMessage = '<section class="outcomeNotifications">
                             <h2>Your Questionnaire Outcome</h2>
-                            <p class="assigned">Surgery Assigned: Yes</p>
-                            <p>The doctor has assigned a surgery for you. Click <a href="surgeryDetails.php">here</a> to view your surgery details.</p>
+                            <p class="assigned">Surgery Assigned: Yes </p>
+                            <p> The doctor has assigned a surgery for you. Click <a href="surgeryDetails.php">here</a> to view your surgery details. </p>
                         </section>';
-} else {
+} 
+else {
     $surgeryMessage = '<section class="outcomeNotifications">
                             <h2>Your Questionnaire Outcome</h2>
                             <p class="assigned">Surgery Assigned: No</p>
@@ -25,7 +26,6 @@ if ($row['count'] > 0) {
                         </section>';
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -37,12 +37,18 @@ if ($row['count'] > 0) {
 </head>
 <body>
     <div class="container"> 
-        <?php include("../includes/patientHeader.php"); ?>  
+        <?php 
+             include("../includes/patientHeader.php"); 
+        ?>  
         <main> 
             <h1>Notifications</h1>
-            <?php echo $surgeryMessage; ?>
+            <?php 
+                echo $surgeryMessage; 
+            ?>
         </main>
-        <?php include("../includes/footer.php"); ?>    
+        <?php 
+             include("../includes/footer.php"); 
+        ?>    
     </div>
 </body>
 </html>
