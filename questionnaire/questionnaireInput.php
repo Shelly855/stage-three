@@ -3,7 +3,7 @@ session_start();
 include '../includes/dbConnection.php';
 
 function getPOAData($poaId) {
-    $db = new SQLite3('C:\xampp\data\stage_3.db');
+    include '../includes/dbConnection.php';
 
     if (!$db) {
         die("Failed to connect to the database.");
