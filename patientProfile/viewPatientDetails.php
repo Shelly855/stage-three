@@ -29,7 +29,9 @@ if ($res) {
 </head>
 <body>
     <div class="container"> 
-        <?php include("../includes/patientHeader.php"); ?>  
+        <?php 
+            include("../includes/patientHeader.php"); 
+        ?>  
         <main> 
             <h1>Personal Details</h1>
             <table class="detailsTable">
@@ -62,16 +64,21 @@ if ($res) {
                     <td><?php echo $row['mobile_number']; ?></td>
                 </tr>
             </table>  
+            <?php
+            } 
+            else {
+                  echo "No results found.";
+           }
+           } 
+           else {
+                 echo "Error executing query.";
+           }
+           ?>
         </main>
-        <?php include("../includes/footer.php"); ?>
+        <?php 
+            include("../includes/footer.php"); 
+        ?>
     </div>
 </body>
 </html>
-<?php
-    } else {
-        echo "No results found.";
-    }
-} else {
-    echo "Error executing query.";
-}
-?>
+
