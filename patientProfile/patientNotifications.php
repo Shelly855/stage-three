@@ -11,7 +11,7 @@ $query = "SELECT COUNT(*) AS count FROM POA_questionnaire WHERE surname='$patien
 $res = $db->query($query);
 $row = $res->fetchArray(SQLITE3_ASSOC);
 
-if ($row['count'] > 0) {
+if ($row['count'] >= 1) {
     $poaMessage = '<section class="poaDecision">
                         <h2>Pre Operative Assessment Decision</h2>
                         <p class="assigned">POA Assigned: Yes</p>  
