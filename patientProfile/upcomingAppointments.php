@@ -51,10 +51,10 @@ $res = $db->query($query);
                 </table>  
                 <?php
                     } else {
-                        echo "<h1>No Upcoming Appointments</h1>";
+                        echo "<h1>You have no Upcoming Appointments</h1>";
                     }
                 } else {
-                    echo "<h1>Error executing query.</h1>";
+                    echo "<h1>Error</h1>";
                 }
                 ?>
             </main>
