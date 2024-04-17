@@ -7,24 +7,22 @@ if (!$db) {
 }
 
 $patientId = $_SESSION['patient_id'];
-$query = $query = "SELECT COUNT(*) AS count FROM POA_questionnaire pq
-JOIN surgery s ON pq.surgery_id = s.surgery_id
-WHERE s.patient_id = $patientId";
+$query = "SELECT COUNT(*) AS count FROM surgery WHERE patient_id = $patientId";
 $res = $db->query($query);
 $row = $res->fetchArray(SQLITE3_ASSOC);
 
-if ($row['count'] >= 1) {
-    $poaMessage = '<section class="poaDecision">
-                        <h2>Pre Operative Assessment Decision</h2>
-                        <p class="assigned">POA Assigned: Yes</p>  
-                        <p>The doctor has assigned a Pre-Operative Assessment for you. You can access the Questionnaire from your dashboard.</p>
-                    </section>';
+if ($row['count'] > 0) {
+    $surgeryMessage = '<section class="outcomeNotifications">
+                            <h2>Your Questionnaire Outcome</h2>
+                            <p class="assigned">Surgery Assigned: Yes</p>
+                            <p>The doctor has assigned a surgery for you. Click <a href="surgeryDetails.php">here</a> to view your surgery details.</p>
+                        </section>';
 } else {
-    $poaMessage = '<section class="poaDecision">
-                        <h2>Pre Operative Assessment Decision</h2>
-                        <p class="assigned">POA Assigned: No</p>
-                        <p>The doctor has not assigned a Pre-Operative Assessment for you. </p>
-                    </section>';
+    $surgeryMessage = '<section class="outcomeNotifications">
+                            <h2>Your Questionnaire Outcome</h2>
+                            <p class="assigned">Surgery Assigned: No</p>
+                            <p>The doctor has not assigned a surgery for you. </p>
+                        </section>';
 }
 ?>
 
@@ -42,7 +40,7 @@ if ($row['count'] >= 1) {
         <?php include("../includes/patientHeader.php"); ?>  
         <main> 
             <h1>Notifications</h1>
-            <?php echo $poaMessage; ?>
+            <?php echo $surgeryMessage; ?>
         </main>
         <?php include("../includes/footer.php"); ?>    
     </div>
