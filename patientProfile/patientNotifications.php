@@ -7,7 +7,7 @@ if (!$db) {
 }
 
 $patient = $_SESSION['patient_id'];
-$query = "SELECT assigned FROM poa WHERE patient_id='$patient'";
+$query = "SELECT assigned FROM POA_questionnaire WHERE patient_id='$patient'";
 $res = $db->query($query);
 $row = $res->fetchArray(SQLITE3_ASSOC);
 
