@@ -55,7 +55,7 @@ if ($res) {
 </html>
 <?php
     } else {
-        echo "No results found.";
+        echo "You have no medical history recorded.";
     }
 } else {
     echo "Error.";
