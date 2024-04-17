@@ -17,7 +17,7 @@ if ($row['count'] >= 1) {
     $poaMessage = '<section class="poaDecision">
                         <h2>Pre Operative Assessment Decision</h2>
                         <p class="assigned">POA Assigned: Yes</p>  
-                        <p>The doctor has assigned a Pre-Operative Assessment for you. Click <a href="">here</a>  to start the Questionnaire.</p>
+                        <p>The doctor has assigned a Pre-Operative Assessment for you. Click <a href="$preOpAssessmentLinks">here</a>  to start the Questionnaire.</p>
                     </section>';
 } else {
     $poaMessage = '<section class="poaDecision">
