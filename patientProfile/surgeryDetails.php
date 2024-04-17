@@ -31,22 +31,18 @@ $res = $db->query($query);
                     if ($row !== false) {
                 ?>
                 <h1>Information about your surgery</h1>
-                <table class="detailsTable">
+                <table class="detailsTable">                    
+                    <tr> 
+                        <td>Patient ID</td>
+                        <td><?php echo $row['patient_id']; ?></td>
+                    </tr> 
                     <tr> 
                         <td>Surgery ID</td>
                         <td><?php echo $row['surgery_id']; ?></td>
                     </tr>
                     <tr> 
-                        <td>Appointment ID</td>
+                        <td>Surgery Name</td>
                         <td><?php echo $row['surgery_name']; ?></td>
-                    </tr>
-                    <tr> 
-                        <td>Appointment Date</td>
-                        <td><?php echo $row['patient_id']; ?></td>
-                    </tr>            
-                    <tr> 
-                        <td>Appointment Time</td>
-                        <td><?php echo $row['eligible']; ?></td>
                     </tr>
                 </table>  
                 <?php
@@ -59,7 +55,9 @@ $res = $db->query($query);
                 }
                 ?>
             </main>
-        <?php include("../includes/footer.php"); ?>    
+        <?php 
+         include("../includes/footer.php"); 
+        ?>    
     </div>
 </body>
 </html>
