@@ -50,15 +50,19 @@ $res = $db->query($query);
                     </tr>
                 </table>  
                 <?php
-                    } else {
+                    } 
+                    else {
                         echo "<h1>You have no Upcoming Appointments</h1>";
                     }
-                } else {
+                } 
+                else {
                     echo "<h1>Error</h1>";
                 }
                 ?>
             </main>
-        <?php include("../includes/footer.php"); ?>    
+        <?php 
+            include("../includes/footer.php"); 
+        ?>    
     </div>
 </body>
 </html>
