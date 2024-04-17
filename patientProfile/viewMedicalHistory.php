@@ -46,6 +46,16 @@ if ($res) {
                 </tr>
                 <tr> 
             </table>  
+            <?php
+            } 
+           else {
+                echo "You have no medical history recorded.";
+           }
+           } 
+           else {
+                echo "Error.";
+           }
+           ?>
         </main>
         <?php 
             include("../includes/footer.php"); 
@@ -53,11 +63,4 @@ if ($res) {
     </div>
 </body>
 </html>
-<?php
-    } else {
-        echo "You have no medical history recorded.";
-    }
-} else {
-    echo "Error.";
-}
-?>
+
