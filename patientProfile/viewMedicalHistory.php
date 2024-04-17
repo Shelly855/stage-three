@@ -26,7 +26,9 @@ if ($res) {
 </head>
 <body>
     <div class="container"> 
-        <?php include("../includes/patientHeader.php"); ?>  
+        <?php 
+            include("../includes/patientHeader.php"); 
+        ?>  
         <main> 
             <h1>Medical History</h1>
             <table class="detailsTable">
@@ -45,7 +47,9 @@ if ($res) {
                 <tr> 
             </table>  
         </main>
-        <?php include("../includes/footer.php"); ?>
+        <?php 
+            include("../includes/footer.php"); 
+        ?>
     </div>
 </body>
 </html>
@@ -54,6 +58,6 @@ if ($res) {
         echo "No results found.";
     }
 } else {
-    echo "Error executing query.";
+    echo "Error.";
 }
 ?>
