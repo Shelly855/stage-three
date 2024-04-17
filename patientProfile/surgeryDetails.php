@@ -10,7 +10,6 @@ $patient = $_SESSION['patient_id'];
 $query = "SELECT * FROM surgery WHERE patient_id='$patient'";
 $res = $db->query($query);
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,7 +21,9 @@ $res = $db->query($query);
 </head>
 <body>
     <div class="container"> 
-            <?php include("../includes/patientHeader.php"); ?>  
+            <?php 
+                 include("../includes/patientHeader.php"); 
+            ?>  
             <main> 
                 <?php
                 if ($res) {
@@ -46,17 +47,18 @@ $res = $db->query($query);
                     </tr>
                 </table>  
                 <?php
-                    } 
-                    else {
-                        echo "<h1>You have no surgery booked</h1>";
-                    }
-                } else {
+                } 
+                else {
+                    echo "<h1>You have no surgery booked</h1>";
+                }
+                } 
+                else {
                     echo "<h1>Error</h1>";
                 }
                 ?>
             </main>
         <?php 
-         include("../includes/footer.php"); 
+            include("../includes/footer.php"); 
         ?>    
     </div>
 </body>
