@@ -41,6 +41,7 @@ if ($row['count'] >= 1) {
     <div class="container"> 
         <?php include("../includes/patientHeader.php"); ?>  
         <main> 
+            <h1>Notifications</h1>
             <?php echo $poaMessage; ?>
         </main>
         <?php include("../includes/footer.php"); ?>    
