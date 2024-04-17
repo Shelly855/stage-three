@@ -6,18 +6,32 @@ if (!$db) {
     die("Failed to connect to the database.");
 }
 
-$firstName = $_SESSION['first_name'];
-$surname = $_SESSION['surname'];
+$patient = $_SESSION['patient_id'];
+$query = "SELECT assigned FROM poa WHERE patient_id='$patient'";
+$res = $db->query($query);
+$row = $res->fetchArray(SQLITE3_ASSOC);
 
-$sqlPOA = "SELECT * FROM POA_questionnaire WHERE firstName = '$firstName' AND surname = '$surname'";
-$resultPOA = $db->query($sqlPOA);
-$poa = $resultPOA->fetchArray() ? true : false;
-
-$sqlSurgery = "SELECT * FROM surgery WHERE patient_id = $patientId AND eligible = 1";
-$resultSurgery = $db->query($sqlSurgery);
-$surgery = $resultSurgery->fetchArray() ? true : false;
-
+if ($row) {
+    $assigned = $row['assigned'];
+    if ($assigned == 1) {
+        $poaNotification = '<section class="poaDecision">
+                            <h2>Pre Operative Assessment Decision</h2>
+                            <p class="assigned">POA Assigned: Yes</p>  
+                            <p>The doctor has assigned a Pre-Operative Assessment for you. Click <a href="">here</a>  to start the Questionnaire.</p>
+                        </section>';
+    } elseif ($assigned == 0) {
+        $poaNotification = '<section class="poaDecision">
+                            <h2>Pre Operative Assessment Decision</h2>
+                            <p class="assigned">POA Assigned: No</p>
+                            <p>The doctor has not assigned a Pre-Operative Assessment for you. </p>
+                        </section>';
+    }
+} 
+    else {
+    $poaNotification = '<p>You have no results.</p>';
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -31,42 +45,9 @@ $surgery = $resultSurgery->fetchArray() ? true : false;
     <div class="container"> 
         <?php include("../includes/patientHeader.php"); ?>  
         <main> 
-            <h1>Notifications</h1>
-            <?php 
-            
-        if ($surgery){
-           echo '<section class="outcomeNotifications">';
-           echo '<h2>Your Questionnaire Outcome</h2>';
-           echo '<p class="assigned">Surgery Assigned: Yes</p>';
-           echo '<p>The doctor has assigned a surgery for you. Click <a href="">here</a> to view your surgery details.</p>';
-           echo '</section>';
-        }
-        else{
-            echo '<section class="outcomeNotifications">';
-            echo '<h2>Your Questionnaire Outcome</h2>';
-            echo '<p class="assigned">Surgery Assigned: No</p>';
-            echo '<p>The doctor has not assigned a surgery for you. </p>';   
-            echo '</section>';
-        }
-        ?>
-        <?php
-        if ($poa) {
-            echo '<section class="poaDecision">';
-            echo '<h2>Pre Operative Assessment Decision</h2>';   
-            echo '<p class="assigned">POA Assigned: Yes</p>';   
-            echo '<p>The doctor has assigned a Pre-Operative Assessment for you. Click <a href="">here</a>  to start the Questionnaire.</p>';   
-            echo '</section>';
-        }
-        else{
-            echo '<section class="poaDecision">';
-            echo '<h2>Pre Operative Assessment Decision</h2>';   
-            echo '<p class="assigned">POA Assigned: No</p>';    
-            echo '<p>The doctor has not assigned a Pre-Operative Assessment for you. </p>';    
-            echo '</section>';
-        }
-        ?>       
+            <?php echo $poaNotification; ?>
         </main>
-        <?php include("../includes/footer.php"); ?>
+        <?php include("../includes/footer.php"); ?>    
     </div>
 </body>
 </html>
