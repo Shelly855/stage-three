@@ -318,6 +318,9 @@ h2 {
 .helpGuide{
     font-size: 30px;
 }
+.requestBtn {
+    width: 500px;
+}
 .requestBtn a{
   font-size: 30px;
   font-family: Lucida Sans;
