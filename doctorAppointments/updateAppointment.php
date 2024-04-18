@@ -14,7 +14,7 @@
         <?php
         include ("../includes/doctorHeader.php");
 
-        $db = new SQLITE3('C:\xampp\data\stage_3.db');
+        include '../includes/dbConnection.php';
         $sql = "SELECT * FROM appointments WHERE appointment_id = :aid";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':aid', $_GET['aid'], SQLITE3_TEXT);
