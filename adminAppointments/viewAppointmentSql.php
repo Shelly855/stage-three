@@ -22,8 +22,8 @@ function getAppointments() {
         appointments
     JOIN 
         patients ON appointments.patient_id = patients.patient_id
-    JOIN 
-        users ON appointments.user_id = users.user_id";
+   JOIN 
+        users ON users.user_id = patients.user_id";
     
  
         
