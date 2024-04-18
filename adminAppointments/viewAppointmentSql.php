@@ -12,20 +12,21 @@ function getAppointments() {
         appointments.appointment_id,
         appointments.date,
         appointments.time,
+        appointments.clinical_notes,
+        patients.medical_conditions,
+        patients.previous_medical_conditions,
         users.first_name AS patient_first_name,
-        users.surname AS patient_surname,
-        users.first_name AS staff_first_name,
-        users.surname AS staff_surname
+        users.surname AS patient_surname
+       
     FROM 
         appointments
-
     JOIN 
         patients ON appointments.patient_id = patients.patient_id
     JOIN 
-        users ON appointments.user_id = users.user_id;
+        users ON appointments.user_id = users.user_id";
+    
+ 
         
-    WHERE 
-        appointments.users_id = :doctor_id";
 
     $stmt = $db->prepare($sql);
     
@@ -41,3 +42,4 @@ function getAppointments() {
     }
     return $arrayResult;
 }
+
