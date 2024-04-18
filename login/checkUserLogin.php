@@ -49,11 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($_SESSION['role'] == 'patient') {
             $_SESSION['patient_id'] = $verifiedUser[0]['patient_id'];
         }
-
-        if ($_SESSION['role'] == 'doctor') {
-            $_SESSION['doctor_id'] = $verifiedUser[0]['user_id'];
-        }
-
+        
         if ($_SESSION['role'] == 'admin') {
             header("Location: ../adminProfile/dashboardAdmin.php");
             exit;
