@@ -12,9 +12,6 @@ function getAppointments() {
         appointments.appointment_id,
         appointments.date,
         appointments.time,
-        appointments.clinical_notes,
-        patients.medical_conditions,
-        patients.previous_medical_conditions,
         users.first_name AS patient_first_name,
         users.surname AS patient_surname
        
@@ -22,11 +19,9 @@ function getAppointments() {
         appointments
     JOIN 
         patients ON appointments.patient_id = patients.patient_id
-   JOIN 
+    JOIN 
         users ON users.user_id = patients.user_id";
     
- 
-        
 
     $stmt = $db->prepare($sql);
     
