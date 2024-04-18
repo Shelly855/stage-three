@@ -186,6 +186,7 @@ input:focus, select:focus{
   border: 2px solid;
   width:auto;
   max-width: 90%;
+  min-width:60%;
   height: auto;
   max-height: 300px;
   overflow-y: auto; 
