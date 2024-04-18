@@ -15,7 +15,7 @@
         require_once ("../login/checkUserLogin.php");
         ?>
         <main role="main" class="pb-3">
-           <h2 id="login-title">Login</h2><br>
+           <h2 id="login-title">Login</h2>
             <div class="row">
                 <div class="col-md-4">
                     <form method="post" action="../login/login.php">
