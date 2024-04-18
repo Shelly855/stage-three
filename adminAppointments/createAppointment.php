@@ -9,10 +9,6 @@ if (isset($_POST['submit'])) {
         $errorpatient = "Please select a patient.";
         $allFields = false;
     }
-    if (empty($_POST['user_id']) || $_POST['user_id'] == 0) {
-        $errorstaff = "Please select a member of staff.";
-        $allFields = false;
-    }
     if (empty($_POST['date'])) {
         $errordate = "Date is mandatory";
         $allFields = false;
@@ -26,10 +22,7 @@ if (isset($_POST['submit'])) {
 
 
     if ($allFields) {
-        $stmt = $db->prepare('SELECT users.user_id, users.first_name, users.surname FROM users WHERE users.user_id = :uid');
-        $stmt->bindValue(':uid', $_POST['user_id'], SQLITE3_INTEGER);
-        $result = $stmt->execute();
-        $staffDetails = $result->fetchArray(SQLITE3_ASSOC);
+    
 
         $stmt = $db->prepare('SELECT patients.patient_id, users.first_name, users.surname FROM patients JOIN users ON patients.user_id = users.user_id WHERE patients.patient_id = :pid');
         $stmt->bindValue(':pid', $_POST['patient_id'], SQLITE3_INTEGER);
@@ -37,10 +30,9 @@ if (isset($_POST['submit'])) {
         $patientDetails = $result->fetchArray(SQLITE3_ASSOC);
 
 
-        if ($staffDetails && $patientDetails){
-            $stmt = $db->prepare('INSERT INTO appointments (patient_id, user_id, date, time) VALUES (:pid, :uid, :date, :time)');
+        if ($patientDetails){
+            $stmt = $db->prepare('INSERT INTO appointments (patient_id, date, time) VALUES (:pid, :date, :time)');
             $stmt->bindValue(':pid', $patientDetails['patient_id'], SQLITE3_INTEGER);
-            $stmt->bindValue(':uid', $staffDetails['user_id'], SQLITE3_INTEGER);
             $stmt->bindValue(':date', $_POST['date'], SQLITE3_TEXT);
             $stmt->bindValue(':time', $_POST['time'], SQLITE3_TEXT);
 
@@ -73,18 +65,7 @@ while ($row = $result_patients->fetchArray(SQLITE3_ASSOC)) {
     );
 }
 
-include '../includes/dbConnection.php';
-$stmt_users = $db->prepare('SELECT users.user_id, users.first_name, users.surname FROM users WHERE users.user_id');
-$result_users = $stmt_users->execute();
 
-$users = array();
-
-while ($row = $result_users->fetchArray(SQLITE3_ASSOC)) {
-    $users[] = array(
-        'user_id' => $row['user_id'],
-        'full_name' => $row['first_name'] . ' ' . $row['surname']
-    );
-}
 
 ?>
 
@@ -118,17 +99,7 @@ while ($row = $result_users->fetchArray(SQLITE3_ASSOC)) {
                 </select>
                 <span class="blank-error"><?php echo $errorpatient; ?></span>
 
-                <label for="user_id">Select Staff:</label>
-                <select name="user_id" id="user_id">
-                    <option value="0">Select Staff</option>
-                    <?php foreach ($users as $user): ?>
-                        <option value="<?php echo $user['user_id']; ?>">
-                            <?php echo $user['full_name']; ?>
-                        </option>
-                    <?php endforeach; ?>
-                </select>
-                <span class="blank-error"><?php echo $errorpatient; ?></span>
-
+           
                 <label>Date</label>
                 <input type="date" name="date" value="<?php echo isset($_POST['date']) ? $_POST['date'] : ''; ?>">
                 <span class="blank-error"><?php echo $errordate; ?></span>
