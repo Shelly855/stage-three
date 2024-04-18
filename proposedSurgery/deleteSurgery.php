@@ -52,7 +52,7 @@ $db->close();
             include("../includes/doctorHeader.php");
         ?>  
         <main>
-            <h2>Delete Surgery <?php echo $_GET['sid']; ?></h2><br>
+            <h2>Delete Surgery</h2><br>
             <div class="confirm">Are you sure you want to delete this surgery?</div>
             <?php if(isset($surgery) && isset($userInfo)): ?>
                 <div class="delete-data">
