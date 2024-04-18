@@ -191,7 +191,7 @@ form {
     text-align: center;
     color: darkred;
     padding: 10px;
-  }
+}
 .patientMenu {
     display: flex;
     justify-content: space-around;  background-color: #89AD7F;
@@ -308,7 +308,7 @@ section .assigned{
     font-size: 20px;
     border-top: 3px solid #658C6F;
     padding: 10px;
-  }
+}
 section p {
     padding: 0px 10px 10px 10px;
 }
