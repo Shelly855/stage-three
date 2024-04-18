@@ -26,7 +26,6 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>Appointment ID</th>
                             <th>Date</th>
                             <th>Time</th>
                             <th>Patient Name</th>
@@ -37,7 +36,6 @@
                     <tbody>
                         <?php foreach ($appointments as $appointment): ?>
                             <tr>
-                                <td><?php echo $appointment['appointment_id']; ?></td>
                                 <td><?php echo $appointment['date']; ?></td>
                                 <td><?php echo $appointment['time']; ?></td>
                                 <td><?php echo $appointment['patient_first_name'] . ' ' . $appointment['patient_surname']; ?></td>
