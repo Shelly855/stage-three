@@ -29,7 +29,6 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Patient Name</th>
-                            <th>Staff Name</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -39,7 +38,6 @@
                                 <td><?php echo $appointment['date']; ?></td>
                                 <td><?php echo $appointment['time']; ?></td>
                                 <td><?php echo $appointment['patient_first_name'] . ' ' . $appointment['patient_surname']; ?></td>
-                                <td><?php echo $appointment['staff_first_name'] . ' ' . $appointment['staff_surname']; ?></td>
                                 <td>
                                     <a href="../adminAppointments/updateAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Update</a> 
                                     <a href="../adminAppointments/deleteAppointment.php?aid=<?php echo $appointment['appointment_id']; ?>">Delete</a>
