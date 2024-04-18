@@ -2,16 +2,31 @@
 include '../includes/dbConnection.php';
 
 if (isset($_POST['assign'])) {
-    $sql = "INSERT INTO POA_questionnaire (surgery_id, assigned, completed, percentage_completed) VALUES (:sid, 1, 0, 0)";
-    $stmt = $db->prepare($sql);
-    $stmt->bindValue(':sid', $_POST['sid']);
-    $result = $stmt->execute();
+    $patientId = $_POST['pid'];
 
-    if ($result) {
-        header("Location: ../proposedSurgery/assignQuestionnaireSuccess.php?assigned=true");
-        exit();
+    $checkSql = "SELECT COUNT(*) AS count 
+                 FROM POA_questionnaire pq 
+                 JOIN surgery s ON pq.surgery_id = s.surgery_id 
+                 WHERE s.patient_id = :pid AND pq.completed = 0";
+    $checkStmt = $db->prepare($checkSql);
+    $checkStmt->bindValue(':pid', $patientId);
+    $checkResult = $checkStmt->execute();
+    $countRow = $checkResult->fetchArray(SQLITE3_ASSOC);
+
+    if ($countRow['count'] == 0) {
+        $sql = "INSERT INTO POA_questionnaire (surgery_id, assigned, completed, percentage_completed) VALUES (:sid, 1, 0, 0)";
+        $stmt = $db->prepare($sql);
+        $stmt->bindValue(':sid', $_POST['sid']);
+        $result = $stmt->execute();
+
+        if ($result) {
+            header("Location: ../proposedSurgery/assignQuestionnaireSuccess.php?assigned=true");
+            exit();
+        } else {
+            $errorMessage = "Error assigning questionnaire.";
+        }
     } else {
-        echo "Error assigning questionnaire.";
+        $errorMessage = "Please wait for the patient to complete their current questionnaire before assigning them a new one.";
     }
 }
 
@@ -64,7 +79,13 @@ $db->close();
             <label><?php echo $surgery['surgery_name']; ?></label>
         </div>
         <form method="post">
-            <input type="hidden" name="sid" value="<?php echo $_GET['sid'] ?>"><br>
+            <input type="hidden" name="sid" value="<?php echo $_GET['sid'] ?>">
+            <input type="hidden" name="pid" value="<?php echo $surgery['patient_id'] ?>"><br>
+            <?php
+                if(isset($errorMessage)) {
+                    echo "<div class='assign-error-message'>$errorMessage</div>";
+                }
+            ?>
             <input type="submit" value="Assign" name="assign">
             <a href="../proposedSurgery/proposedSurgery.php" class="back-button">Cancel</a>
         </form>
