@@ -25,7 +25,6 @@
                             <th>Date</th>
                             <th>Time</th>
                             <th>Patient Name</th>
-                            <th>Staff Name</th>
                             <th>Clinical Notes</th>
                             <th>Medical Conditions</th>
                             <th>Previous Medical Conditions</th>
@@ -39,7 +38,6 @@
                                 <td><?php echo $appointment['date']; ?></td>
                                 <td><?php echo $appointment['time']; ?></td>
                                 <td><?php echo $appointment['patient_first_name'] . ' ' . $appointment['patient_surname']; ?></td>
-                                <td><?php echo $appointment['staff_first_name'] . ' ' . $appointment['staff_surname']; ?></td>
                                 <td><?php echo $appointment['clinical_notes']; ?></td>
                                 <td><?php echo $appointment['medical_conditions']; ?></td>
                                 <td><?php echo $appointment['previous_medical_conditions']; ?></td>
