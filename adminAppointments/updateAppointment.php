@@ -12,7 +12,7 @@
         <?php
         include("../includes/doctorHeader.php");
         
-        $db = new SQLITE3('C:\xampp\data\stage_3.db');
+        include '../includes/dbConnection.php';
         $sql = "SELECT * FROM appointments WHERE appointment_id = :aid";
         $stmt = $db->prepare($sql);
         $stmt->bindParam(':aid', $_GET['aid'], SQLITE3_TEXT);
@@ -61,7 +61,6 @@
                 $stmt = $db->prepare("UPDATE appointments SET date = :date, time = :timeWHE RE appointment_id = :aid");
                 $stmt->bindValue(':date', $_POST['date']);
                 $stmt->bindValue(':time', $_POST['time']);
-              
                 $stmt->bindValue(':aid', $_GET['aid']);
 
                 $result = $stmt->execute();
@@ -93,8 +92,6 @@
                 <label>Time</label>
                 <input type="time" name="time" value="<?php echo $arrayResult[0][2]; ?>">
                 <span class="blank-error"><?php echo $errortime; ?></span>
-
-            
 
                 <input type="submit" name="submit" value="Update"><a href="../adminAppointments/adminAppointments.php" class="back-button">Back</a>
             </form>
