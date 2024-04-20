@@ -21,9 +21,9 @@ $sql = "SELECT a.date, a.time, u_patient.first_name AS patient_first_name, u_pat
 $stmt = $db->prepare($sql);
 $stmt->bindValue(':aid', $_GET['aid']);
 $result = $stmt->execute();
-$arrayResult = [];
+$appointment = $result->fetchArray(SQLITE3_ASSOC);
 
-while ($row = $result->fetchArray(SQLITE3_NUM)) {
+while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
     $arrayResult[] = $row;
 }
 
@@ -48,19 +48,19 @@ $db->close();
             <div class="confirm">Are you sure you want to delete this appointment?</div>
             <div class="delete-data">
                 <label class="delete-label">Date:</label>
-                <label><?php echo $arrayResult[0][0] ?></label>
+                <label><?php echo $appointment['date'] ?></label>
             </div>
             <div class="delete-data">
                 <label class="delete-label">Time:</label>
-                <label><?php echo $arrayResult[0][1] ?></label>
+                <label><?php echo $appointment['time']?></label>
             </div>
             <div class="delete-data">
                 <label class="delete-label">Patient First Name:</label>
-                <label><?php echo $arrayResult[0][2] ?></label>
+                <label><?php echo $appointment['patient_first_name'] ?></label>
             </div>
             <div class="delete-data">
                 <label class="delete-label">Patient Last Name:</label>
-                <label><?php echo $arrayResult[0][3] ?></label><br>
+                <label><?php echo $appointment['patient_last_name'] ?></label><br>
             </div>
        
             <form method="post">
