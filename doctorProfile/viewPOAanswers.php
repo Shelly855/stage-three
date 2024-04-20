@@ -147,7 +147,7 @@ $POAanswers = getPOAanswers();
                                         <input type="hidden" name="surgery_id"
                                             value="<?php echo $POAanswer['surgery_id']; ?>">
                                         <input type="checkbox" id="eligible" name="eligible" value="1">
-                                        <input type="submit" value="Submit">
+                                        <input type="submit" value="Submit" style="background-color: green; color: white; padding: 10px 20px;  border-radius: 5px; cursor: pointer;">
                                     </form>
                                 </td>
                             </tr>
