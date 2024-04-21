@@ -22,7 +22,8 @@
                     <a href="../adminPatientProfiles/adminPatientProfiles.php">Patients</a> 
                 </div>
                 <div class="pageLinks">
-                    <p class="headings">Appointments</p>
+                    <p class="headings">Surgery & Appointments</p>
+                    <a href="../adminProfile/adminProposedSurgery.php">Surgery</a>
                     <a href="../adminAppointments/adminAppointments.php">Patient Appointments</a>
                 </div> 
             </div>
