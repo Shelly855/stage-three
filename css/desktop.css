@@ -99,6 +99,14 @@ tr:nth-child(odd) {
 tr:nth-child(even) {
     background-color: lightgreen;
 }
+form input#submit-eligibility-button {
+    background-color: green; 
+    color: white; 
+    padding: 10px 20px;  
+    border-radius: 5px; 
+    cursor: pointer;
+    width:100%
+}
 button,
 input[type=submit] {
     background-color: lightgreen;
