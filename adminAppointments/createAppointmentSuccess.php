@@ -1,3 +1,10 @@
+<?php
+    $result = isset($_GET['createAppointment']) ? $_GET['createAppointment'] : '';
+
+    $message = ($result) ? "Appointment Created Successfully!" : "Appointment Creation Failed!";
+
+    $title = $message;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,12 +20,6 @@
             include("../includes/adminHeader.php");
 
             $db = new SQLITE3('C:\xampp\data\stage_3.db');
-
-            $result = isset($_GET['createAppointment']) ? $_GET['createAppointment'] : '';
-
-            $message = ($result) ? "Appointment Created Successfully!" : "Appointment Creation Failed!";
-
-            $title = $message;
         ?>  
         <main>
             <h1><?php echo $message; ?></h1>
