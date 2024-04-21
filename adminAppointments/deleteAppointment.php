@@ -6,7 +6,7 @@ if (isset($_POST['delete'])) {
     $stmt->bindValue(':aid', $_POST['aid']);
     $result = $stmt->execute();
     if ($result) {
-        header("Location: ../adminAppointments/adminAppointments.php?deleted=true");
+        header("Location: ../adminAppointments/deleteAppointmentSuccess.php?deleted=true");
         exit();
     } else {
         echo "Error deleting appointment.";
@@ -15,17 +15,13 @@ if (isset($_POST['delete'])) {
 
 $sql = "SELECT a.date, a.time, u_patient.first_name AS patient_first_name, u_patient.surname AS patient_last_name
         FROM appointments AS a 
-        JOIN users AS u_patient ON a.patient_id = u_patient.user_id 
-
+        JOIN patients AS p ON a.patient_id = p.patient_id
+        JOIN users AS u_patient ON p.user_id = u_patient.user_id
         WHERE a.appointment_id = :aid";
 $stmt = $db->prepare($sql);
 $stmt->bindValue(':aid', $_GET['aid']);
 $result = $stmt->execute();
 $appointment = $result->fetchArray(SQLITE3_ASSOC);
-
-while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-    $arrayResult[] = $row;
-}
 
 $db->close();
 ?>
