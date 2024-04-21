@@ -13,10 +13,7 @@ $query = "SELECT p.patient_id, u.username, u.first_name, u.surname, p.date_of_bi
           WHERE p.patient_id='$patient'";
 $res = $db->query($query);
 
-if ($res) {
-    $row = $res->fetchArray(SQLITE3_ASSOC);
 
-    if ($row !== false) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,7 +29,12 @@ if ($res) {
         <?php 
             include("../includes/patientHeader.php"); 
         ?>  
-        <main> 
+        <main>
+            <?php
+            if ($res) {
+                $row = $res->fetchArray(SQLITE3_ASSOC);
+                if ($row !== false) {
+            ?>
             <h1>Personal Details</h1>
             <table class="detailsTable">
                 <tr> 
@@ -67,7 +69,9 @@ if ($res) {
             <?php
             } 
             else {
-                  echo "No results found.";
+                  echo '<h1>No results found. </h1>';
+                  echo '<p class="backPatient"><a href="patientProfile.php">Back</a></p>';
+
            }
            } 
            else {
