@@ -10,10 +10,7 @@ $patient = $_SESSION['patient_id'];
 $query = "SELECT * FROM patients WHERE patient_id='$patient'";
 $res = $db->query($query);
 
-if ($res) {
-    $row = $res->fetchArray(SQLITE3_ASSOC);
 
-    if ($row !== false) {
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -30,6 +27,11 @@ if ($res) {
             include("../includes/patientHeader.php"); 
         ?>  
         <main> 
+            <?php 
+            if ($res) {
+                $row = $res->fetchArray(SQLITE3_ASSOC);
+                if ($row !== false) {
+            ?>
             <h1>Medical History</h1>
             <table class="detailsTable">
                 <tr> 
@@ -49,7 +51,8 @@ if ($res) {
             <?php
             } 
            else {
-                echo "You have no medical history recorded.";
+                echo '<h1>You have no medical history recorded.</h1>';
+                echo '<p class="backPatient"><a href="patientProfile.php">Back</a></p>';
            }
            } 
            else {
