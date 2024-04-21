@@ -58,7 +58,7 @@
 
             if ($allFields) {
 
-                $stmt = $db->prepare("UPDATE appointments SET date = :date, time = :timeWHE RE appointment_id = :aid");
+                $stmt = $db->prepare("UPDATE appointments SET date = :date, time = :time WHERE appointment_id = :aid");
                 $stmt->bindValue(':date', $_POST['date']);
                 $stmt->bindValue(':time', $_POST['time']);
                 $stmt->bindValue(':aid', $_GET['aid']);
@@ -66,7 +66,7 @@
                 $result = $stmt->execute();
 
                 if ($result) {
-                    header('Location: ../adminAppointments/adminAppointments.php');
+                    header('Location: ../adminAppointments/updateAppointmentSuccess.php?updated=true');
                     exit;
                 } else {
                     echo "Error updating appointment.";
