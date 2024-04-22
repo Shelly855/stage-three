@@ -201,7 +201,8 @@ form {
 }
 .patientMenu {
     display: flex;
-    justify-content: space-around;  background-color: #89AD7F;
+    justify-content: space-around;  
+    background-color: #89AD7F;
 }
 .col-3 {
     border: 2px solid;
