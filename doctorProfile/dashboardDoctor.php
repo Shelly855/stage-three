@@ -10,10 +10,15 @@
 <body>
     <div class="container"> 
         <?php
+            session_start();
             include("../includes/doctorHeader.php");
+
+            $username = $_SESSION['username'];
+            $role = $_SESSION['role'];
+            $role = ucfirst($role);
         ?>  
         <main> 
-        <h1>Welcome To Your Dashboard</h1>
+            <h1>Welcome <?php echo $role; ?> <?php echo $username; ?></h1>
             <div class="dashboardBoxes">
                 <div class="pageLinks">
                     <p class="headings">Profiles</p>
