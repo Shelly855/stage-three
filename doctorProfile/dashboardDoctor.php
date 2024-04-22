@@ -18,7 +18,7 @@
             $role = ucfirst($role);
         ?>  
         <main> 
-            <h1>Welcome <?php echo $role; ?> <?php echo $username; ?></h1>
+            <h1>Welcome, <?php echo $role; ?> <?php echo $username; ?></h1>
             <div class="dashboardBoxes">
                 <div class="pageLinks">
                     <p class="headings">Profiles</p>
