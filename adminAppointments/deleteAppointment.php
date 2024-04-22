@@ -40,7 +40,7 @@ $db->close();
             include("../includes/adminHeader.php");
         ?>  
         <main>
-            <h2>Delete Appointment <?php echo $_GET['aid']; ?></h2><br>
+            <h2>Delete Appointment</h2><br>
             <div class="confirm">Are you sure you want to delete this appointment?</div>
             <div class="delete-data">
                 <label class="delete-label">Date:</label>
