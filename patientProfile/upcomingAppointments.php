@@ -31,7 +31,7 @@ $res = $db->query($query);
                     if ($row !== false) {
                 ?>
                 <h1>Appointments</h1>
-                <table class="detailsTable">
+                <table class="details-table">
                     <tr> 
                         <td>Patient ID</td>
                         <td><?php echo $row['patient_id']; ?></td>
