@@ -99,6 +99,34 @@ nav li:last-child{
 .table-container tr:nth-child(even) {
   background-color: lightgreen;
 }
+.details-table{
+  max-height: 400px;
+  overflow-y: auto;
+  padding-bottom:20px;
+  text-align: center;
+  width:100%;
+}
+.details-table table {
+  margin: 0 auto;
+}
+.details-table th,
+.details-table td {
+  padding: 8px;
+  padding: 10px 12px;
+}
+.details-table th {
+  position: sticky;
+  top: 0;
+  border-bottom: 2px solid green;
+  background-color: #A8F0B6;
+  z-index: 1;
+}
+.details-table tr:nth-child(odd) {
+  background-color: #fff;
+}
+.details-table tr:nth-child(even) {
+  background-color: lightgreen;
+}
 button, input[type=submit] {
   background-color: lightgreen;
   color: black;
