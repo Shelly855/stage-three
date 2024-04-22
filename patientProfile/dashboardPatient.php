@@ -15,6 +15,9 @@
             include '../includes/dbConnection.php';
 
             $patientId = $_SESSION['patient_id'];
+            $username = $_SESSION['username'];
+            $role = $_SESSION['role'];
+            $role = ucfirst($role);
 
             $questionnaireQuery = "SELECT pq.poa_form_id, s.surgery_id
                                     FROM POA_questionnaire pq
@@ -27,33 +30,33 @@
                 echo "Error executing query";
             } else {
                 echo '<main>
-                        <h1>Welcome To Your Dashboard</h1>
+                        <h1>Welcome, ' . $role . ' ' . $username . '</h1>
                         <div class="dashboardBoxes">
                             <div class="pageLinks">
                                 <p class="headings">Your Appointments</p>
                                 <a href="upcomingAppointments.php">Upcoming Appointments</a> 
                             </div>';
 
-                $preOpAssessmentLinks = '';
+                            $preOpAssessmentLinks = '';
 
-                while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
-                    $_SESSION['surgery_id'] = $row['surgery_id'];
-                    $preOpAssessmentLinks .= '<li><a href="../questionnaire/questionnaire.php?id=' . $row['poa_form_id'] . '&surgery_id=' . $row['surgery_id'] . '">Pre-operative assessment</a></li>';
-                }
+                            while ($row = $result->fetchArray(SQLITE3_ASSOC)) {
+                                $_SESSION['surgery_id'] = $row['surgery_id'];
+                                $preOpAssessmentLinks .= '<li><a href="../questionnaire/questionnaire.php?id=' . $row['poa_form_id'] . '&surgery_id=' . $row['surgery_id'] . '">Pre-operative assessment</a></li>';
+                            }
 
-                if (!empty($preOpAssessmentLinks)) {
-                    echo '<div class="pageLinks">
-                            <p class="headings"> Need To Complete </p>
-                            <ul>';
-                    echo $preOpAssessmentLinks;
-                    echo '</ul></div>';
-                }
+                            if (!empty($preOpAssessmentLinks)) {
+                                echo '<div class="pageLinks">
+                                        <p class="headings"> Need To Complete </p>
+                                        <ul>';
+                                echo $preOpAssessmentLinks;
+                                echo '</ul></div>';
+                            }
 
-                echo '<div class="viewProfileButton">
-                        <br>
-                        <a href="patientProfile.php" class="viewProfile">View Your Profile</a>
-                    </div>
-                    </div>
+                            echo '<div class="viewProfileButton">
+                                    <br>
+                                    <a href="patientProfile.php" class="viewProfile">View Your Profile</a>
+                                </div>
+                        </div>
                     </main>';
             }
             $db->close();
