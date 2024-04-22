@@ -221,6 +221,9 @@ form {
     text-decoration: none;
     color: black;
 }
+.col-3 a:hover {
+    color:white;
+}
 .dashboardBoxes {
     display: flex;
     flex-direction: column;
