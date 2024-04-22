@@ -24,11 +24,9 @@
             $arrayResult [] = $row;
         }
         
-
         $erroraid = $errordate = $errortime = "";
         $allFields = true;
 
-        
         $patient_name = getPatientName($db, $appointment['patient_id']);
 
         function getPatientName($db, $patient_id)
@@ -73,7 +71,6 @@
                 }
             }
         }
-
         ?>
         <main>
             <h1>Update Appointment</h1>
@@ -86,11 +83,11 @@
                     <span><?php echo isset($patient_name) ? $patient_name : ''; ?></span>
                 </div>
                 <label>Date</label>
-                <input type="date" name="date" value="<?php echo $arrayResult[0][1]; ?>">
+                <input type="date" name="date" value="<?php echo $appointment['date']; ?>">
                 <span class="blank-error"><?php echo $errordate; ?></span>
 
                 <label>Time</label>
-                <input type="time" name="time" value="<?php echo $arrayResult[0][2]; ?>">
+                <input type="time" name="time" value="<?php echo $appointment['time']; ?>">
                 <span class="blank-error"><?php echo $errortime; ?></span>
 
                 <input type="submit" name="submit" value="Update"><a href="../adminAppointments/adminAppointments.php" class="back-button">Back</a>
