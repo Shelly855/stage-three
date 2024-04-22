@@ -157,21 +157,23 @@ input:focus, select:focus{
 }
 .patientMenu {
   display: flex;
-  justify-content: space-around;  background-color: #89AD7F;
+  flex-wrap: wrap; 
+  justify-content: space-around;  
+  background-color: #89AD7F;
 }
 .col-3 {
   border: 2px solid;
-  padding: 90px 30px 10px 30px;
-  width: 240px;
-  height: 135px;
+  padding: 30px 15px;
+  width: 100%;
+  height: auto;
   align-items: center;
-  margin: 0;
+  margin: 10px;
   text-align: center;
   border-radius: 20px;
   background-color: #658C6F;
   font-weight:bold;
   font-family: cursive;
-  font-size: 25px;
+  font-size: 17px;
 }
 .col-3 a:link {
   text-decoration: none;
