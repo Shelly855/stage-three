@@ -325,19 +325,16 @@ h2 {
   text-align:center;
 }
 .requestBtn {
-    width: 60%;
-    align-items:center;
+  width: 60%;
+  align-items:center;
 }
 .requestBtn a{
-  font-size: 17px;
   font-family: Lucida Sans;
   color: black;
   text-decoration: none;
 }
 .backPatient{
-  font-size: 17px;
   font-family: Lucida Sans;
-  text-align: center;
 }
 #login-title{
   text-align:center;
