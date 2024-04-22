@@ -292,30 +292,32 @@ input:focus, select:focus{
   text-align:center;
 }
 .notification{
-  padding: 10px 12px;
+  padding: 10px;
   text-align: left;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  font-size: 15px;
-  border-bottom: 5px solid green;
+  font-size: 14px;
+  border-bottom: 3px solid green;
   border: 1px solid #000000;
   border-radius: 8px;
   background-color: #A8F0B6;
 }
 section{
-  border: 5px solid #5b7e64;
-  width: 80%;
-  margin: 40px 40px 40px 130px;
+  text-align:center;
+  border: 3px solid #5b7e64;
+  width: 90%;
+  margin: 20px auto;
+  padding: 10px;
 }
 section h2{
   text-align: center;
 }
 section .assigned{
-  font-size: 20px;
+  font-size: 18px;
   border-top: 3px solid #658C6F;
-  padding: 10px;
+  padding: 5px;
 }
 section p {
-  padding: 0px 10px 10px 10px;
+  padding: 0 5px;
 }
 h2 {
   font-size: 27px;
