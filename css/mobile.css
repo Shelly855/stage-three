@@ -318,22 +318,24 @@ section p {
   padding: 0px 10px 10px 10px;
 }
 h2 {
-  font-size: 40px;
+  font-size: 27px;
 }
 .helpGuide{
-  font-size: 30px;
+  font-size: 17px;
+  text-align:center;
 }
 .requestBtn {
-    width: 500px;
+    width: 60%;
+    align-items:center;
 }
 .requestBtn a{
-  font-size: 30px;
+  font-size: 17px;
   font-family: Lucida Sans;
   color: black;
   text-decoration: none;
 }
 .backPatient{
-  font-size: 30px;
+  font-size: 17px;
   font-family: Lucida Sans;
   text-align: center;
 }
