@@ -13,15 +13,17 @@
             include("../includes/patientHeader.php");
         ?>  
         <main>
-            <h1>Help Guide<h1> 
-                <h2>How do I register?</h2>
-                <p class="helpGuide">Patients do not need to register, our systems administrator will register each patient.</p>
-                <h2>How do I access the system?</h2>
-                <p class="helpGuide">Patients will receive their login credentials from us. Patients must log in with their personal username and password and this will allow them to use the system. </p>
-                <h2>Request a paper assessment if you are unable to access the digital system.</h2>
-                <button class="requestBtn"><a href="requestSubmitted.php">Request paper assessment</a></button>                
-                <h2>Contact Us if you have any more questions.</h2>
-                <p class="helpGuide">0300 311 22 33</p>
+            <div class="helpGuide">
+                <h1>Help Guide<h1> 
+                    <h2>How do I register?</h2>
+                    <p>Patients do not need to register, our systems administrator will register each patient.</p>
+                    <h2>How do I access the system?</h2>
+                    <p>Patients will receive their login credentials from us. Patients must log in with their personal username and password and this will allow them to use the system. </p>
+                    <h2>Request a paper assessment if you are unable to access the digital system.</h2>
+                    <button class="requestBtn"><a href="requestSubmitted.php">Request paper assessment</a></button>                
+                    <h2>Contact Us if you have any more questions.</h2>
+                    <p>0300 311 22 33</p>
+            </div>
         </main>
         <?php
             include("../includes/footer.php");
