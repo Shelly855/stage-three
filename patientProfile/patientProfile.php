@@ -14,7 +14,7 @@
         ?>  
         <main>
             <h1>My Profile<h1> <br>
-        <div class="row patientMenu">
+        <div class="patientMenu">
             <div class="col-3">
                 <a href="viewPatientDetails.php">My Details</a> 
             </div>
