@@ -34,7 +34,7 @@
                         <div class="dashboardBoxes">
                             <div class="pageLinks">
                                 <p class="headings">Your Appointments</p>
-                                <a href="upcomingAppointments.php">Upcoming Appointments</a> 
+                                <a href="../patientProfile/upcomingAppointments.php">Upcoming Appointments</a> 
                             </div>';
 
                             $preOpAssessmentLinks = '';
@@ -54,7 +54,7 @@
 
                             echo '<div class="viewProfileButton">
                                     <br>
-                                    <a href="patientProfile.php" class="viewProfile">View Your Profile</a>
+                                    <a href="../patientProfile/patientProfile.php" class="viewProfile">View Your Profile</a>
                                 </div>
                         </div>
                     </main>';
