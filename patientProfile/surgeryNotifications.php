@@ -8,7 +8,7 @@ if ($row['count'] > 0) {
     $surgeryNotification = '<section class="outcomeNotifications">
                             <h2>Surgery Decision</h2>
                             <p class="assigned">Surgery Proposed: Yes </p>
-                            <p> The doctor has proposed a surgery for you. Click <a href="surgeryDetails.php">here</a> to view your surgery details. </p>
+                            <p> The doctor has proposed a surgery for you. Click <a href="../patientProfile/surgeryDetails.php">here</a> to view your surgery details. </p>
                         </section>';
 } 
 else {
