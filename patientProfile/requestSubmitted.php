@@ -16,7 +16,7 @@
             <div class="helpGuide">
                 <h1>Help Guide<h1> 
                 <h2>Your request has been submitted. We will get back to you shortly.</h2>
-                <p class="backPatient"><a href="helpGuide.php">Back</a></p>    
+                <p class="backPatient"><a href="../patientProfile/helpGuide.php">Back</a></p>    
             </div>  
         </main>
         <?php
