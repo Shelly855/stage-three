@@ -18,8 +18,8 @@ if (!$db) {
     <div class="container"> 
         <?php 
             include("../includes/patientHeader.php"); 
-            include 'surgeryNotifications.php';
-            include 'poaNotifications.php';
+            include '../patientProfile/surgeryNotifications.php';
+            include '../patientProfile/poaNotifications.php';
         ?>  
         <main> 
             <h1>Notifications</h1>
