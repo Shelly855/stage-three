@@ -20,7 +20,7 @@
                     <h2>How do I access the system?</h2>
                     <p>Patients will receive their login credentials from us. Patients must log in with their personal username and password and this will allow them to use the system. </p>
                     <h2>Request a paper assessment if you are unable to access the digital system.</h2>
-                    <button class="requestBtn"><a href="requestSubmitted.php">Request paper assessment</a></button>                
+                    <button class="requestBtn"><a href="../patientProfile/requestSubmitted.php">Request paper assessment</a></button>                
                     <h2>Contact Us if you have any more questions.</h2>
                     <p>0300 311 22 33</p>
             </div>
