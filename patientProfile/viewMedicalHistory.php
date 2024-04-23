@@ -52,7 +52,7 @@ $res = $db->query($query);
             } 
            else {
                 echo '<h1>You have no medical history recorded.</h1>';
-                echo '<p class="backPatient"><a href="patientProfile.php">Back</a></p>';
+                echo '<p class="backPatient"><a href="../patientProfile/patientProfile.php">Back</a></p>';
            }
            } 
            else {
@@ -66,4 +66,3 @@ $res = $db->query($query);
     </div>
 </body>
 </html>
-
