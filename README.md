@@ -7,3 +7,6 @@ The goal of this project was to create a system that could streamline the POA pr
 
 ## **Solution**  
 The proposed solution was a web application that allows patients to complete the POA questionnaire, making the assessment process more efficient in identifying patients who require appointments.
+
+## **Database**
+- SQLite
