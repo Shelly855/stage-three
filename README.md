@@ -23,8 +23,8 @@ The proposed solution was a web application that allows patients to complete the
 - Password: password1
 
 ### Patient Login
-- Username: Mary33
-- Password: password2
+- Username: Beth11
+- Password: 4rghs8A
 
 ### Admin Login
 - Username: Sarah12
