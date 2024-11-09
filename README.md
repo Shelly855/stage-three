@@ -14,7 +14,7 @@ The proposed solution was a web application that allows patients to complete the
 ## To Be Added:
 - Code comments
 
-## How to Run
+## How To Run
 1. Start XAMPP.
 2. Open a browser and go to: localhost/stage-three/stage-three/login/login.php
 
