@@ -18,8 +18,9 @@ The proposed solution was a web application that allows patients to complete the
 - Improving Review Answers page for doctor users
 
 ## How To Run
-1. Start XAMPP.
-2. Open a browser and go to: localhost/stage-three/stage-three/login/login.php
+1. Clone the repository (e.g., in Visual Studio Code) and save it in the **htdocs** directory inside your **XAMPP** folder
+2. Open **XAMPP** and start both the **Apache** and **MySQL** servers
+2. Open a browser and go to: localhost/stage-three/login/login.php
 
 ### Doctor Login
 - Username: Will23
