@@ -12,8 +12,10 @@ The proposed solution was a web application that allows patients to complete the
 ## Database
 - SQLite
 
-## To Be Added:
-- Code comments
+## Possible Improvements
+- Adding code comments
+- Improving Review Answers page for patient users
+- Improving Review Answers page for doctor users
 
 ## How To Run
 1. Start XAMPP.
