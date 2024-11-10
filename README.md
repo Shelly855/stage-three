@@ -23,13 +23,13 @@ The proposed solution was a web application that allows patients to complete the
 2. Open a browser and go to: localhost/stage-three/login/login.php
 
 ### Doctor Login
-- Username: Will23
-- Password: password1
+- Username: **Will23**
+- Password: **password1**
 
 ### Patient Login
-- Username: Beth11
-- Password: 4rghs8A
+- Username: **Beth11**
+- Password: **4rghs8A**
 
 ### Admin Login
-- Username: Sarah12
-- Password: password3
+- Username: **Sarah12**
+- Password: **password3**
