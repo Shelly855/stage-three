@@ -1,4 +1,5 @@
-# Digital Preoperative Assessment Pathway and Clinical Decision Support System (Completed April 2024)
+# Digital Preoperative Assessment Pathway and Clinical Decision Support System
+**Project Duration:** Mar 4th - Apr 23rd 2024
 
 This project was developed as part of a 1st-year university assignment, with **AZ Hospital Trust** as a hypothetical client. The patients at AZ Hospital Trust each have 1-hour appointments, leading to a lengthy surgical waiting list and affecting their eligibility for surgery. The hospital's preoperative assessment (POA) process was previously inefficient, with a lot of time spent assessing patients who did not need appointments.
 
