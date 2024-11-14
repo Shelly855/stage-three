@@ -22,7 +22,7 @@ A web application that allows patients to complete the POA questionnaire, making
 2. Open **XAMPP** and start both the **Apache** and **MySQL** servers
 3. Import the **.sql** file into **SQLite**
 4. Save the database file in a folder called **data** inside your **XAMPP** folder
-5. Open a browser and go to: localhost/stage-three/login/login.php
+5. Open a browser and go to: **localhost/stage-three/login/login.php**
 
 ### Doctor Login
 - Username: **Will23**
