@@ -20,7 +20,7 @@ A web application that allows patients to complete the POA questionnaire, making
 ## How To Run
 1. Clone the repository (e.g., in Visual Studio Code) and save it in the **htdocs** directory inside your **XAMPP** folder
 2. Open **XAMPP** and start both the **Apache** and **MySQL** servers
-3. Import the **.sql** file into **SQLite**
+3. Use **DB Browser for SQLite** (or a similar tool) to import the **.sql** file and initialise the database.
 4. Save the database file, which is called **stage-three**, in a folder called **data** inside your **XAMPP** folder
 5. Open a browser and go to: **localhost/stage-three/login/login.php**
 
