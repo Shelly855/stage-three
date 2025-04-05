@@ -24,6 +24,7 @@ A web application that allows patients to complete the POA questionnaire, making
 4. Save the database file, which is called **stage-three**, in a folder called **data** inside your **XAMPP** folder
 5. Open a browser and go to: **localhost/stage-three/login/login.php**
 
+## Dummy Login Credentials
 ### Doctor Login
 - Username: **Will23**
 - Password: **password1**
